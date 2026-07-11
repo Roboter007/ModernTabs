@@ -1,7 +1,7 @@
 <hr>
 <h1 style="text-align: left;"><strong>What is ModernTabs?</strong></h1>
 <hr>
-<p>It is a library which adds creative mode tab banners which are purely for decorational purposes. Moreover it also contains specific parts of code from the Create Aeronautics/Simulated Mod.</p>
+<p>It is a library mod that adds creative mode tab banners which are purely for decorative purposes. This idea comes from the Create Aeronautics/Simulated mod and therefore includes portions of its code.</p>
 <p>&nbsp;</p>
 <hr>
 <h1><strong>Example Creative Tab</strong></h1>
