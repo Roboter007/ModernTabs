@@ -1,0 +1,9 @@
+{
+  "priority": 0,
+  "title": {
+    "text": { "text": "Building Blocks" },
+    "color": "#FFE9B0"
+  },
+  "sprite": "moderntabs:example_banner",
+  "only_animate_on_hover": true
+}

@@ -1,0 +1,9 @@
+{
+  "priority": 1,
+  "title": {
+    "text": { "text": "Tools & Weapons" },
+    "color": "#CFF3FF"
+  },
+  "sprite": "moderntabs:example_banner",
+  "only_animate_on_hover": false
+}

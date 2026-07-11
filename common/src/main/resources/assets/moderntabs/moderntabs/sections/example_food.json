@@ -1,0 +1,9 @@
+{
+  "priority": 2,
+  "title": {
+    "text": { "text": "Food" },
+    "color": "#FFD3E8"
+  },
+  "sprite": "moderntabs:example_banner",
+  "only_animate_on_hover": true
+}

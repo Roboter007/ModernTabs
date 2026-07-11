@@ -1,0 +1,20 @@
+{
+  "required": true,
+  "package": "dev.moderntabs.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "refmap": "moderntabs-common-refmap.json",
+  "client": [
+    "AbstractContainerScreenAccessor",
+    "CreativeModeInventoryScreenMixin",
+    "ItemPickerMenuMixin",
+    "SpriteContentsMixin",
+    "SpriteContentsTickerMixin"
+  ],
+  "mixins": [
+    "CreativeModeTabMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

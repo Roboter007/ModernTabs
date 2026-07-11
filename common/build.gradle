@@ -1,0 +1,15 @@
+architectury {
+    common rootProject.enabled_platforms.split(',')
+}
+
+dependencies {
+    // We depend on the Fabric Loader API here only to use its @Environment / @EnvironmentInterface
+    // annotations, which both platforms understand for client-only class/member stripping.
+    // No other Fabric Loader classes may be referenced from common code.
+    modCompileOnly("net.fabricmc:fabric-loader:$rootProject.fabric_loader_version")
+
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/moderntabs-common.accesswidener")
+}
