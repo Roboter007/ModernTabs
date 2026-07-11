@@ -38,7 +38,7 @@ public final class ExampleTab {
     );
 
     public static final CreativeModeTab TAB = CreativeModeTab.builder(CreativeModeTab.Row.TOP, 10)
-            .title(Component.literal("ModernTabs Example"))
+            .title(Component.translatable("itemGroup.moderntabs.example"))
             .icon(() -> new ItemStack(Items.WHITE_BANNER))
             .displayItems((parameters, output) -> {
                 BUILDING_BLOCKS.forEach(output::accept);
