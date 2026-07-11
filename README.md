@@ -13,10 +13,10 @@
 <h1><strong>For Developers</strong></h1>
 <hr>
 <p>You can use it in your mod by using cursemaven:</p>
-<pre><span class="code-orange">repositories</span> { <br>  maven { <br>    url <span class="code-yellow">"<span class="inline-host">https://cursemaven.com</span>"</span> <br>  } <br>}</pre>
+<pre>repositories { <br>  maven { <br>    url "https://cursemaven.com" <br>  } <br>}</pre>
 <p>&nbsp;</p>
 <p><span style="text-decoration: underline;">What you need to do in order to implement the creative tab banners correctly in your mod:<br></span></p>
-<pre>// Required: Once, e.g. right after you build your tab:<br>ModernTabs.enableSections(MyMod.MAIN_TAB);<br><br>// Required: For every item that should be grouped:<br>SectionedItems.addItem(MyItems.EXAMPLE_ITEM, ResourceLocation.fromNamespaceAndPath("mymod", "example_section"));<br><br>// Optional: hide a debug item from the grid but keep it searchable<br>TabItemTransforms.setVisibility(MyItems.DEBUG_STICK, TabItemTransforms.VisibilityType.SEARCH_ONLY);</pre>
+<pre>// Required: Once, e.g. right after you build your tab:<br>ModernTabs.enableSections(MyMod.MAIN_TAB);<br><br>// Required: For every item that should be grouped:<br>SectionedItems.addItem(MyItems.EXAMPLE_ITEM, ResourceLocation.fromNamespaceAndPath("mymod", "example_section"));<br><br>// Optional: hide a debug item from the grid but keep it searchable<br>TabItemTransforms.setVisibility(MyItems.DEBUG_STICK, TabItemTransforms.VisibilityType.SEARCH_ONLY);<br><br>// Optional: if you want to enable the example tab:<br>ModernTabs.setExampleTabEnabled(true);</pre>
 <p>&nbsp;</p>
 <p>In order for the creative tab sections to work properly, you need to create one <strong>JSON</strong> file for each creative tab section you want to have.<br>These json files have to be in the location: <strong>assets/mymod/moderntabs/sections/basics.json</strong> and the defined section (in this case: example_section) has to match one json file in this location</p>
 <p>Example <strong>JSON</strong> file:</p>
@@ -87,11 +87,11 @@
 <hr>
 <h1>Bugs &amp; Feature Requests</h1>
 <hr>
-<p data-id="ravkqe" data-pm-slice="1 1 []">Please report any bugs you encounter or feature requests on the linked GitHub.</p>
+<p>Please report any bugs you encounter or feature requests on the linked GitHub.</p>
 <p>&nbsp;</p>
 <hr>
 <h1><strong>Credits</strong></h1>
 <hr>
-<ul style="list-style-type: circle;">
-<li>Thank you to the <a title="Create Aeronautics" href="https://www.curseforge.com/minecraft/mc-mods/create-aeronautics" target="_blank" rel="noopener">Create Aeronautics/Simulated</a> mod team and contributors for creating such a great mod.</li>
+<ul>
+<li>Thank you to the <a href="https://www.curseforge.com/minecraft/mc-mods/create-aeronautics" target="_blank" rel="nofollow noopener">Create Aeronautics/Simulated</a> mod team and contributors for creating such a great mod.</li>
 </ul>

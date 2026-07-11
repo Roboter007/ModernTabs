@@ -10,7 +10,7 @@ import java.util.Set;
 public class ModernTabs {
 
     public static final String MOD_ID = "moderntabs";
-    private static boolean exampleTab = true;
+    private static boolean exampleTab = false;
 
     private static final Set<CreativeModeTab> SECTIONED_TABS = Collections.newSetFromMap(new IdentityHashMap<>());
 
