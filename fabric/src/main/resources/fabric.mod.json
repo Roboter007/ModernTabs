@@ -10,6 +10,7 @@
   "license": "${license}",
   "icon": "assets/moderntabs/icon.png",
   "environment": "*",
+  "accessWidener": "moderntabs-common.accesswidener",
   "entrypoints": {
     "main": [
       "de.Roboter007.moderntabs.fabric.ModernTabsFabric"
