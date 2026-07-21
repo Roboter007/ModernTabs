@@ -2,6 +2,7 @@ package de.Roboter007.moderntabs.example;
 
 import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.background.config.TabIconBackground;
+import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
 import de.Roboter007.moderntabs.section.item.SectionedItems;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -20,25 +21,25 @@ public final class ExampleTab {
     private static final ResourceLocation SECTION_TOOLS_AND_WEAPONS = ModernTabs.path("example_tools_and_weapons");
     private static final ResourceLocation SECTION_FOOD = ModernTabs.path("example_food");
 
-    private static final List<Item> BUILDING_BLOCKS = List.of(
+    public static final List<Item> BUILDING_BLOCKS = List.of(
             Items.DIRT, Items.GRASS_BLOCK, Items.STONE, Items.COBBLESTONE,
             Items.OAK_LOG, Items.OAK_PLANKS, Items.GLASS, Items.BRICKS,
             Items.SAND, Items.SANDSTONE, Items.TERRACOTTA
     );
 
-    private static final List<Item> TOOLS_AND_WEAPONS = List.of(
+    public static final List<Item> TOOLS_AND_WEAPONS = List.of(
             Items.DIAMOND_SWORD, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_SHOVEL,
             Items.DIAMOND_HOE, Items.BOW, Items.CROSSBOW, Items.ARROW,
             Items.SHIELD, Items.TRIDENT, Items.FISHING_ROD
     );
 
-    private static final List<Item> FOOD = List.of(
+    public static final List<Item> FOOD = List.of(
             Items.APPLE, Items.GOLDEN_APPLE, Items.ENCHANTED_GOLDEN_APPLE, Items.BREAD,
             Items.COOKED_BEEF, Items.COOKED_PORKCHOP, Items.CAKE, Items.COOKIE,
             Items.CARROT, Items.GOLDEN_CARROT, Items.MELON_SLICE, Items.PUMPKIN_PIE
     );
 
-    public static final CreativeModeTab TAB = CreativeModeTab.builder(CreativeModeTab.Row.TOP, 10)
+    public static final CreativeModeTab TAB = ModernTabsPlatform.get().creativeBuilder()
             .title(Component.translatable("itemGroup.moderntabs.example"))
             .icon(() -> new ItemStack(Items.WHITE_BANNER))
             .displayItems((parameters, output) -> {
@@ -46,6 +47,7 @@ public final class ExampleTab {
                 TOOLS_AND_WEAPONS.forEach(output::accept);
                 FOOD.forEach(output::accept);
             }).build();
+
 
     private ExampleTab() {
     }

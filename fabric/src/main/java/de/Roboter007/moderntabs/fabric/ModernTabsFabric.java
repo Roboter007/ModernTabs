@@ -14,11 +14,13 @@ public final class ModernTabsFabric implements ModInitializer {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(ModernTabs.MOD_ID);
 
+
     @Override
     public void onInitialize() {
         ModernTabsPlatform.init(new FabricPlatform());
         if(ModernTabs.isExampleTabEnabled()) {
             Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ExampleTab.TAB_ID, ExampleTab.TAB);
+
             ExampleTab.init();
         }
     }
