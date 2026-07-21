@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "de.Roboter007.moderntabs.fabric.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "refmap": "moderntabs-fabric-refmap.json",
+  "client": [
+  ],
+  "mixins": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

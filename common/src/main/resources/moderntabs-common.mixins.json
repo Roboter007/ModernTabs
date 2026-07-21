@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "package": "de.Roboter007.moderntabs.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "client": [
+    "background.CreativeModeInventoryScreenMixin",
+    "background.GuiGraphicsMixin",
+    "background.GuiSpriteManagerMixin",
+    "banner.AbstractContainerScreenAccessor",
+    "banner.CreativeModeInventoryScreenMixin",
+    "banner.ItemPickerMenuMixin",
+    "banner.SpriteContentsMixin",
+    "banner.SpriteContentsTickerMixin"
+  ],
+  "mixins": [
+    "banner.CreativeModeTabMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

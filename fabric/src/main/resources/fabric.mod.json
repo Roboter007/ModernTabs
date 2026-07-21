@@ -12,14 +12,15 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "dev.moderntabs.fabric.ModernTabsFabric"
+      "de.Roboter007.moderntabs.fabric.ModernTabsFabric"
     ],
     "client": [
-      "dev.moderntabs.fabric.ModernTabsFabricClient"
+      "de.Roboter007.moderntabs.fabric.ModernTabsFabricClient"
     ]
   },
   "mixins": [
-    "moderntabs.mixins.json"
+    "moderntabs-common.mixins.json",
+    "moderntabs-fabric.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.16.0",

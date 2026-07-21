@@ -12,7 +12,10 @@ description = '''${mod_description}'''
 logoFile='assets/moderntabs/icon.png'
 
 [[mixins]]
-config = "moderntabs.mixins.json"
+config = "moderntabs-common.mixins.json"
+
+[[mixins]]
+config = "moderntabs-neoforge.mixins.json"
 
 [[dependencies.${mod_id}]]
 modId = "neoforge"
