@@ -7,6 +7,8 @@
     "background.CreativeModeInventoryScreenMixin",
     "background.GuiGraphicsMixin",
     "background.GuiSpriteManagerMixin",
+    "background.TextureAtlasAccessor",
+    "background.TextureAtlasHolderAccessor",
     "banner.AbstractContainerScreenAccessor",
     "banner.CreativeModeInventoryScreenMixin",
     "banner.ItemPickerMenuMixin",

@@ -2,6 +2,7 @@ package de.Roboter007.moderntabs.mixin.background;
 
 import de.Roboter007.moderntabs.background.CustomGuiSpriteManager;
 import net.minecraft.client.gui.GuiSpriteManager;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.TextureAtlasHolder;
@@ -26,7 +27,10 @@ public class GuiSpriteManagerMixin extends TextureAtlasHolder implements CustomG
 
     @Unique
     public TextureAtlasSprite moderntabs$getSpriteWithDefault(ResourceLocation location, ResourceLocation defaultLocation) {
-        TextureAtlasSprite textureatlassprite = this.textureAtlas.texturesByName.getOrDefault(location, this.textureAtlas.texturesByName.get(defaultLocation));
+        TextureAtlasHolderAccessor textureAtlasHolderAccessor = (TextureAtlasHolderAccessor) this;
+        TextureAtlasAccessor accessor = (TextureAtlasAccessor) textureAtlasHolderAccessor.getTextureAtlas();
+
+        TextureAtlasSprite textureatlassprite = accessor.getTexturesByName().getOrDefault(location, accessor.getTexturesByName().get(defaultLocation));
 
         if (textureatlassprite == null) {
             throw new IllegalStateException("Tried to lookup sprite, but atlas is not initialized");
