@@ -67,6 +67,7 @@ remapJar {
     input.set shadowJar.archiveFile
 }
 
+
 loom {
-    accessWidenerPath = file("src/main/resources/moderntabs-neoforge.accesswidener")
+    accessWidenerPath = project(':common').file("src/main/resources/moderntabs-common.accesswidener")
 }

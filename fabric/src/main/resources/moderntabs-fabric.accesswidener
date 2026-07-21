@@ -1,5 +1,0 @@
-accessWidener v2 named
-
-accessible class net/minecraft/client/renderer/texture/SpriteContents$Ticker
-accessible field net/minecraft/client/resources/TextureAtlasHolder textureAtlas Lnet/minecraft/client/renderer/texture/TextureAtlas;
-accessible field net/minecraft/client/renderer/texture/TextureAtlas texturesByName Ljava/util/Map;
