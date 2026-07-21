@@ -16,7 +16,7 @@ public class ModernTabs {
     public static final String MOD_ID = "moderntabs";
     public static final Logger LOGGER = LoggerFactory.getLogger(ModernTabs.MOD_ID);
     // Disabled by default
-    private static boolean exampleTab = true;
+    private static boolean exampleTab = false;
 
     private static final Set<CreativeModeTab> SECTIONED_TABS = Collections.newSetFromMap(new IdentityHashMap<>());
     private static final HashMap<CreativeModeTab, TabIconBackground> TABS_WITH_CUSTOM_ICON_BACKGROUND = new HashMap<>();
