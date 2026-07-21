@@ -23,7 +23,7 @@ public class ModernTabs {
 
     private ModernTabs() {}
 
-    // Sections for Creative Tab Banners -> have to be enabled to work
+    // Sections for Creative Tab Banners -> has to be enabled to work
     public static void enableSections(final CreativeModeTab tab) {
         SECTIONED_TABS.add(tab);
     }
@@ -32,7 +32,7 @@ public class ModernTabs {
         return tab != null && SECTIONED_TABS.contains(tab);
     }
 
-    // Custom Tab Icon Background -> have to be enabled to work
+    // Custom Tab Icon Background -> has to be enabled to work
     public static void enableCustomIconBackground(CreativeModeTab creativeModeTab, TabIconBackground creativeTabBackgrounds) {
         TABS_WITH_CUSTOM_ICON_BACKGROUND.put(creativeModeTab, creativeTabBackgrounds);
     }
@@ -45,7 +45,7 @@ public class ModernTabs {
         return TABS_WITH_CUSTOM_ICON_BACKGROUND.get(creativeModeTab);
     }
 
-    // Example Tab
+    // Example Tab -> has to be enabled to work
     public static boolean isExampleTabEnabled() {
         return exampleTab;
     }
