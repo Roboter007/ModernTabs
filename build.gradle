@@ -61,7 +61,11 @@ subprojects {
         publications {
             mavenJava(MavenPublication) {
                 artifactId = base.archivesName.get()
-                from components.java
+                artifact remapJar
+
+                artifact(sourcesJar) {
+                    builtBy remapSourcesJar
+                }
             }
         }
 
