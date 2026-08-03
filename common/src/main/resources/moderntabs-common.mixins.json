@@ -13,9 +13,12 @@
     "banner.CreativeModeInventoryScreenMixin",
     "banner.ItemPickerMenuMixin",
     "banner.SpriteContentsMixin",
-    "banner.SpriteContentsTickerMixin"
+    "banner.SpriteContentsTickerMixin",
+    "icon.CreativeModeInventoryMixin",
+    "scroller.CreativeModeInventoryMixin"
   ],
   "mixins": [
+    "CreativeModeTabMixin",
     "banner.CreativeModeTabMixin"
   ],
   "injectors": {

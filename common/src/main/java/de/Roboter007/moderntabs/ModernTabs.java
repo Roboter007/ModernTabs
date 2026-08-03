@@ -1,50 +1,24 @@
 package de.Roboter007.moderntabs;
 
 import de.Roboter007.moderntabs.background.config.TabIconBackground;
+import de.Roboter007.moderntabs.extensions.CreativeModeTabExtension;
+import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.IdentityHashMap;
-import java.util.Set;
-
+//ToDo: add way for fabric to add a scroller custom texture
 public class ModernTabs {
 
     public static final String MOD_ID = "moderntabs";
     public static final Logger LOGGER = LoggerFactory.getLogger(ModernTabs.MOD_ID);
     // Disabled by default
-    private static boolean exampleTab = false;
-
-    private static final Set<CreativeModeTab> SECTIONED_TABS = Collections.newSetFromMap(new IdentityHashMap<>());
-    private static final HashMap<CreativeModeTab, TabIconBackground> TABS_WITH_CUSTOM_ICON_BACKGROUND = new HashMap<>();
+    private static boolean exampleTab = ModernTabsPlatform.get().isDevEnvironment();
 
 
     private ModernTabs() {}
 
-    // Sections for Creative Tab Banners -> has to be enabled to work
-    public static void enableSections(final CreativeModeTab tab) {
-        SECTIONED_TABS.add(tab);
-    }
-
-    public static boolean hasSections(final CreativeModeTab tab) {
-        return tab != null && SECTIONED_TABS.contains(tab);
-    }
-
-    // Custom Tab Icon Background -> has to be enabled to work
-    public static void enableCustomIconBackground(CreativeModeTab creativeModeTab, TabIconBackground creativeTabBackgrounds) {
-        TABS_WITH_CUSTOM_ICON_BACKGROUND.put(creativeModeTab, creativeTabBackgrounds);
-    }
-
-    public static boolean hasCustomTabBackground(CreativeModeTab creativeModeTab) {
-        return TABS_WITH_CUSTOM_ICON_BACKGROUND.containsKey(creativeModeTab) && TABS_WITH_CUSTOM_ICON_BACKGROUND.get(creativeModeTab) != null;
-    }
-
-    public static TabIconBackground getCustomTabBackground(CreativeModeTab creativeModeTab) {
-        return TABS_WITH_CUSTOM_ICON_BACKGROUND.get(creativeModeTab);
-    }
 
     // Example Tab -> has to be enabled to work
     public static boolean isExampleTabEnabled() {
@@ -58,5 +32,46 @@ public class ModernTabs {
     // Utility
     public static ResourceLocation path(final String path) {
         return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+    }
+
+    public static Builder builder(CreativeModeTab creativeModeTab) {
+        return new Builder(creativeModeTab);
+    }
+
+    public static class Builder {
+
+        private final CreativeModeTab creativeModeTab;
+        private final CreativeModeTabExtension tabExtension;
+
+        private Builder(CreativeModeTab creativeModeTab) {
+            this.creativeModeTab = creativeModeTab;
+            this.tabExtension = (CreativeModeTabExtension) creativeModeTab;
+        }
+
+        public Builder withEnabledSections(boolean sectionsEnabled) {
+            this.tabExtension.moderntabs$setSectionsEnabled(sectionsEnabled);
+            return this;
+        }
+
+
+        public Builder withCustomTabIconBackground(TabIconBackground tabIconBackground) {
+            this.tabExtension.moderntabs$setCustomTabIconBackground(tabIconBackground);
+            return this;
+        }
+
+
+        public Builder withCustomTabIcon(ResourceLocation tabIconLocation) {
+            this.tabExtension.moderntabs$setCustomTabIcon(tabIconLocation);
+            return this;
+        }
+
+        public Builder withCustomScroller(ResourceLocation tabIconLocation) {
+            this.tabExtension.moderntabs$setCustomScroller(tabIconLocation);
+            return this;
+        }
+
+        public CreativeModeTab creativeModeTab() {
+            return creativeModeTab;
+        }
     }
 }

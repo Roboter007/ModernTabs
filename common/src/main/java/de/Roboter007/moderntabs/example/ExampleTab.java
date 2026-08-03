@@ -8,7 +8,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 import java.util.List;
@@ -41,7 +40,6 @@ public final class ExampleTab {
 
     public static final CreativeModeTab TAB = ModernTabsPlatform.get().creativeBuilder()
             .title(Component.translatable("itemGroup.moderntabs.example"))
-            .icon(() -> new ItemStack(Items.WHITE_BANNER))
             .displayItems((parameters, output) -> {
                 BUILDING_BLOCKS.forEach(output::accept);
                 TOOLS_AND_WEAPONS.forEach(output::accept);
@@ -54,11 +52,15 @@ public final class ExampleTab {
 
     public static void init() {
         TabIconBackground creativeTabBackgrounds = new TabIconBackground(ModernTabs.MOD_ID, "example");
-        ModernTabs.enableCustomIconBackground(TAB, creativeTabBackgrounds);
 
-        ModernTabs.enableSections(TAB);
         BUILDING_BLOCKS.forEach(item -> SectionedItems.addItem(item, SECTION_BUILDING_BLOCKS));
         TOOLS_AND_WEAPONS.forEach(item -> SectionedItems.addItem(item, SECTION_TOOLS_AND_WEAPONS));
         FOOD.forEach(item -> SectionedItems.addItem(item, SECTION_FOOD));
+
+        ModernTabs.builder(TAB)
+                .withEnabledSections(true)
+                .withCustomTabIconBackground(creativeTabBackgrounds)
+                .withCustomTabIcon(ModernTabs.path("container/creative_inventory/icon"))
+                .withCustomScroller(ModernTabs.path("container/creative_inventory/scroller"));
     }
 }

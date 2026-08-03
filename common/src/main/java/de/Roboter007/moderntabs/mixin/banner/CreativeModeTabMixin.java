@@ -3,6 +3,7 @@ package de.Roboter007.moderntabs.mixin.banner;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import de.Roboter007.moderntabs.ModernTabs;
+import de.Roboter007.moderntabs.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.section.client.SectionedTabRenderer;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -30,7 +31,8 @@ public class CreativeModeTabMixin {
 
         original.call(parameters);
 
-        if (!ModernTabs.hasSections(self)) {
+        CreativeModeTabExtension tabExtension = (CreativeModeTabExtension) self;
+        if (!tabExtension.moderntabs$hasCustomSections()) {
             return;
         }
 

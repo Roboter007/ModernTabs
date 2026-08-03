@@ -1,0 +1,29 @@
+package de.Roboter007.moderntabs.extensions;
+
+import de.Roboter007.moderntabs.background.config.TabIconBackground;
+import net.minecraft.resources.ResourceLocation;
+
+public interface CreativeModeTabExtension {
+
+    void moderntabs$setSectionsEnabled(boolean sectionsEnabled);
+    boolean moderntabs$hasCustomSections();
+
+    void moderntabs$setCustomTabIconBackground(TabIconBackground tabIconBackground);
+    TabIconBackground moderntabs$getCustomTabIconBackground();
+    default boolean moderntabs$hasCustomTabIconBackground() {
+        return moderntabs$getCustomTabIconBackground() != null;
+    }
+
+    ResourceLocation moderntabs$getCustomTabIcon();
+    void moderntabs$setCustomTabIcon(ResourceLocation tabIconLocation);
+    default boolean moderntabs$hasCustomTabIcon() {
+        return moderntabs$getCustomTabIconBackground() != null;
+    }
+
+    ResourceLocation moderntabs$getCustomScroller();
+    void moderntabs$setCustomScroller(ResourceLocation scrollerLocation);
+    default boolean moderntabs$hasCustomScroller() {
+        return moderntabs$getCustomScroller() != null;
+    }
+
+}

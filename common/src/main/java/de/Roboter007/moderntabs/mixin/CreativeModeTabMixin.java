@@ -1,0 +1,66 @@
+package de.Roboter007.moderntabs.mixin;
+
+import de.Roboter007.moderntabs.background.config.TabIconBackground;
+import de.Roboter007.moderntabs.extensions.CreativeModeTabExtension;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+
+@Mixin(CreativeModeTab.class)
+public class CreativeModeTabMixin implements CreativeModeTabExtension {
+
+    @Unique
+    public boolean moderntabs$sectionsEnabled = false;
+    @Unique
+    public TabIconBackground moderntabs$tabIconBackground = null;
+    @Unique
+    public ResourceLocation moderntabs$tabIcon = null;
+    @Unique
+    public ResourceLocation moderntabs$scroller = null;
+
+
+    @Override
+    public void moderntabs$setSectionsEnabled(boolean sectionsEnabled) {
+        this.moderntabs$sectionsEnabled = sectionsEnabled;
+    }
+
+    @Override
+    public boolean moderntabs$hasCustomSections() {
+        return moderntabs$sectionsEnabled;
+    }
+
+
+    @Override
+    public void moderntabs$setCustomTabIconBackground(TabIconBackground tabIconBackground) {
+        this.moderntabs$tabIconBackground = tabIconBackground;
+    }
+
+    @Override
+    public TabIconBackground moderntabs$getCustomTabIconBackground() {
+        return moderntabs$tabIconBackground;
+    }
+
+
+    @Override
+    public ResourceLocation moderntabs$getCustomTabIcon() {
+        return moderntabs$tabIcon;
+    }
+
+    @Override
+    public void moderntabs$setCustomTabIcon(ResourceLocation tabIconLocation) {
+        this.moderntabs$tabIcon = tabIconLocation;
+    }
+
+
+    @Override
+    public ResourceLocation moderntabs$getCustomScroller() {
+        return moderntabs$scroller;
+    }
+
+    @Override
+    public void moderntabs$setCustomScroller(ResourceLocation scrollerLocation) {
+        this.moderntabs$scroller = scrollerLocation;
+    }
+
+}

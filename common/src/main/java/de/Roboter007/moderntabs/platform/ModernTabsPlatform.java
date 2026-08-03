@@ -16,11 +16,8 @@ public abstract class ModernTabsPlatform {
         return Objects.requireNonNull(INSTANCE, "ModernTabsPlatform not initialized");
     }
 
-    public static boolean isInitialized() {
-        return INSTANCE != null;
-    }
-
     public ModernTabsPlatform() {}
 
     public abstract CreativeModeTab.Builder creativeBuilder();
+    public abstract boolean isDevEnvironment();
 }
