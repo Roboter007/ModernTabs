@@ -35,13 +35,4 @@ public class TabIconBackground {
         }
         throw new NullPointerException();
     }
-
-    public void setCreativeTabImage(Row row, Column column, Selection selection, TabIconBackgroundImage newIconBackground) {
-        for(int i = 0; i < creativeTabImages.length - 1; i++) {
-            TabIconBackgroundImage iconBackground = creativeTabImages[i];
-            if(iconBackground.row().equals(row) && iconBackground.column().equals(column) && iconBackground.selection().equals(selection)) {
-                creativeTabImages[i] = newIconBackground;
-            }
-        }
-    }
 }

@@ -82,7 +82,6 @@
 </tr>
 </tbody>
 </table>
-<hr>
 <h1>&nbsp;</h1>
 <hr>
 <h1><strong>FAQ</strong></h1>

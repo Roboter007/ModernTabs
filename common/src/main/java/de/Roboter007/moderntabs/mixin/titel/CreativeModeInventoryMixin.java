@@ -38,7 +38,13 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
         if(creativeModeTabExtension.moderntabs$hasCustomTabTitelRendering()) {
             CustomTabTitel customTabTitel = creativeModeTabExtension.moderntabs$getCustomTabTitel();
             if(customTabTitel.backgroundColor() != null) {
-                final int textWidth = font.width(text);
+                final int textWidth;
+                if(customTabTitel instanceof SpriteTabTitel spriteTabTitel) {
+                    textWidth = spriteTabTitel.width();
+                } else {
+                    textWidth = font.width(text);
+                }
+
                 final int height = 10;
                 guiGraphics.fill(x, y - 2, x + textWidth + 2, y + height, customTabTitel.backgroundColor().color());
                 x++;
@@ -77,7 +83,7 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
 
                 TabTitelRenderer.drawAuraText(guiGraphics, text, titelFont, titelFont2, titelColor.color(), titelColor2.color(), titelDropShadow, titelDropShadow2, x, y);
             } else if(customTabTitel instanceof SpriteTabTitel spriteTabTitel) {
-                guiGraphics.blitSprite(spriteTabTitel.spriteTitelLocation(), x, y, width, height);
+                guiGraphics.blitSprite(spriteTabTitel.spriteTitelLocation(), x, y, spriteTabTitel.width(), spriteTabTitel.height());
             } else {
                 guiGraphics.drawString(titelFont, text, x, y, titelColor.color(), titelDropShadow);
             }
