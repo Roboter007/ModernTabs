@@ -3,6 +3,7 @@ package de.Roboter007.moderntabs;
 import de.Roboter007.moderntabs.background.config.TabIconBackground;
 import de.Roboter007.moderntabs.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
+import de.Roboter007.moderntabs.titel.CustomTabTitel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import org.slf4j.Logger;
@@ -67,6 +68,11 @@ public class ModernTabs {
 
         public Builder withCustomScroller(ResourceLocation tabIconLocation) {
             this.tabExtension.moderntabs$setCustomScroller(tabIconLocation);
+            return this;
+        }
+
+        public Builder withCustomTitelRendering(CustomTabTitel tabTitelRendererConfig) {
+            this.tabExtension.moderntabs$setCustomTabTitel(tabTitelRendererConfig);
             return this;
         }
 

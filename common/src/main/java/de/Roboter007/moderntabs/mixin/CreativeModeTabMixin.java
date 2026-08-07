@@ -2,6 +2,7 @@ package de.Roboter007.moderntabs.mixin;
 
 import de.Roboter007.moderntabs.background.config.TabIconBackground;
 import de.Roboter007.moderntabs.extensions.CreativeModeTabExtension;
+import de.Roboter007.moderntabs.titel.CustomTabTitel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,6 +13,8 @@ public class CreativeModeTabMixin implements CreativeModeTabExtension {
 
     @Unique
     public boolean moderntabs$sectionsEnabled = false;
+    @Unique
+    public CustomTabTitel moderntabs$customTabTitel = null;
     @Unique
     public TabIconBackground moderntabs$tabIconBackground = null;
     @Unique
@@ -30,6 +33,15 @@ public class CreativeModeTabMixin implements CreativeModeTabExtension {
         return moderntabs$sectionsEnabled;
     }
 
+    @Override
+    public void moderntabs$setCustomTabTitel(CustomTabTitel customTabTitel) {
+        this.moderntabs$customTabTitel = customTabTitel;
+    }
+
+    @Override
+    public CustomTabTitel moderntabs$getCustomTabTitel() {
+        return moderntabs$customTabTitel;
+    }
 
     @Override
     public void moderntabs$setCustomTabIconBackground(TabIconBackground tabIconBackground) {

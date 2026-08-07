@@ -15,7 +15,8 @@
     "banner.SpriteContentsMixin",
     "banner.SpriteContentsTickerMixin",
     "icon.CreativeModeInventoryMixin",
-    "scroller.CreativeModeInventoryMixin"
+    "scroller.CreativeModeInventoryMixin",
+    "titel.CreativeModeInventoryMixin"
   ],
   "mixins": [
     "CreativeModeTabMixin",

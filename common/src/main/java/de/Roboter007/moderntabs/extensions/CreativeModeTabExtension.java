@@ -1,12 +1,19 @@
 package de.Roboter007.moderntabs.extensions;
 
 import de.Roboter007.moderntabs.background.config.TabIconBackground;
+import de.Roboter007.moderntabs.titel.CustomTabTitel;
 import net.minecraft.resources.ResourceLocation;
 
 public interface CreativeModeTabExtension {
 
     void moderntabs$setSectionsEnabled(boolean sectionsEnabled);
     boolean moderntabs$hasCustomSections();
+
+    void moderntabs$setCustomTabTitel(CustomTabTitel customTabTitel);
+    CustomTabTitel moderntabs$getCustomTabTitel();
+    default boolean moderntabs$hasCustomTabTitelRendering() {
+        return moderntabs$getCustomTabTitel() != null;
+    }
 
     void moderntabs$setCustomTabIconBackground(TabIconBackground tabIconBackground);
     TabIconBackground moderntabs$getCustomTabIconBackground();

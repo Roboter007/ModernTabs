@@ -14,7 +14,7 @@ public final class ColorUtil {
     private ColorUtil() {
     }
 
-    private static DataResult<Integer> parse(final String value) {
+    public static DataResult<Integer> parse(final String value) {
         final String hex = value.startsWith("#") ? value.substring(1) : value;
         try {
             if (hex.length() == 6) {
@@ -28,7 +28,7 @@ public final class ColorUtil {
         return DataResult.error(() -> "Expected a '#RRGGBB' or '#AARRGGBB' color, got '" + value + "'");
     }
 
-    private static String toHexString(final int argb) {
+    public static String toHexString(final int argb) {
         return String.format("#%08X", argb);
     }
 
@@ -40,7 +40,7 @@ public final class ColorUtil {
         return (a << 24) | (r << 16) | (g << 8) | b;
     }
 
-    private static int clamp(final int value) {
+    public static int clamp(final int value) {
         return Math.max(0, Math.min(255, value));
     }
 }
