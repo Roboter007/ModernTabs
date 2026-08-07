@@ -5,6 +5,7 @@ import net.minecraft.client.gui.Font;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+// uses the same text style of the tab banners
 public class AuraTabTitel extends CustomTabTitel {
 
     private final Font font2;

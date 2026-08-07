@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+// uses a sprite as a tab titel
 public class SpriteTabTitel extends CustomTabTitel {
 
     private final ResourceLocation spriteTitelLocation;

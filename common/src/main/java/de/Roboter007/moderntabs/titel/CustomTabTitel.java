@@ -5,6 +5,7 @@ import net.minecraft.client.gui.Font;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+// uses the vanilla Minecraft text style that can be configured
 public class CustomTabTitel {
 
     private final ModernColor backgroundColor;
