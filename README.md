@@ -6,8 +6,8 @@
 <hr>
 <h1><strong>Example Creative Tab</strong></h1>
 <hr>
-<p><img src="https://media.forgecdn.net/attachments/description/null/description_481190fc-36f3-4963-abe5-2f95d71279d0.png" alt=""></p>
-<p>This example creative tab is only enabled in the development enviroment. That means it will not show up in a regular modpack.</p>
+<p><img src="https://media.forgecdn.net/attachments/description/1606742/description_6960a51f-1ee7-42bb-87df-7489b8827e7a.png"></p>
+<p>This example creative tab is only enabled in the development enviroment and therefore exists for showcase only. That means it will not show up in a regular modpack.</p>
 <p>&nbsp;</p>
 <hr>
 <h1><strong>For Developers</strong></h1>
