@@ -1,7 +1,6 @@
 package de.Roboter007.moderntabs.example;
 
 import de.Roboter007.moderntabs.ModernTabs;
-import de.Roboter007.moderntabs.iconBackground.config.TabIconBackground;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
 import de.Roboter007.moderntabs.section.item.SectionedItems;
 import de.Roboter007.moderntabs.titel.SpriteTabTitel;
@@ -54,6 +53,7 @@ public final class ExampleTab {
     }
 
     public static void init() {
+        ModernColor example_color = new ModernColor("#36454F");
         SpriteTabTitel spriteTabTitel = new SpriteTabTitel(new ModernColor("#36454F").lighten(0.5f), ModernTabs.path("container/creative_inventory/titel"), 64, 10);
 
         BUILDING_BLOCKS.forEach(item -> SectionedItems.addItem(item, SECTION_BUILDING_BLOCKS));
