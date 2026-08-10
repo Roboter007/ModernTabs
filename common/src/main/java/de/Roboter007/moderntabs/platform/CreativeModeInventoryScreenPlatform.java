@@ -1,6 +1,6 @@
 package de.Roboter007.moderntabs.platform;
 
-import de.Roboter007.moderntabs.background.config.TabIconBackgroundImage;
+import de.Roboter007.moderntabs.iconBackground.config.TabIconBackgroundImage;
 import net.minecraft.world.item.CreativeModeTab;
 
 public interface CreativeModeInventoryScreenPlatform {

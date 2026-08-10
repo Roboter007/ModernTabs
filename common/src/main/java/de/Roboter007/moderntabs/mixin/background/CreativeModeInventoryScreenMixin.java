@@ -1,12 +1,7 @@
 package de.Roboter007.moderntabs.mixin.background;
 
-import com.llamalad7.mixinextras.sugar.Local;
-import de.Roboter007.moderntabs.ModernTabs;
-import de.Roboter007.moderntabs.background.CustomGuiGraphics;
-import de.Roboter007.moderntabs.background.config.TabIconBackground;
-import de.Roboter007.moderntabs.background.config.TabIconBackgroundImage;
 import de.Roboter007.moderntabs.extensions.CreativeModeTabExtension;
-import de.Roboter007.moderntabs.platform.CreativeModeInventoryScreenPlatform;
+import de.Roboter007.moderntabs.util.ModernColor;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
@@ -22,7 +17,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(CreativeModeInventoryScreen.class)
 public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingInventoryScreen<CreativeModeInventoryScreen.ItemPickerMenu> {
 
-
     @Shadow
     private static CreativeModeTab selectedTab;
 
@@ -30,25 +24,21 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
         super(menu, playerInventory, title);
     }
 
-    @Redirect(method = "renderTabButton", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lnet/minecraft/resources/ResourceLocation;IIII)V"))
-    protected void renderTabButton(GuiGraphics instance, ResourceLocation sprite, int x, int y, int width, int height, @Local(argsOnly = true) CreativeModeTab creativeModeTab) {
-        CreativeModeTabExtension tabExtension = (CreativeModeTabExtension) creativeModeTab;
+    @Redirect(method = "renderBg", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blit(Lnet/minecraft/resources/ResourceLocation;IIIIII)V"))
+    protected void renderBg(GuiGraphics guiGraphics, ResourceLocation atlasLocation, int x, int y, int uOffset, int vOffset, int uWidth, int vHeight) {
+        CreativeModeTabExtension extension = (CreativeModeTabExtension) selectedTab;
+        if(extension.moderntabs$hasCustomBackgroundColor()) {
+            // set color
+            ModernColor backgroundColor = extension.moderntabs$getBackgroundColor();
+            guiGraphics.setColor(backgroundColor.normalizedRed(), backgroundColor.normalizedGreen(), backgroundColor.normalizedBlue(), backgroundColor.normalizedAlpha());
 
-        if(tabExtension.moderntabs$hasCustomTabIconBackground()) {
-            CreativeModeInventoryScreenPlatform platform = (CreativeModeInventoryScreenPlatform) this;
+            // render
+            guiGraphics.blit(atlasLocation, x, y, uOffset, vOffset, uWidth, vHeight);
 
-            TabIconBackground tabIconBackground = tabExtension.moderntabs$getCustomTabIconBackground();
-            TabIconBackgroundImage tabBackgroundImage = tabIconBackground.get(platform.moderntabs$row(creativeModeTab), platform.moderntabs$column(creativeModeTab), TabIconBackgroundImage.Selection.fromBoolean(creativeModeTab == selectedTab));
-
-            // uff, just added a completely new system for just a better fail save for this - why? -> I don't know
-            CustomGuiGraphics customGuiGraphics = (CustomGuiGraphics) instance;
-            customGuiGraphics.moderntabs$blitSprite(tabBackgroundImage.toResourceLocation(), tabBackgroundImage.toDefaultLocation(), x, y, width, height);
+            // reset color
+            guiGraphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         } else {
-            instance.blitSprite(sprite, x, y, width, height);
+            guiGraphics.blit(atlasLocation, x, y, uOffset, vOffset, uWidth, vHeight);
         }
     }
-
-    @Override
-    @Shadow
-    protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {}
 }

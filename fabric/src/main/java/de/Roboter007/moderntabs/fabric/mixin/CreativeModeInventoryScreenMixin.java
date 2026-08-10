@@ -1,6 +1,6 @@
 package de.Roboter007.moderntabs.fabric.mixin;
 
-import de.Roboter007.moderntabs.background.config.TabIconBackgroundImage.Column;
+import de.Roboter007.moderntabs.iconBackground.config.TabIconBackgroundImage.Column;
 import de.Roboter007.moderntabs.platform.CreativeModeInventoryScreenPlatform;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
@@ -10,7 +10,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTab.Row;
 import org.spongepowered.asm.mixin.Mixin;
 
-import static de.Roboter007.moderntabs.background.config.TabIconBackgroundImage.Column.*;
+import static de.Roboter007.moderntabs.iconBackground.config.TabIconBackgroundImage.Column.*;
 
 @Mixin(CreativeModeInventoryScreen.class)
 public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingInventoryScreen<CreativeModeInventoryScreen.ItemPickerMenu> implements CreativeModeInventoryScreenPlatform {

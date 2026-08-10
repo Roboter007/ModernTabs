@@ -1,4 +1,4 @@
-package de.Roboter007.moderntabs.mixin.background;
+package de.Roboter007.moderntabs.mixin.iconBackground;
 
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.TextureAtlasHolder;

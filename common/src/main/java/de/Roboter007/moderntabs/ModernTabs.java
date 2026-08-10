@@ -1,9 +1,11 @@
 package de.Roboter007.moderntabs;
 
-import de.Roboter007.moderntabs.background.config.TabIconBackground;
+import de.Roboter007.moderntabs.iconBackground.config.ColoredTabIconBackground;
+import de.Roboter007.moderntabs.iconBackground.config.TabIconBackground;
 import de.Roboter007.moderntabs.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
 import de.Roboter007.moderntabs.titel.CustomTabTitel;
+import de.Roboter007.moderntabs.util.ModernColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import org.slf4j.Logger;
@@ -73,6 +75,23 @@ public class ModernTabs {
 
         public Builder withCustomTitelRendering(CustomTabTitel tabTitelRendererConfig) {
             this.tabExtension.moderntabs$setCustomTabTitel(tabTitelRendererConfig);
+            return this;
+        }
+
+        public Builder withCustomBackgroundColor(ModernColor backgroundColor) {
+            this.tabExtension.moderntabs$setBackgroundColor(backgroundColor);
+            return this;
+        }
+
+        public Builder withCustomColor(ModernColor color) {
+            this.tabExtension.moderntabs$setBackgroundColor(color);
+            this.tabExtension.moderntabs$setCustomTabIconBackground(new ColoredTabIconBackground(color));
+            return this;
+        }
+
+        public Builder withCustomColor(ModernColor color, String namespace, String tabIdentifier) {
+            this.tabExtension.moderntabs$setBackgroundColor(color);
+            this.tabExtension.moderntabs$setCustomTabIconBackground(new ColoredTabIconBackground(color, namespace, tabIdentifier));
             return this;
         }
 

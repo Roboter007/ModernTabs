@@ -1,8 +1,7 @@
-package de.Roboter007.moderntabs.mixin.background;
+package de.Roboter007.moderntabs.mixin.iconBackground;
 
-import de.Roboter007.moderntabs.background.CustomGuiSpriteManager;
+import de.Roboter007.moderntabs.iconBackground.CustomGuiSpriteManager;
 import net.minecraft.client.gui.GuiSpriteManager;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.TextureAtlasHolder;

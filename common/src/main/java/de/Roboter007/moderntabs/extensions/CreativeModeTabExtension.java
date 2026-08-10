@@ -1,7 +1,8 @@
 package de.Roboter007.moderntabs.extensions;
 
-import de.Roboter007.moderntabs.background.config.TabIconBackground;
+import de.Roboter007.moderntabs.iconBackground.config.TabIconBackground;
 import de.Roboter007.moderntabs.titel.CustomTabTitel;
+import de.Roboter007.moderntabs.util.ModernColor;
 import net.minecraft.resources.ResourceLocation;
 
 public interface CreativeModeTabExtension {
@@ -31,6 +32,12 @@ public interface CreativeModeTabExtension {
     void moderntabs$setCustomScroller(ResourceLocation scrollerLocation);
     default boolean moderntabs$hasCustomScroller() {
         return moderntabs$getCustomScroller() != null;
+    }
+
+    ModernColor moderntabs$getBackgroundColor();
+    void moderntabs$setBackgroundColor(ModernColor backgroundColor);
+    default boolean moderntabs$hasCustomBackgroundColor() {
+        return moderntabs$getBackgroundColor() != null;
     }
 
 }

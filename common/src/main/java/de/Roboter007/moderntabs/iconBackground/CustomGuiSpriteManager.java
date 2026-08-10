@@ -1,4 +1,4 @@
-package de.Roboter007.moderntabs.background;
+package de.Roboter007.moderntabs.iconBackground;
 
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;

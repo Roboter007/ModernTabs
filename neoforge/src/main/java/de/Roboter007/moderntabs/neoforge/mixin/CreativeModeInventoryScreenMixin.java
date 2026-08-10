@@ -1,6 +1,6 @@
 package de.Roboter007.moderntabs.neoforge.mixin;
 
-import de.Roboter007.moderntabs.background.config.TabIconBackgroundImage.Column;
+import de.Roboter007.moderntabs.iconBackground.config.TabIconBackgroundImage.Column;
 import de.Roboter007.moderntabs.platform.CreativeModeInventoryScreenPlatform;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
@@ -12,7 +12,7 @@ import net.neoforged.neoforge.client.gui.CreativeTabsScreenPage;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-import static de.Roboter007.moderntabs.background.config.TabIconBackgroundImage.Column.*;
+import static de.Roboter007.moderntabs.iconBackground.config.TabIconBackgroundImage.Column.*;
 
 @Mixin(CreativeModeInventoryScreen.class)
 public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingInventoryScreen<CreativeModeInventoryScreen.ItemPickerMenu> implements CreativeModeInventoryScreenPlatform {

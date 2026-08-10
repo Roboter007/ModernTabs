@@ -1,4 +1,4 @@
-package de.Roboter007.moderntabs.background.config;
+package de.Roboter007.moderntabs.iconBackground.config;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;

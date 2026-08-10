@@ -1,8 +1,8 @@
-package de.Roboter007.moderntabs.background.config;
+package de.Roboter007.moderntabs.iconBackground.config;
 
 import net.minecraft.world.item.CreativeModeTab.Row;
-import de.Roboter007.moderntabs.background.config.TabIconBackgroundImage.Column;
-import de.Roboter007.moderntabs.background.config.TabIconBackgroundImage.Selection;
+import de.Roboter007.moderntabs.iconBackground.config.TabIconBackgroundImage.Column;
+import de.Roboter007.moderntabs.iconBackground.config.TabIconBackgroundImage.Selection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

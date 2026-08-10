@@ -1,8 +1,9 @@
 package de.Roboter007.moderntabs.mixin;
 
-import de.Roboter007.moderntabs.background.config.TabIconBackground;
+import de.Roboter007.moderntabs.iconBackground.config.TabIconBackground;
 import de.Roboter007.moderntabs.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.titel.CustomTabTitel;
+import de.Roboter007.moderntabs.util.ModernColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,6 +22,8 @@ public class CreativeModeTabMixin implements CreativeModeTabExtension {
     public ResourceLocation moderntabs$tabIcon = null;
     @Unique
     public ResourceLocation moderntabs$scroller = null;
+    @Unique
+    public ModernColor moderntabs$backgroundColor = null;
 
 
     @Override
@@ -73,6 +76,16 @@ public class CreativeModeTabMixin implements CreativeModeTabExtension {
     @Override
     public void moderntabs$setCustomScroller(ResourceLocation scrollerLocation) {
         this.moderntabs$scroller = scrollerLocation;
+    }
+
+    @Override
+    public ModernColor moderntabs$getBackgroundColor() {
+        return moderntabs$backgroundColor;
+    }
+
+    @Override
+    public void moderntabs$setBackgroundColor(ModernColor backgroundColor) {
+        this.moderntabs$backgroundColor = backgroundColor;
     }
 
 }

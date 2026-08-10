@@ -1,4 +1,4 @@
-package de.Roboter007.moderntabs.fabric;
+package de.Roboter007.moderntabs.fabric.section;
 
 import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.section.SectionReloadListener;
