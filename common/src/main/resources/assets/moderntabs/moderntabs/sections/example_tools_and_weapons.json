@@ -2,8 +2,9 @@
   "priority": 1,
   "title": {
     "text": { "text": "Tools & Weapons" },
-    "color": "#CFF3FF"
+    "color": "#CFF3FF",
+    "orientation": "centered"
   },
   "sprite": "moderntabs:example_banner",
-  "only_animate_on_hover": false
+  "animation_mode": "play_continuously"
 }

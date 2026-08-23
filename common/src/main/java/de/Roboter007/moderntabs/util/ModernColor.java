@@ -64,27 +64,32 @@ public class ModernColor {
         return blue() / 255f;
     }
 
-    public void setAlpha(int alpha) {
+    public ModernColor withAlpha(int alpha) {
         this.argbColor = (alpha << 24) | (red() << 16) | (green() << 8) | blue();
+        return this;
     }
 
-    public void setRed(int red) {
+    public ModernColor withRed(int red) {
         this.argbColor = (alpha() << 24) | (red << 16) | (green() << 8) | blue();
+        return this;
     }
 
-    public void setGreen(int green) {
+    public ModernColor withGreen(int green) {
         this.argbColor = (alpha() << 24) | (red() << 16) | (green << 8) | blue();
+        return this;
     }
 
-    public void setBlue(int blue) {
+    public ModernColor withBlue(int blue) {
         this.argbColor = (alpha() << 24) | (red() << 16) | (green() << 8) | blue;
+        return this;
     }
 
-    public void set(int red, int green, int blue, int alpha) {
-        setRed(red);
-        setGreen(green);
-        setBlue(blue);
-        setAlpha(alpha);
+    public ModernColor with(int red, int green, int blue, int alpha) {
+        withRed(red);
+        withGreen(green);
+        withBlue(blue);
+        withAlpha(alpha);
+        return this;
     }
 
     public int color() {

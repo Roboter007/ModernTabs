@@ -1,10 +1,7 @@
 package de.Roboter007.moderntabs.mixin.titel;
 
 import de.Roboter007.moderntabs.extensions.CreativeModeTabExtension;
-import de.Roboter007.moderntabs.titel.AuraTabTitel;
-import de.Roboter007.moderntabs.titel.CustomTabTitel;
-import de.Roboter007.moderntabs.titel.SpriteTabTitel;
-import de.Roboter007.moderntabs.titel.TabTitelRenderer;
+import de.Roboter007.moderntabs.titel.*;
 import de.Roboter007.moderntabs.util.ModernColor;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -37,14 +34,21 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
         CreativeModeTabExtension creativeModeTabExtension = (CreativeModeTabExtension) selectedTab;
         if(creativeModeTabExtension.moderntabs$hasCustomTabTitelRendering()) {
             CustomTabTitel customTabTitel = creativeModeTabExtension.moderntabs$getCustomTabTitel();
-            if(customTabTitel.backgroundColor() != null) {
-                final int textWidth;
-                if(customTabTitel instanceof SpriteTabTitel spriteTabTitel) {
-                    textWidth = spriteTabTitel.width();
-                } else {
-                    textWidth = font.width(text);
-                }
 
+            final int textWidth;
+            if(customTabTitel instanceof SpriteTabTitel spriteTabTitel) {
+                textWidth = spriteTabTitel.width();
+            } else {
+                textWidth = font.width(text);
+            }
+
+            if(customTabTitel.textOrientation() == TextOrientation.CENTERED) {
+                x += (160 - textWidth) / 2;
+            } else if(customTabTitel.textOrientation() == TextOrientation.RIGHT) {
+                x += 160 - textWidth;
+            }
+
+            if(customTabTitel.backgroundColor() != null) {
                 final int height = 10;
                 guiGraphics.fill(x, y - 2, x + textWidth + 2, y + height, customTabTitel.backgroundColor().color());
                 x++;

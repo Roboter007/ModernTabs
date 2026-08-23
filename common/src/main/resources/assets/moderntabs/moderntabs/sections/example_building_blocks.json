@@ -5,5 +5,5 @@
     "color": "#FFE9B0"
   },
   "sprite": "moderntabs:example_banner",
-  "only_animate_on_hover": true
+  "animation_mode": "play_continuously"
 }

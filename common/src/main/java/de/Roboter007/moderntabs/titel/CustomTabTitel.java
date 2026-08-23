@@ -9,20 +9,30 @@ import org.jetbrains.annotations.Nullable;
 public class CustomTabTitel {
 
     private final ModernColor backgroundColor;
-
-    private final Font font;
     private final ModernColor color;
+
+    private final TextOrientation tabTextOrientation;
+    private final Font font;
     private final Boolean dropShadow;
 
-    public CustomTabTitel(@Nullable ModernColor backgroundColor, @Nullable Font font, @Nullable ModernColor color, @Nullable Boolean dropShadow) {
+    public CustomTabTitel(@Nullable TextOrientation tabTextOrientation, @Nullable ModernColor backgroundColor, @Nullable Font font, @Nullable ModernColor color, @Nullable Boolean dropShadow) {
+        this.tabTextOrientation = tabTextOrientation;
         this.backgroundColor = backgroundColor;
         this.font = font;
         this.color = color;
         this.dropShadow = dropShadow;
     }
 
-    public CustomTabTitel(@Nullable Font font, @NotNull ModernColor color, @Nullable Boolean dropShadow) {
-        this(null, font, color, dropShadow);
+    public CustomTabTitel(@Nullable ModernColor backgroundColor, @Nullable Font font, @Nullable ModernColor color, @Nullable Boolean dropShadow) {
+        this(TextOrientation.LEFT, backgroundColor, font, color, dropShadow);
+    }
+
+    public CustomTabTitel(@Nullable TextOrientation tabTextOrientation, @Nullable Font font, @NotNull ModernColor color, @Nullable Boolean dropShadow) {
+        this(tabTextOrientation, null, font, color, dropShadow);
+    }
+
+    public TextOrientation textOrientation() {
+        return tabTextOrientation;
     }
 
     public ModernColor backgroundColor() {

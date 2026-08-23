@@ -12,11 +12,15 @@ public class AuraTabTitel extends CustomTabTitel {
     private final ModernColor color2;
     private final Boolean dropShadow2;
 
-    public AuraTabTitel(@Nullable ModernColor backgroundColor, @Nullable Font font1, @Nullable Font font2, @Nullable ModernColor color1, @Nullable ModernColor color2, @Nullable Boolean dropShadow1, @Nullable Boolean dropShadow2) {
-        super(backgroundColor, font1, color1, dropShadow1);
+    public AuraTabTitel(@Nullable TextOrientation textOrientation, @Nullable ModernColor backgroundColor, @Nullable Font font1, @Nullable Font font2, @Nullable ModernColor color1, @Nullable ModernColor color2, @Nullable Boolean dropShadow1, @Nullable Boolean dropShadow2) {
+        super(textOrientation, backgroundColor, font1, color1, dropShadow1);
         this.font2 = font2;
         this.color2 = color2;
         this.dropShadow2 = dropShadow2;
+    }
+
+    public AuraTabTitel(@Nullable ModernColor backgroundColor, @Nullable Font font1, @Nullable Font font2, @Nullable ModernColor color1, @Nullable ModernColor color2, @Nullable Boolean dropShadow1, @Nullable Boolean dropShadow2) {
+        this(null, backgroundColor, font1, font2, color1, color2, dropShadow1, dropShadow2);
     }
 
     public AuraTabTitel(@Nullable ModernColor backgroundColor, @Nullable Font font1, @Nullable Font font2, @Nullable ModernColor color1, @Nullable ModernColor color2) {
@@ -35,6 +39,10 @@ public class AuraTabTitel extends CustomTabTitel {
         this(backgroundColor,null,null, color, color.darken(darknessAmount), true, false);
     }
 
+    public AuraTabTitel(@Nullable TextOrientation textOrientation, @Nullable ModernColor backgroundColor, @NotNull ModernColor color, float darknessAmount) {
+        this(textOrientation, backgroundColor,null,null, color, color.darken(darknessAmount), true, false);
+    }
+
     public AuraTabTitel(@Nullable Font font1, @Nullable Font font2, @Nullable ModernColor color1, @Nullable ModernColor color2, @Nullable Boolean dropShadow1, @Nullable Boolean dropShadow2) {
         this(null, font1, font2, color1, color2, dropShadow1, dropShadow2);
     }
@@ -51,12 +59,20 @@ public class AuraTabTitel extends CustomTabTitel {
         this(null, font1, font2, color, color.darken(darknessAmount), true, false);
     }
 
+    public AuraTabTitel(@Nullable TextOrientation textOrientation, @NotNull ModernColor color, float darknessAmount) {
+        this(textOrientation, null,null,null, color, color.darken(darknessAmount), true, false);
+    }
+
     public AuraTabTitel(@NotNull ModernColor color, float darknessAmount) {
         this(null,null,null, color, color.darken(darknessAmount), true, false);
     }
 
     public AuraTabTitel(@NotNull ModernColor color) {
         this(null,null,null, color, color.darken(0.2f), true, false);
+    }
+
+    public AuraTabTitel(@Nullable TextOrientation textOrientation, @NotNull ModernColor color) {
+        this(textOrientation, null,null,null, color, color.darken(0.2f), true, false);
     }
 
 

@@ -3,6 +3,7 @@ package de.Roboter007.moderntabs.section.client;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import de.Roboter007.moderntabs.section.BannerAnimationMode;
 import de.Roboter007.moderntabs.section.item.SectionedItems;
 import de.Roboter007.moderntabs.section.item.TabItemTransforms;
 import de.Roboter007.moderntabs.mixin.banner.AbstractContainerScreenAccessor;
@@ -10,6 +11,7 @@ import de.Roboter007.moderntabs.section.extensions.SpriteContentsExtension;
 import de.Roboter007.moderntabs.section.extensions.TickerExtension;
 import de.Roboter007.moderntabs.section.Section;
 import de.Roboter007.moderntabs.section.Sections;
+import de.Roboter007.moderntabs.titel.TextOrientation;
 import de.Roboter007.moderntabs.util.ColorUtil;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.client.Minecraft;
@@ -78,10 +80,12 @@ public final class SectionedTabRenderer {
 
             final ResourceLocation bannerTexture = section.sprite();
 
-            if (section.animateOnHover()) {
+            if (section.animationMode() == BannerAnimationMode.PLAY_ON_HOVER) {
                 final boolean isHovering = mouseX >= left + x && mouseX <= left + x + w
                         && mouseY >= top + y && mouseY <= top + y + h;
                 setPlaying(bannerTexture, isHovering);
+            } else if(section.animationMode() == BannerAnimationMode.PLAY_CONTINUOUSLY) {
+                setPlaying(bannerTexture, true);
             }
 
             graphics.blitSprite(bannerTexture, x, y, w, h);
@@ -89,12 +93,34 @@ public final class SectionedTabRenderer {
             final Component text = section.title().text();
             final int textWidth = font.width(text);
 
+            final int orientatedX;
+            final int backgroundMinX;
+            final int backgroundMaxX;
+            final int textX;
+
+            if(section.title().orientation() == TextOrientation.CENTERED) {
+                orientatedX = (w - textWidth) / 2;
+                backgroundMinX = orientatedX - 20;
+                backgroundMaxX = orientatedX + textWidth + 20;
+                textX = orientatedX;
+            } else if (section.title().orientation() == TextOrientation.RIGHT) {
+                orientatedX = w - textWidth - 4;
+                backgroundMinX = orientatedX - 2;
+                backgroundMaxX = orientatedX + textWidth + 2;
+                textX = orientatedX;
+            } else {
+                orientatedX = x;
+                backgroundMinX = orientatedX + 2;
+                backgroundMaxX = orientatedX + textWidth + 2 + 5;
+                textX = orientatedX + 4;
+            }
+
             final int background = section.title().background();
-            graphics.fill(x + 2, y + 2, x + textWidth + 8, y + h - 2, background);
+            graphics.fill(backgroundMinX, y + 2, backgroundMaxX, y + h - 2, background);
 
             final int light = section.title().color();
             final int dark = section.title().secondaryColor().orElseGet(() -> ColorUtil.darken(light, 0.2f));
-            drawAuraText(graphics, text, dark, light, x + 5, y + 5);
+            drawAuraText(graphics, text, dark, light, textX, y + 5);
         }
 
         ps.popPose();

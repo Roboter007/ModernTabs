@@ -5,6 +5,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.w3c.dom.Text;
 
 // uses a sprite as a tab titel
 public class SpriteTabTitel extends CustomTabTitel {
@@ -13,11 +14,15 @@ public class SpriteTabTitel extends CustomTabTitel {
     private final int width;
     private final int height;
 
-    public SpriteTabTitel(@Nullable ModernColor backgroundColor, @NotNull ResourceLocation spriteTitelLocation, int width, int height) {
-        super(backgroundColor, null, null, null);
+    public SpriteTabTitel(@Nullable TextOrientation textOrientation, @Nullable ModernColor backgroundColor, @NotNull ResourceLocation spriteTitelLocation, int width, int height) {
+        super(textOrientation, backgroundColor, null, null, null);
         this.spriteTitelLocation = spriteTitelLocation;
         this.width = width;
         this.height = height;
+    }
+
+    public SpriteTabTitel(@Nullable ModernColor backgroundColor, @NotNull ResourceLocation spriteTitelLocation, int width, int height) {
+        this(null, backgroundColor, spriteTitelLocation, width, height);
     }
 
     public SpriteTabTitel(@NotNull ResourceLocation spriteTitelLocation, int width, int height) {

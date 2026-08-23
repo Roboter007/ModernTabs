@@ -3,7 +3,9 @@ package de.Roboter007.moderntabs.example;
 import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
 import de.Roboter007.moderntabs.section.item.SectionedItems;
+import de.Roboter007.moderntabs.titel.AuraTabTitel;
 import de.Roboter007.moderntabs.titel.SpriteTabTitel;
+import de.Roboter007.moderntabs.titel.TextOrientation;
 import de.Roboter007.moderntabs.util.ModernColor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -54,7 +56,8 @@ public final class ExampleTab {
 
     public static void init() {
         ModernColor example_color = new ModernColor("#36454F");
-        SpriteTabTitel spriteTabTitel = new SpriteTabTitel(new ModernColor("#36454F").lighten(0.5f), ModernTabs.path("container/creative_inventory/titel"), 64, 10);
+        SpriteTabTitel spriteTabTitel = new SpriteTabTitel(TextOrientation.CENTERED, new ModernColor("#36454F").lighten(0.5f), ModernTabs.path("container/creative_inventory/titel"), 64, 10);
+        //AuraTabTitel auraTabTitel = new AuraTabTitel(TextOrientation.RIGHT, new ModernColor("#36454F").darken(0.75f), new ModernColor("#36454F"), 0.4f);
 
         BUILDING_BLOCKS.forEach(item -> SectionedItems.addItem(item, SECTION_BUILDING_BLOCKS));
         TOOLS_AND_WEAPONS.forEach(item -> SectionedItems.addItem(item, SECTION_TOOLS_AND_WEAPONS));

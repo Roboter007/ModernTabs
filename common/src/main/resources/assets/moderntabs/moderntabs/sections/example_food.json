@@ -2,8 +2,9 @@
   "priority": 2,
   "title": {
     "text": { "text": "Food" },
-    "color": "#FFD3E8"
+    "color": "#FFD3E8",
+    "orientation": "right"
   },
   "sprite": "moderntabs:example_banner",
-  "only_animate_on_hover": true
+  "animation_mode": "play_continuously"
 }
