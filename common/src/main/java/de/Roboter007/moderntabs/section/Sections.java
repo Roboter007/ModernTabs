@@ -12,6 +12,7 @@ public final class Sections {
 
     private static Map<ResourceLocation, Section> byId = Map.of();
     private static Map<Section, ResourceLocation> idsBySection = Map.of();
+
     private static List<Section> sorted = List.of();
 
     private Sections() {
@@ -29,7 +30,7 @@ public final class Sections {
         return sorted;
     }
 
-    static void reload(final Map<ResourceLocation, Section> newEntries) {
+    public static void reload(final Map<ResourceLocation, Section> newEntries) {
         final Map<ResourceLocation, Section> byIdCopy = new HashMap<>(newEntries);
         final Map<Section, ResourceLocation> idsCopy = new HashMap<>();
         newEntries.forEach((id, section) -> idsCopy.put(section, id));

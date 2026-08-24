@@ -100,19 +100,19 @@ public final class SectionedTabRenderer {
 
             if(section.title().orientation() == TextOrientation.CENTERED) {
                 orientatedX = (w - textWidth) / 2;
-                backgroundMinX = orientatedX - 20;
-                backgroundMaxX = orientatedX + textWidth + 20;
-                textX = orientatedX;
-            } else if (section.title().orientation() == TextOrientation.RIGHT) {
-                orientatedX = w - textWidth - 4;
                 backgroundMinX = orientatedX - 2;
                 backgroundMaxX = orientatedX + textWidth + 2;
                 textX = orientatedX;
+            } else if (section.title().orientation() == TextOrientation.RIGHT) {
+                orientatedX = w - textWidth;
+                backgroundMinX = orientatedX - 8;
+                backgroundMaxX = orientatedX + textWidth - 2;
+                textX = orientatedX - 5;
             } else {
                 orientatedX = x;
                 backgroundMinX = orientatedX + 2;
-                backgroundMaxX = orientatedX + textWidth + 2 + 5;
-                textX = orientatedX + 4;
+                backgroundMaxX = orientatedX + textWidth + 8;
+                textX = orientatedX + 5;
             }
 
             final int background = section.title().background();
@@ -120,6 +120,7 @@ public final class SectionedTabRenderer {
 
             final int light = section.title().color();
             final int dark = section.title().secondaryColor().orElseGet(() -> ColorUtil.darken(light, 0.2f));
+
             drawAuraText(graphics, text, dark, light, textX, y + 5);
         }
 
