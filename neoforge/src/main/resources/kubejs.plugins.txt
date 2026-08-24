@@ -1,0 +1,1 @@
+de.Roboter007.moderntabs.neoforge.kubejs.ModernTabsKubeJSPlugin moderntabs

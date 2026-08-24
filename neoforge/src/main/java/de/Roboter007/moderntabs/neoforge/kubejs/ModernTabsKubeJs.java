@@ -1,5 +1,6 @@
-package de.Roboter007.moderntabs;
+package de.Roboter007.moderntabs.neoforge.kubejs;
 
+import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.iconBackground.config.ColoredTabIconBackground;
 import de.Roboter007.moderntabs.iconBackground.config.TabIconBackground;
 import de.Roboter007.moderntabs.extensions.CreativeModeTabExtension;
@@ -12,33 +13,17 @@ import net.minecraft.world.item.CreativeModeTab;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ModernTabs {
+public class ModernTabsKubeJs {
 
-    public static final String MOD_ID = "moderntabs";
-    public static final Logger LOGGER = LoggerFactory.getLogger(ModernTabs.MOD_ID);
-    // Disabled by default
-    private static boolean exampleTab = ModernTabsPlatform.get().isDevEnvironment();
+    public ModernTabsKubeJs() {}
 
 
-    private ModernTabs() {}
-
-
-    // Example Tab -> has to be enabled to work
     public static boolean isExampleTabEnabled() {
-        return exampleTab;
+        return ModernTabs.isExampleTabEnabled();
     }
 
     public static void setExampleTabEnabled(boolean exampleTab) {
-        ModernTabs.exampleTab = exampleTab;
-    }
-
-    // Utility
-    public static ResourceLocation path(final String path) {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
-    }
-
-    public static Builder builder(CreativeModeTab creativeModeTab) {
-        return new Builder(creativeModeTab);
+        ModernTabs.setExampleTabEnabled(exampleTab);
     }
 
     public static Builder builder(String tabId) {
@@ -67,13 +52,15 @@ public class ModernTabs {
         }
 
 
-        public Builder withCustomTabIcon(ResourceLocation tabIconLocation) {
-            this.tabExtension.moderntabs$setCustomTabIcon(tabIconLocation);
+        public Builder withCustomTabIcon(String tabIconLocation) {
+            ResourceLocation resourceLocation = ResourceLocation.parse(tabIconLocation);
+            this.tabExtension.moderntabs$setCustomTabIcon(resourceLocation);
             return this;
         }
 
-        public Builder withCustomScroller(ResourceLocation tabIconLocation) {
-            this.tabExtension.moderntabs$setCustomScroller(tabIconLocation);
+        public Builder withCustomScroller(String tabIconLocation) {
+            ResourceLocation resourceLocation = ResourceLocation.parse(tabIconLocation);
+            this.tabExtension.moderntabs$setCustomScroller(resourceLocation);
             return this;
         }
 
@@ -82,20 +69,16 @@ public class ModernTabs {
             return this;
         }
 
-        public Builder withCustomBackgroundColor(ModernColor backgroundColor) {
-            this.tabExtension.moderntabs$setBackgroundColor(backgroundColor);
+        public Builder withCustomBackgroundColor(String backgroundColor) {
+            ModernColor modernColor = new ModernColor(backgroundColor);
+            this.tabExtension.moderntabs$setBackgroundColor(modernColor);
             return this;
         }
 
-        public Builder withCustomColor(ModernColor color) {
-            this.tabExtension.moderntabs$setBackgroundColor(color);
-            this.tabExtension.moderntabs$setCustomTabIconBackground(new ColoredTabIconBackground(color));
-            return this;
-        }
-
-        public Builder withCustomColor(ModernColor color, String namespace, String tabIdentifier) {
-            this.tabExtension.moderntabs$setBackgroundColor(color);
-            this.tabExtension.moderntabs$setCustomTabIconBackground(new ColoredTabIconBackground(color, namespace, tabIdentifier));
+        public Builder withCustomColor(String color) {
+            ModernColor modernColor = new ModernColor(color);
+            this.tabExtension.moderntabs$setBackgroundColor(modernColor);
+            this.tabExtension.moderntabs$setCustomTabIconBackground(new ColoredTabIconBackground(modernColor));
             return this;
         }
 
