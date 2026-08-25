@@ -2,6 +2,7 @@ package de.Roboter007.moderntabs.iconBackground.config;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
+import org.jetbrains.annotations.NotNull;
 
 public record TabIconBackgroundImage(String namespace, String tabIdentifier, CreativeModeTab.Row row, Column column, Selection selection) {
 
@@ -9,6 +10,7 @@ public record TabIconBackgroundImage(String namespace, String tabIdentifier, Cre
         this(null, null, row, column, selection);
     }
 
+    @NotNull
     public ResourceLocation toResourceLocation() {
         if (namespace != null) {
             return ResourceLocation.fromNamespaceAndPath(namespace, "container/creative_inventory/tab_" + tabIdentifier +  "_" + row.toString().toLowerCase() + "_" + column.toString().toLowerCase() + "_" + selection.toString().toLowerCase());
@@ -17,6 +19,7 @@ public record TabIconBackgroundImage(String namespace, String tabIdentifier, Cre
         }
     }
 
+    @NotNull
     public ResourceLocation toDefaultLocation() {
         return ResourceLocation.withDefaultNamespace("container/creative_inventory/tab_" + row.toString().toLowerCase() + "_" + selection.toString().toLowerCase() + "_" + column.getMcColumn());
     }

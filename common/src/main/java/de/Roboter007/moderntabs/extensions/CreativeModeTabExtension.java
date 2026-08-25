@@ -25,7 +25,7 @@ public interface CreativeModeTabExtension {
     ResourceLocation moderntabs$getCustomTabIcon();
     void moderntabs$setCustomTabIcon(ResourceLocation tabIconLocation);
     default boolean moderntabs$hasCustomTabIcon() {
-        return moderntabs$getCustomTabIconBackground() != null;
+        return moderntabs$getCustomTabIcon() != null;
     }
 
     ResourceLocation moderntabs$getCustomScroller();
