@@ -13,6 +13,7 @@ import de.Roboter007.moderntabs.section.Section;
 import de.Roboter007.moderntabs.section.Sections;
 import de.Roboter007.moderntabs.titel.TextOrientation;
 import de.Roboter007.moderntabs.util.ColorUtil;
+import de.Roboter007.moderntabs.util.ModernColor;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -27,13 +28,7 @@ import net.minecraft.world.item.ItemStack;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.IdentityHashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
 public final class SectionedTabRenderer {
@@ -61,71 +56,99 @@ public final class SectionedTabRenderer {
         ps.translate(left, top, 0);
 
         for (final Section section : Sections.sortedEntries()) {
-            final ResourceLocation id = Sections.getId(section);
-            if (!yValues.containsKey(id)) {
-                continue;
-            }
-
-            final int yValue = yValues.getInt(id);
-            final int sectionRow = yValue - CURRENT_ROW;
-            if (sectionRow < 0 || sectionRow > 4) {
-                continue;
-            }
-
-            final Font font = Minecraft.getInstance().font;
-            final int x = 0;
-            final int y = sectionRow * 18;
-            final int w = 162;
-            final int h = 18;
-
-            final ResourceLocation bannerTexture = section.sprite();
-
-            if (section.animationMode() == BannerAnimationMode.PLAY_ON_HOVER) {
-                final boolean isHovering = mouseX >= left + x && mouseX <= left + x + w
-                        && mouseY >= top + y && mouseY <= top + y + h;
-                setPlaying(bannerTexture, isHovering);
-            } else if(section.animationMode() == BannerAnimationMode.PLAY_CONTINUOUSLY) {
-                setPlaying(bannerTexture, true);
-            }
-
-            graphics.blitSprite(bannerTexture, x, y, w, h);
-
-            final Component text = section.title().text();
-            final int textWidth = font.width(text);
-
-            final int orientatedX;
-            final int backgroundMinX;
-            final int backgroundMaxX;
-            final int textX;
-
-            if(section.title().orientation() == TextOrientation.CENTERED) {
-                orientatedX = (w - textWidth) / 2;
-                backgroundMinX = orientatedX - 2;
-                backgroundMaxX = orientatedX + textWidth + 2;
-                textX = orientatedX;
-            } else if (section.title().orientation() == TextOrientation.RIGHT) {
-                orientatedX = w - textWidth;
-                backgroundMinX = orientatedX - 8;
-                backgroundMaxX = orientatedX + textWidth - 2;
-                textX = orientatedX - 5;
-            } else {
-                orientatedX = x;
-                backgroundMinX = orientatedX + 2;
-                backgroundMaxX = orientatedX + textWidth + 8;
-                textX = orientatedX + 5;
-            }
-
-            final int background = section.title().background();
-            graphics.fill(backgroundMinX, y + 2, backgroundMaxX, y + h - 2, background);
-
-            final int light = section.title().color();
-            final int dark = section.title().secondaryColor().orElseGet(() -> ColorUtil.darken(light, 0.2f));
-
-            drawAuraText(graphics, text, dark, light, textX, y + 5);
+            renderSection(section, graphics, yValues, left, top, mouseX, mouseY);
         }
 
         ps.popPose();
         RenderSystem.disableDepthTest();
+    }
+
+    public static void renderSection(Section section, GuiGraphics graphics, final Object2IntOpenHashMap<ResourceLocation> yValues, final int left, final int top, final int mouseX, final int mouseY) {
+        final ResourceLocation id = Sections.getId(section);
+        if (!yValues.containsKey(id)) {
+            return;
+        }
+
+        final int yValue = yValues.getInt(id);
+        final int sectionRow = yValue - CURRENT_ROW;
+        if (sectionRow < 0 || sectionRow > 4) {
+            return;
+        }
+
+        final int x = 0;
+        final int y = sectionRow * 18;
+        final int w = 162;
+        final int h = 18;
+
+        final boolean isHovering = mouseX >= left + x && mouseX <= left + x + w && mouseY >= top + y && mouseY <= top + y + h;
+        // render main banner sprite
+        final ResourceLocation bannerTexture = section.sprite();
+
+        if (section.animationMode() == BannerAnimationMode.PLAY_ON_HOVER) {
+            setPlaying(bannerTexture, isHovering);
+        } else if(section.animationMode() == BannerAnimationMode.PLAY_CONTINUOUSLY) {
+            setPlaying(bannerTexture, true);
+        }
+        graphics.blitSprite(bannerTexture, x, y, w, h);
+
+        // render banner overlay sprite
+        final Optional<Section.Overlay> optionalOverlay = section.overlay();
+        if(optionalOverlay.isPresent()) {
+            final Section.Overlay overlay = optionalOverlay.get();
+            ResourceLocation overlayTexture = overlay.location();
+
+            if (overlay.animationMode() == BannerAnimationMode.PLAY_ON_HOVER) {
+                setPlaying(overlayTexture, isHovering);
+            } else if(section.animationMode() == BannerAnimationMode.PLAY_CONTINUOUSLY) {
+                setPlaying(overlayTexture, true);
+            }
+
+            if(overlay.color().isPresent()) {
+                ModernColor color = new ModernColor(overlay.color().get());
+                graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
+            }
+
+            graphics.blitSprite(overlayTexture, x, y, w, h);
+
+            if(overlay.color().isPresent()) {
+                graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+            }
+        }
+
+        // render text
+        final Component text = section.title().text();
+        final Font font = Minecraft.getInstance().font;
+        final int textWidth = font.width(text);
+
+        final int orientatedX;
+        final int backgroundMinX;
+        final int backgroundMaxX;
+        final int textX;
+
+        if(section.title().orientation() == TextOrientation.CENTERED) {
+            orientatedX = (w - textWidth) / 2;
+            backgroundMinX = orientatedX - 2;
+            backgroundMaxX = orientatedX + textWidth + 2;
+            textX = orientatedX;
+        } else if (section.title().orientation() == TextOrientation.RIGHT) {
+            orientatedX = w - textWidth;
+            backgroundMinX = orientatedX - 8;
+            backgroundMaxX = orientatedX + textWidth - 2;
+            textX = orientatedX - 5;
+        } else {
+            orientatedX = x;
+            backgroundMinX = orientatedX + 2;
+            backgroundMaxX = orientatedX + textWidth + 8;
+            textX = orientatedX + 5;
+        }
+
+        final int background = section.title().background();
+        graphics.fill(backgroundMinX, y + 2, backgroundMaxX, y + h - 2, background);
+
+        final int light = section.title().color();
+        final int dark = section.title().secondaryColor().orElseGet(() -> ColorUtil.darken(light, 0.2f));
+
+        drawAuraText(graphics, text, dark, light, textX, y + 5);
     }
 
     public static void drawAuraText(final GuiGraphics graphics, final Component text, final int color1, final int color2, final int x, final int y) {
