@@ -29,63 +29,63 @@
 <p>In order for the creative tab sections to work properly, you need to create one&nbsp;<strong>JSON</strong> file for each creative tab section you want to have.<br>These json files have to be in the location: <strong>assets/mymod/moderntabs/sections/example_section.json</strong> and the defined section in your code has to match one json file in this location.</p>
 <p>Example <strong>JSON</strong> file:</p>
 <pre>{<br>&nbsp; "priority": 0,<br>&nbsp; "title": {<br>  &nbsp; "text": { "translate": "itemGroup.example_mod.basics" },<br>&nbsp; &nbsp; "color": "#FFFFFF",<br>  &nbsp; "background": "#AA000000",<br>&nbsp; },<br>  "sprite": "example_mod:basics_banner",<br>  "animation_mode": "play_on_hover"<br>}</pre>
-<table style="width: 100%; height: 531.984px;">
+<table style="width: 100%;">
 <thead>
-<tr style="height: 21px;">
-<th style="width: 16.9894%; height: 21px;">Field</th>
-<th style="width: 17.8695%; height: 21px;">Type</th>
-<th style="width: 19.5425%; height: 21px;">Default</th>
-<th style="width: 45.5986%; height: 21px;">Notes</th>
+<tr>
+<th style="width: 16.9894%;">Field</th>
+<th style="width: 17.8695%;">Type</th>
+<th style="width: 19.5425%;">Default</th>
+<th style="width: 45.5986%;">Notes</th>
 </tr>
 </thead>
 <tbody>
-<tr style="height: 44.1875px;">
-<td style="width: 16.9894%; height: 44.1875px;"><code>priority</code></td>
-<td style="width: 17.8695%; height: 44.1875px;">positive int</td>
-<td style="width: 19.5425%; height: 44.1875px;"><code>0</code></td>
-<td style="width: 45.5986%; height: 44.1875px;">Lower values are drawn first (higher up in the tab).</td>
+<tr>
+<td style="width: 16.9894%;"><code>priority</code></td>
+<td style="width: 17.8695%;">positive int</td>
+<td style="width: 19.5425%;"><code>0</code></td>
+<td style="width: 45.5986%;">Lower values are drawn first (higher up in the tab).</td>
 </tr>
-<tr style="height: 44.1875px;">
-<td style="width: 16.9894%; height: 44.1875px;"><code>title.text</code></td>
-<td style="width: 17.8695%; height: 44.1875px;">Component</td>
-<td style="width: 19.5425%; height: 44.1875px;"><em>required</em></td>
-<td style="width: 45.5986%; height: 44.1875px;">Any normal text/translatable component.</td>
+<tr>
+<td style="width: 16.9894%;"><code>title.text</code></td>
+<td style="width: 17.8695%;">Component</td>
+<td style="width: 19.5425%;"><em>required</em></td>
+<td style="width: 45.5986%;">Any normal text/translatable component.</td>
 </tr>
-<tr style="height: 70.5px;">
-<td style="width: 16.9894%; height: 70.5px;"><code>title.color</code></td>
-<td style="width: 17.8695%; height: 70.5px;"><span style="font-family: monospace;">html color code:<br><code>"#RRGGBB"</code><code>"#AARRGGBB"</code><br></span></td>
-<td style="width: 19.5425%; height: 70.5px;"><code>#FFFFFFFF</code></td>
-<td style="width: 45.5986%; height: 70.5px;">Primary text fill color.</td>
+<tr>
+<td style="width: 16.9894%;"><code>title.color</code></td>
+<td style="width: 17.8695%;"><span style="font-family: monospace;">html color code:<br><code>"#RRGGBB"</code><code>"#AARRGGBB"</code><br></span></td>
+<td style="width: 19.5425%;"><code>#FFFFFFFF</code></td>
+<td style="width: 45.5986%;">Primary text fill color.</td>
 </tr>
-<tr style="height: 70.5px;">
-<td style="width: 16.9894%; height: 70.5px;"><code>title.secondary_color</code></td>
-<td style="width: 17.8695%; height: 70.5px;"><span style="font-family: monospace;">html color code</span></td>
-<td style="width: 19.5425%; height: 70.5px;">20% darker than <code>title.color</code></td>
-<td style="width: 45.5986%; height: 70.5px;">Outline/"aura" color.</td>
+<tr>
+<td style="width: 16.9894%;"><code>title.secondary_color</code></td>
+<td style="width: 17.8695%;"><span style="font-family: monospace;">html color code</span></td>
+<td style="width: 19.5425%;">20% darker than <code>title.color</code></td>
+<td style="width: 45.5986%;">Outline/"aura" color.</td>
 </tr>
-<tr style="height: 70.5px;">
-<td style="width: 16.9894%; height: 70.5px;"><code>title.background</code></td>
-<td style="width: 17.8695%; height: 70.5px;"><code>html color code</code></td>
-<td style="width: 19.5425%; height: 70.5px;"><code>#AA000000</code></td>
-<td style="width: 45.5986%; height: 70.5px;">Background color of the pill behind the text.</td>
+<tr>
+<td style="width: 16.9894%;"><code>title.background</code></td>
+<td style="width: 17.8695%;"><code>html color code</code></td>
+<td style="width: 19.5425%;"><code>#AA000000</code></td>
+<td style="width: 45.5986%;">Background color of the pill behind the text.</td>
 </tr>
-<tr style="height: 72.125px;">
-<td style="width: 16.9894%; height: 72.125px;"><code>title.orientation</code></td>
-<td style="width: 17.8695%; height: 72.125px;">TextOrientation</td>
-<td style="width: 19.5425%; height: 72.125px;">left</td>
-<td style="width: 45.5986%; height: 72.125px;">Defines if the text gets placed left, centered or right on the banner</td>
+<tr>
+<td style="width: 16.9894%;"><code>title.orientation</code></td>
+<td style="width: 17.8695%;">TextOrientation</td>
+<td style="width: 19.5425%;">left</td>
+<td style="width: 45.5986%;">Defines if the text gets placed left, centered or right on the banner</td>
 </tr>
-<tr style="height: 70.5px;">
-<td style="width: 16.9894%; height: 70.5px;"><code>sprite</code></td>
-<td style="width: 17.8695%; height: 70.5px;">sprite ID as a string</td>
-<td style="width: 19.5425%; height: 70.5px;"><code>moderntabs:default_banner</code></td>
-<td style="width: 45.5986%; height: 70.5px;">A texture under <code>textures/gui/sprites/</code>, 162&times;18 px per animation frame.</td>
+<tr>
+<td style="width: 16.9894%;"><code>sprite</code></td>
+<td style="width: 17.8695%;">sprite ID as a string</td>
+<td style="width: 19.5425%;"><code>moderntabs:default_banner</code></td>
+<td style="width: 45.5986%;">A texture under <code>textures/gui/sprites/</code>, 162&times;18 px per animation frame.</td>
 </tr>
-<tr style="height: 68.4844px;">
-<td style="width: 16.9894%; height: 68.4844px;"><code>animation_mode</code></td>
-<td style="width: 17.8695%; height: 68.4844px;">BannerAnimationMode</td>
-<td style="width: 19.5425%; height: 68.4844px;"><span style="font-family: monospace;">not_animated</span></td>
-<td style="width: 45.5986%; height: 68.4844px;">Defines how the banner animation gets treated. Possible inputs are: not_animated, play_on_hover, play_continuously</td>
+<tr>
+<td style="width: 16.9894%;"><code>animation_mode</code></td>
+<td style="width: 17.8695%;">BannerAnimationMode</td>
+<td style="width: 19.5425%;"><span style="font-family: monospace;">not_animated</span></td>
+<td style="width: 45.5986%;">Defines how the banner animation gets treated. Possible inputs are: not_animated, play_on_hover, play_continuously</td>
 </tr>
 </tbody>
 </table>
@@ -96,7 +96,7 @@
 <hr>
 <div class="spoiler">
 <h2><span style="text-decoration: underline;">How to use ModernTabs in your own mod (Setup):</span></h2>
-<p>At first, download the latest <a title="KubeJs" href="https://modrinth.com/mod/kubejs/versions" target="_blank" rel="noopener">KubeJs</a> and <a title="ModernTabs" href="https://modrinth.com/mod/moderntabs/versions" target="_blank" rel="noopener">ModernTabs</a> version.</p>
+<p>At first, download the latest <a href="https://modrinth.com/mod/kubejs/versions" target="_blank" rel="nofollow noopener">KubeJs</a> and <a href="https://modrinth.com/mod/moderntabs/versions" target="_blank" rel="nofollow noopener">ModernTabs</a> version.</p>
 <p>&nbsp;</p>
 <h2><span style="text-decoration: underline;">What you need to do in order to correctly customize the creative tabs you want to modify:</span></h2>
 <div>&nbsp;You can simply create a new JavaScript/js file in the startup_scripts folder. This code can be used as an orientation:</div>
@@ -107,68 +107,68 @@
 <p>In order for the creative tab sections to work properly, you need to create one&nbsp;<strong>JSON</strong> file for each creative tab section you want to have.<br>These json files have to be in the location: <strong>assets/mymod/moderntabs/sections/example_section.json</strong> and the defined section in your code has to match one json file in this location.</p>
 <p>Example <strong>JSON</strong> file:</p>
 <pre>{<br>&nbsp; "priority": 0,<br>&nbsp; "title": {<br>  &nbsp; "text": { "translate": "itemGroup.example_mod.basics" },<br>&nbsp; &nbsp; "color": "#FFFFFF",<br>  &nbsp; "background": "#AA000000",<br>&nbsp; },<br>  "sprite": "example_mod:basics_banner",<br>  "animation_mode": "play_on_hover"<br>}</pre>
-<table style="width: 100%; height: 531.984px;">
+<table style="width: 100%;">
 <thead>
-<tr style="height: 21px;">
-<th style="width: 16.9894%; height: 21px;">Field</th>
-<th style="width: 17.8695%; height: 21px;">Type</th>
-<th style="width: 19.5425%; height: 21px;">Default</th>
-<th style="width: 45.5986%; height: 21px;">Notes</th>
+<tr>
+<th style="width: 16.9894%;">Field</th>
+<th style="width: 17.8695%;">Type</th>
+<th style="width: 19.5425%;">Default</th>
+<th style="width: 45.5986%;">Notes</th>
 </tr>
 </thead>
 <tbody>
-<tr style="height: 44.1875px;">
-<td style="width: 16.9894%; height: 44.1875px;"><code>priority</code></td>
-<td style="width: 17.8695%; height: 44.1875px;">positive int</td>
-<td style="width: 19.5425%; height: 44.1875px;"><code>0</code></td>
-<td style="width: 45.5986%; height: 44.1875px;">Lower values are drawn first (higher up in the tab).</td>
+<tr>
+<td style="width: 16.9894%;"><code>priority</code></td>
+<td style="width: 17.8695%;">positive int</td>
+<td style="width: 19.5425%;"><code>0</code></td>
+<td style="width: 45.5986%;">Lower values are drawn first (higher up in the tab).</td>
 </tr>
-<tr style="height: 44.1875px;">
-<td style="width: 16.9894%; height: 44.1875px;"><code>title.text</code></td>
-<td style="width: 17.8695%; height: 44.1875px;">Component</td>
-<td style="width: 19.5425%; height: 44.1875px;"><em>required</em></td>
-<td style="width: 45.5986%; height: 44.1875px;">Any normal text/translatable component.</td>
+<tr>
+<td style="width: 16.9894%;"><code>title.text</code></td>
+<td style="width: 17.8695%;">Component</td>
+<td style="width: 19.5425%;"><em>required</em></td>
+<td style="width: 45.5986%;">Any normal text/translatable component.</td>
 </tr>
-<tr style="height: 70.5px;">
-<td style="width: 16.9894%; height: 70.5px;"><code>title.color</code></td>
-<td style="width: 17.8695%; height: 70.5px;"><span style="font-family: monospace;">html color code:<br><code>"#RRGGBB"</code><code>"#AARRGGBB"</code><br></span></td>
-<td style="width: 19.5425%; height: 70.5px;"><code>#FFFFFFFF</code></td>
-<td style="width: 45.5986%; height: 70.5px;">Primary text fill color.</td>
+<tr>
+<td style="width: 16.9894%;"><code>title.color</code></td>
+<td style="width: 17.8695%;"><span style="font-family: monospace;">html color code:<br><code>"#RRGGBB"</code><code>"#AARRGGBB"</code><br></span></td>
+<td style="width: 19.5425%;"><code>#FFFFFFFF</code></td>
+<td style="width: 45.5986%;">Primary text fill color.</td>
 </tr>
-<tr style="height: 70.5px;">
-<td style="width: 16.9894%; height: 70.5px;"><code>title.secondary_color</code></td>
-<td style="width: 17.8695%; height: 70.5px;"><span style="font-family: monospace;">html color code</span></td>
-<td style="width: 19.5425%; height: 70.5px;">20% darker than <code>title.color</code></td>
-<td style="width: 45.5986%; height: 70.5px;">Outline/"aura" color.</td>
+<tr>
+<td style="width: 16.9894%;"><code>title.secondary_color</code></td>
+<td style="width: 17.8695%;"><span style="font-family: monospace;">html color code</span></td>
+<td style="width: 19.5425%;">20% darker than <code>title.color</code></td>
+<td style="width: 45.5986%;">Outline/"aura" color.</td>
 </tr>
-<tr style="height: 70.5px;">
-<td style="width: 16.9894%; height: 70.5px;"><code>title.background</code></td>
-<td style="width: 17.8695%; height: 70.5px;"><code>html color code</code></td>
-<td style="width: 19.5425%; height: 70.5px;"><code>#AA000000</code></td>
-<td style="width: 45.5986%; height: 70.5px;">Background color of the pill behind the text.</td>
+<tr>
+<td style="width: 16.9894%;"><code>title.background</code></td>
+<td style="width: 17.8695%;"><code>html color code</code></td>
+<td style="width: 19.5425%;"><code>#AA000000</code></td>
+<td style="width: 45.5986%;">Background color of the pill behind the text.</td>
 </tr>
-<tr style="height: 72.125px;">
-<td style="width: 16.9894%; height: 72.125px;"><code>title.orientation</code></td>
-<td style="width: 17.8695%; height: 72.125px;">TextOrientation</td>
-<td style="width: 19.5425%; height: 72.125px;">left</td>
-<td style="width: 45.5986%; height: 72.125px;">Defines if the text gets placed left, centered or right on the banner</td>
+<tr>
+<td style="width: 16.9894%;"><code>title.orientation</code></td>
+<td style="width: 17.8695%;">TextOrientation</td>
+<td style="width: 19.5425%;">left</td>
+<td style="width: 45.5986%;">Defines if the text gets placed left, centered or right on the banner</td>
 </tr>
-<tr style="height: 70.5px;">
-<td style="width: 16.9894%; height: 70.5px;"><code>sprite</code></td>
-<td style="width: 17.8695%; height: 70.5px;">sprite ID as a string</td>
-<td style="width: 19.5425%; height: 70.5px;"><code>moderntabs:default_banner</code></td>
-<td style="width: 45.5986%; height: 70.5px;">A texture under <code>textures/gui/sprites/</code>, 162&times;18 px per animation frame.</td>
+<tr>
+<td style="width: 16.9894%;"><code>sprite</code></td>
+<td style="width: 17.8695%;">sprite ID as a string</td>
+<td style="width: 19.5425%;"><code>moderntabs:default_banner</code></td>
+<td style="width: 45.5986%;">A texture under <code>textures/gui/sprites/</code>, 162&times;18 px per animation frame.</td>
 </tr>
-<tr style="height: 68.4844px;">
-<td style="width: 16.9894%; height: 68.4844px;"><code>animation_mode</code></td>
-<td style="width: 17.8695%; height: 68.4844px;">BannerAnimationMode</td>
-<td style="width: 19.5425%; height: 68.4844px;"><span style="font-family: monospace;">not_animated</span></td>
-<td style="width: 45.5986%; height: 68.4844px;">Defines how the banner animation gets treated. Possible inputs are: not_animated, play_on_hover, play_continuously</td>
+<tr>
+<td style="width: 16.9894%;"><code>animation_mode</code></td>
+<td style="width: 17.8695%;">BannerAnimationMode</td>
+<td style="width: 19.5425%;"><span style="font-family: monospace;">not_animated</span></td>
+<td style="width: 45.5986%;">Defines how the banner animation gets treated. Possible inputs are: not_animated, play_on_hover, play_continuously</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p><span style="text-decoration: underline;">&nbsp;</span></p>
+<p>&nbsp;</p>
 <hr>
 <h1><strong>FAQ</strong></h1>
 <hr>
