@@ -13,6 +13,8 @@ import net.minecraft.world.item.CreativeModeTab;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static de.Roboter007.moderntabs.ModernTabs.MOD_ID;
+
 //ToDo: Crafter Tweaker support
 public class ModernTabsKubeJs {
 
@@ -29,6 +31,11 @@ public class ModernTabsKubeJs {
 
     public static Builder builder(String tabId) {
         return new Builder(BuiltInRegistries.CREATIVE_MODE_TAB.get(ResourceLocation.parse(tabId)));
+    }
+
+    // Utility
+    public static ResourceLocation path(final String path) {
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
     }
 
     public static class Builder {
