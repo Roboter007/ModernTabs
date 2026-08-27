@@ -2,6 +2,7 @@
 <h1 style="text-align: left;"><strong>What is ModernTabs?</strong></h1>
 <hr>
 <p>It is a library mod that adds a <strong>cross-platform</strong> solution for <strong>customzing any creative tab</strong> even further than what is currently possible on both NeoForge and Fabric.<br>ModernTabs makes it possible to add individual <strong>sections</strong> with an assigned<strong> banner</strong>, change the <strong>scrollbar</strong> sprite and <strong>modify the background sprite</strong> for the creative tab icon. Furthermore, you can use <strong>any sprite as a creative tab icon</strong> without it having to be registered as an item in game.&nbsp;<br>ModernTabs also makes it possible to <strong>change the background</strong>,<strong> icon background</strong> and <strong>scroller texture</strong> just by <strong>defining the color</strong> you want without any texture sprite required.<br><br>The idea for the creative tab banners comes from the <a href="https://www.curseforge.com/minecraft/mc-mods/create-aeronautics" target="_blank" rel="nofollow noopener">Create Aeronautics/Simulated</a> mod and therefore includes little portions of its code.</p>
+<p>There is also a KubeJs integration since version v1.5.0 for Modpack devolopers. If you want to see more regarding how to implement specific things via KubeJs, scroll down a little under the <strong>For Modpack Developers</strong> section.</p>
 <p>&nbsp;</p>
 <hr>
 <h1><strong>Example Creative Tab</strong></h1>
