@@ -6,8 +6,7 @@
   },
   "sprite": "moderntabs:example_banner",
   "overlay": {
-    "sprite": "moderntabs:overlay/default_banner_overlay",
-    "color": "#36454F"
+    "sprite": "moderntabs:overlay/default_banner_overlay"
   },
   "animation_mode": "play_continuously"
 }
