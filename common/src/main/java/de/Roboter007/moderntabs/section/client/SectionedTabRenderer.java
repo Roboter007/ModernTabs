@@ -3,6 +3,7 @@ package de.Roboter007.moderntabs.section.client;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import de.Roboter007.moderntabs.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.section.BannerAnimationMode;
 import de.Roboter007.moderntabs.section.item.SectionedItems;
 import de.Roboter007.moderntabs.section.item.TabItemTransforms;
@@ -56,14 +57,15 @@ public final class SectionedTabRenderer {
         ps.translate(left, top, 0);
 
         for (final Section section : Sections.sortedEntries()) {
-            renderSection(section, graphics, yValues, left, top, mouseX, mouseY);
+            renderSection(tab, section, graphics, yValues, left, top, mouseX, mouseY);
         }
 
         ps.popPose();
         RenderSystem.disableDepthTest();
     }
 
-    public static void renderSection(Section section, GuiGraphics graphics, final Object2IntOpenHashMap<ResourceLocation> yValues, final int left, final int top, final int mouseX, final int mouseY) {
+    public static void renderSection(final CreativeModeTab tab, Section section, GuiGraphics graphics, final Object2IntOpenHashMap<ResourceLocation> yValues, final int left, final int top, final int mouseX, final int mouseY) {
+        CreativeModeTabExtension extension = (CreativeModeTabExtension) tab;
         final ResourceLocation id = Sections.getId(section);
         if (!yValues.containsKey(id)) {
             return;
@@ -106,11 +108,16 @@ public final class SectionedTabRenderer {
             if(overlay.color().isPresent()) {
                 ModernColor color = new ModernColor(overlay.color().get());
                 graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
+            } else if (extension.moderntabs$hasCustomBackgroundColor()) {
+                ModernColor color = extension.moderntabs$getBackgroundColor();
+                graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
             }
 
             graphics.blitSprite(overlayTexture, x, y, w, h);
 
             if(overlay.color().isPresent()) {
+                graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+            } else if (extension.moderntabs$hasCustomBackgroundColor()) {
                 graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
             }
         }
