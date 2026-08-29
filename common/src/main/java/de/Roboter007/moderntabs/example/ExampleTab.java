@@ -3,7 +3,6 @@ package de.Roboter007.moderntabs.example;
 import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
 import de.Roboter007.moderntabs.section.item.SectionedItems;
-import de.Roboter007.moderntabs.titel.AuraTabTitel;
 import de.Roboter007.moderntabs.titel.SpriteTabTitel;
 import de.Roboter007.moderntabs.titel.TextOrientation;
 import de.Roboter007.moderntabs.util.ModernColor;
@@ -59,14 +58,16 @@ public final class ExampleTab {
         SpriteTabTitel spriteTabTitel = new SpriteTabTitel(TextOrientation.CENTERED, new ModernColor("#36454F").lighten(0.5f), ModernTabs.path("container/creative_inventory/titel"), 64, 10);
         //AuraTabTitel auraTabTitel = new AuraTabTitel(TextOrientation.RIGHT, new ModernColor("#36454F").darken(0.75f), new ModernColor("#36454F"), 0.4f);
 
-        BUILDING_BLOCKS.forEach(item -> SectionedItems.addItem(item, SECTION_BUILDING_BLOCKS));
-        TOOLS_AND_WEAPONS.forEach(item -> SectionedItems.addItem(item, SECTION_TOOLS_AND_WEAPONS));
-        FOOD.forEach(item -> SectionedItems.addItem(item, SECTION_FOOD));
+        SectionedItems.addItemList(SECTION_BUILDING_BLOCKS, BUILDING_BLOCKS);
+        SectionedItems.addItemList(SECTION_TOOLS_AND_WEAPONS, TOOLS_AND_WEAPONS);
+        SectionedItems.addItemList(SECTION_FOOD, FOOD);
 
-        ModernTabs.builder(TAB)
-                .withEnabledSections(true)
-                .withCustomTabIcon(ModernTabs.path("container/creative_inventory/icon"))
-                .withCustomColor(new ModernColor("#36454F"))
-                .withCustomTitelRendering(spriteTabTitel);
+        ModernTabs.TabDesign tabDesign = new ModernTabs.TabDesign()
+                .sectionsEnabled(true)
+                .tabIconLocation(ModernTabs.path("container/creative_inventory/icon"))
+                .color(example_color)
+                .customTabTitel(spriteTabTitel);
+
+        ModernTabs.configureTab(TAB, tabDesign);
     }
 }

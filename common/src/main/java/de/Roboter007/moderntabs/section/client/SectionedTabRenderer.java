@@ -36,13 +36,13 @@ public final class SectionedTabRenderer {
 
     public static int CURRENT_ROW = 0;
 
-    private static final Map<CreativeModeTab, Object2IntOpenHashMap<ResourceLocation>> SECTION_Y_VALUES = new IdentityHashMap<>();
+    private static final Map<CreativeModeTab, Object2IntOpenHashMap<ResourceLocation>> SECTIONS = new IdentityHashMap<>();
 
     private SectionedTabRenderer() {
     }
 
     public static void renderBanners(final CreativeModeTab tab, final CreativeModeInventoryScreen screen, final GuiGraphics graphics, final int mouseX, final int mouseY) {
-        final Object2IntOpenHashMap<ResourceLocation> yValues = SECTION_Y_VALUES.get(tab);
+        final Object2IntOpenHashMap<ResourceLocation> yValues = SECTIONS.get(tab);
         if (yValues == null || yValues.isEmpty()) {
             return;
         }
@@ -192,7 +192,7 @@ public final class SectionedTabRenderer {
     public static void processItems(final CreativeModeTab tab, final Collection<ItemStack> originalDisplayItems,
                                      final Consumer<ItemStack> displayItems, final Consumer<ItemStack> searchItems) {
         final Object2IntOpenHashMap<ResourceLocation> yValues = new Object2IntOpenHashMap<>();
-        SECTION_Y_VALUES.put(tab, yValues);
+        SECTIONS.put(tab, yValues);
 
         final Map<Section, List<ItemStack>> sectionMap = new LinkedHashMap<>();
         final List<ItemStack> unassigned = new ArrayList<>();

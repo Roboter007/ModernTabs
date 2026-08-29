@@ -6,9 +6,11 @@ import de.Roboter007.moderntabs.neoforge.platform.NeoForgePlatform;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.CreativeModeTab;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
@@ -23,6 +25,9 @@ public final class ModernTabsNeoForge {
 
     public ModernTabsNeoForge(final IEventBus modEventBus, final ModContainer modContainer) {
         ModernTabsPlatform.init(new NeoForgePlatform());
+        modEventBus.addListener(EventPriority.LOWEST, (FMLLoadCompleteEvent event) -> {
+            ModernTabs.applyTabDesign();
+        });
         if(ModernTabs.isExampleTabEnabled()) {
             DeferredRegister<CreativeModeTab> EXAMPLE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ModernTabs.MOD_ID);
             EXAMPLE_TABS.register("example_tab", () -> ExampleTab.TAB);

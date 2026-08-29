@@ -4,7 +4,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
 
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class SectionedItems {
@@ -14,9 +14,49 @@ public final class SectionedItems {
     private SectionedItems() {
     }
 
-    public static void addItem(final ItemLike item, final ResourceLocation sectionId) {
-        ITEM_TO_SECTION.put(BuiltInRegistries.ITEM.getKey(item.asItem()), sectionId);
+    public static void addItem(ResourceLocation sectionLocation, ItemLike item) {
+        ITEM_TO_SECTION.put(BuiltInRegistries.ITEM.getKey(item.asItem()), sectionLocation);
     }
+
+    public static void addItem(String sectionId, ItemLike item) {
+        ITEM_TO_SECTION.put(BuiltInRegistries.ITEM.getKey(item.asItem()), ResourceLocation.parse(sectionId));
+    }
+
+    public static void addItemById(String sectionId, String itemId) {
+        ITEM_TO_SECTION.put(ResourceLocation.parse(itemId), ResourceLocation.parse(sectionId));
+    }
+
+    public static void addItems(String sectionId, String... itemIds) {
+        for(String itemId : itemIds) {
+            addItemById(sectionId, itemId);
+        }
+    }
+
+    public static void addItems(String sectionId, ItemLike... items) {
+        for(ItemLike item : items) {
+            addItem(sectionId, item);
+        }
+    }
+
+    public static void addItemListById(String sectionId, List<String> itemIds) {
+        for(String itemId : itemIds) {
+            addItemById(sectionId, itemId);
+        }
+    }
+
+    public static void addItemList(String sectionId, List<ItemLike> items) {
+        for(ItemLike item : items) {
+            addItem(sectionId, item);
+        }
+    }
+
+    public static <I extends ItemLike> void addItemList(ResourceLocation sectionLocation, List<I> items) {
+        for(ItemLike item : items) {
+            addItem(sectionLocation, item);
+        }
+    }
+
+
 
     public static ResourceLocation sectionOf(final ItemLike item) {
         return ITEM_TO_SECTION.get(BuiltInRegistries.ITEM.getKey(item.asItem()));
