@@ -52,6 +52,7 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
                 final int height = 10;
                 guiGraphics.fill(x, y - 2, x + textWidth + 2, y + height, customTabTitel.backgroundColor().color());
                 x++;
+                y--;
             }
 
             Font titelFont = font;

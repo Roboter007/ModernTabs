@@ -14,16 +14,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
-public record Section(int priority, Title title, ResourceLocation sprite, Optional<Overlay> overlay, BannerAnimationMode animationMode) implements Comparable<Section> {
-
-    private static final ResourceLocation DEFAULT_BANNER = ModernTabs.path("default_banner");
+public record Section(int priority, Title title, Banner banner, Optional<Overlay> overlay) implements Comparable<Section> {
 
     public static final Codec<Section> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ExtraCodecs.POSITIVE_INT.fieldOf("priority").orElse(0).forGetter(Section::priority),
             Title.CODEC.fieldOf("title").forGetter(Section::title),
-            ResourceLocation.CODEC.fieldOf("sprite").orElse(DEFAULT_BANNER).forGetter(Section::sprite),
-            Overlay.CODEC.optionalFieldOf("overlay").forGetter(Section::overlay),
-            StringRepresentable.fromEnum(BannerAnimationMode::values).fieldOf("animation_mode").orElse(BannerAnimationMode.NOT_ANIMATED).forGetter(Section::animationMode)
+            Banner.CODEC.fieldOf("banner").forGetter(Section::banner),
+            Overlay.CODEC.optionalFieldOf("overlay").forGetter(Section::overlay)
     ).apply(instance, Section::new));
 
     @Override
@@ -41,13 +38,29 @@ public record Section(int priority, Title title, ResourceLocation sprite, Option
         ).apply(instance, Title::new));
     }
 
-    public record Overlay(ResourceLocation location, Optional<Integer> color, BannerAnimationMode animationMode) {
+    public record Overlay(ResourceLocation sprite, BannerAnimationMode animationMode, Optional<Integer> color) implements Decoration {
         private static final ResourceLocation DEFAULT_OVERLAY = ModernTabs.path("overlay/default_banner_overlay");
 
         public static final Codec<Overlay> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                ResourceLocation.CODEC.fieldOf("sprite").orElse(DEFAULT_OVERLAY).forGetter(Overlay::location),
-                ColorUtil.ARGB_CODEC.optionalFieldOf("color").orElse(Optional.of(0xFFFFFFFF)).forGetter(Overlay::color),
-                StringRepresentable.fromEnum(BannerAnimationMode::values).fieldOf("animation_mode").orElse(BannerAnimationMode.NOT_ANIMATED).forGetter(Overlay::animationMode)
-        ).apply(instance, Overlay::new));
+                ResourceLocation.CODEC.fieldOf("sprite").orElse(DEFAULT_OVERLAY).forGetter(Overlay::sprite),
+                StringRepresentable.fromEnum(BannerAnimationMode::values).fieldOf("animation_mode").orElse(BannerAnimationMode.NOT_ANIMATED).forGetter(Overlay::animationMode),
+                ColorUtil.ARGB_CODEC.optionalFieldOf("color").orElse(Optional.of(0xFFFFFFFF)).forGetter(Overlay::color)
+                ).apply(instance, Overlay::new));
+    }
+
+    public record Banner(ResourceLocation sprite, BannerAnimationMode animationMode, Optional<Integer> color) implements Decoration {
+        private static final ResourceLocation MISSING_BANNER = ModernTabs.path("default_banner");
+
+        public static final Codec<Banner> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                ResourceLocation.CODEC.fieldOf("sprite").orElse(MISSING_BANNER).forGetter(Banner::sprite),
+                StringRepresentable.fromEnum(BannerAnimationMode::values).fieldOf("animation_mode").orElse(BannerAnimationMode.NOT_ANIMATED).forGetter(Banner::animationMode),
+                ColorUtil.ARGB_CODEC.optionalFieldOf("color").orElse(Optional.of(0xFFFFFFFF)).forGetter(Banner::color)
+        ).apply(instance, Banner::new));
+    }
+
+    public interface Decoration {
+        ResourceLocation sprite();
+        BannerAnimationMode animationMode();
+        Optional<Integer> color();
     }
 }

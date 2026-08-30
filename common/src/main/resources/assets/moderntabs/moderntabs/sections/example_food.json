@@ -2,9 +2,16 @@
   "priority": 2,
   "title": {
     "text": { "text": "Food" },
-    "color": "#FFD3E8",
+    "color": "#FFE9B0",
+    "secondaryColor": "#FFC1B0",
     "orientation": "right"
   },
-  "sprite": "moderntabs:example_banner",
-  "animation_mode": "play_continuously"
+  "banner": {
+    "sprite": "moderntabs:colored_banner",
+    "animation_mode": "not_animated",
+    "color": "#EEFFB0"
+  },
+  "overlay": {
+    "sprite": "moderntabs:overlay/default_banner_overlay"
+  }
 }

@@ -95,4 +95,8 @@ public class ModernColor {
     public int color() {
         return argbColor;
     }
+
+    public ModernColor copy() {
+        return new ModernColor(this.argbColor);
+    }
 }

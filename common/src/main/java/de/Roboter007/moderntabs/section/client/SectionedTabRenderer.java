@@ -83,43 +83,13 @@ public final class SectionedTabRenderer {
         final int h = 18;
 
         final boolean isHovering = mouseX >= left + x && mouseX <= left + x + w && mouseY >= top + y && mouseY <= top + y + h;
-        // render main banner sprite
-        final ResourceLocation bannerTexture = section.sprite();
 
-        if (section.animationMode() == BannerAnimationMode.PLAY_ON_HOVER) {
-            setPlaying(bannerTexture, isHovering);
-        } else if(section.animationMode() == BannerAnimationMode.PLAY_CONTINUOUSLY) {
-            setPlaying(bannerTexture, true);
-        }
-        graphics.blitSprite(bannerTexture, x, y, w, h);
+        // render main banner sprite
+        renderSectionDecoration(extension, graphics, isHovering, section.banner(), x, y, w, h);
 
         // render banner overlay sprite
-        final Optional<Section.Overlay> optionalOverlay = section.overlay();
-        if(optionalOverlay.isPresent()) {
-            final Section.Overlay overlay = optionalOverlay.get();
-            ResourceLocation overlayTexture = overlay.location();
-
-            if (overlay.animationMode() == BannerAnimationMode.PLAY_ON_HOVER) {
-                setPlaying(overlayTexture, isHovering);
-            } else if(section.animationMode() == BannerAnimationMode.PLAY_CONTINUOUSLY) {
-                setPlaying(overlayTexture, true);
-            }
-
-            if(overlay.color().isPresent()) {
-                ModernColor color = new ModernColor(overlay.color().get());
-                graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
-            } else if (extension.moderntabs$hasCustomBackgroundColor()) {
-                ModernColor color = extension.moderntabs$getBackgroundColor();
-                graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
-            }
-
-            graphics.blitSprite(overlayTexture, x, y, w, h);
-
-            if(overlay.color().isPresent()) {
-                graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-            } else if (extension.moderntabs$hasCustomBackgroundColor()) {
-                graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-            }
+        if(section.overlay().isPresent()) {
+            renderSectionDecoration(extension, graphics, isHovering, section.overlay().get(), x, y, w, h);
         }
 
         // render text
@@ -156,6 +126,32 @@ public final class SectionedTabRenderer {
         final int dark = section.title().secondaryColor().orElseGet(() -> ColorUtil.darken(light, 0.2f));
 
         drawAuraText(graphics, text, dark, light, textX, y + 5);
+    }
+
+    public static void renderSectionDecoration(CreativeModeTabExtension extension, GuiGraphics graphics, boolean isHovering, Section.Decoration decoration, int x, int y, int w, int h) {
+        ResourceLocation bannerSprite = decoration.sprite();
+
+        if (decoration.animationMode() == BannerAnimationMode.PLAY_ON_HOVER) {
+            setPlaying(bannerSprite, isHovering);
+        } else if (decoration.animationMode() == BannerAnimationMode.PLAY_CONTINUOUSLY) {
+            setPlaying(bannerSprite, true);
+        }
+
+        if (decoration.color().isPresent()) {
+            ModernColor color = new ModernColor(decoration.color().get());
+            graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
+        } else if (extension.moderntabs$hasCustomBackgroundColor()) {
+            ModernColor color = extension.moderntabs$getBackgroundColor();
+            graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
+        }
+
+        graphics.blitSprite(bannerSprite, x, y, w, h);
+
+        if (decoration.color().isPresent()) {
+            graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        } else if (extension.moderntabs$hasCustomBackgroundColor()) {
+            graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        }
     }
 
     public static void drawAuraText(final GuiGraphics graphics, final Component text, final int color1, final int color2, final int x, final int y) {

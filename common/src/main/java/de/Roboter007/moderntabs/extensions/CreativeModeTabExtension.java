@@ -4,8 +4,14 @@ import de.Roboter007.moderntabs.iconBackground.config.TabIconBackground;
 import de.Roboter007.moderntabs.titel.CustomTabTitel;
 import de.Roboter007.moderntabs.util.ModernColor;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public interface CreativeModeTabExtension {
+
+    void modernTabs$addItem(ItemStack stack, boolean searchable);
 
     void moderntabs$setSectionsEnabled(boolean sectionsEnabled);
     boolean moderntabs$hasCustomSections();

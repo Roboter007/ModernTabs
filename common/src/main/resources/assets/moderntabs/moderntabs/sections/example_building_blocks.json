@@ -2,11 +2,15 @@
   "priority": 0,
   "title": {
     "text": { "text": "Building Blocks" },
-    "color": "#FFE9B0"
+    "color": "#D1FFD3",
+    "secondaryColor": "#E6FFD1"
   },
-  "sprite": "moderntabs:example_banner",
+  "banner": {
+    "sprite": "moderntabs:animated_example_banner",
+    "animation_mode": "not_animated",
+    "color": "#D1FFEA"
+  },
   "overlay": {
     "sprite": "moderntabs:overlay/default_banner_overlay"
-  },
-  "animation_mode": "play_continuously"
+  }
 }

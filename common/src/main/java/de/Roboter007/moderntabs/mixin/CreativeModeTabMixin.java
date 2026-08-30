@@ -6,12 +6,22 @@ import de.Roboter007.moderntabs.titel.CustomTabTitel;
 import de.Roboter007.moderntabs.util.ModernColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @Mixin(CreativeModeTab.class)
 public class CreativeModeTabMixin implements CreativeModeTabExtension {
 
+    @Shadow
+    private Collection<ItemStack> displayItems;
+    @Shadow
+    private Set<ItemStack> displayItemsSearchTab;
     @Unique
     public boolean moderntabs$sectionsEnabled = false;
     @Unique
@@ -25,6 +35,14 @@ public class CreativeModeTabMixin implements CreativeModeTabExtension {
     @Unique
     public ModernColor moderntabs$backgroundColor = null;
 
+
+    @Override
+    public void modernTabs$addItem(ItemStack stack, boolean searchable) {
+        this.displayItems.add(stack);
+        if(searchable) {
+            this.displayItemsSearchTab.add(stack);
+        }
+    }
 
     @Override
     public void moderntabs$setSectionsEnabled(boolean sectionsEnabled) {

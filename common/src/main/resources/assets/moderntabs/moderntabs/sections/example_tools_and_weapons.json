@@ -3,8 +3,15 @@
   "title": {
     "text": { "text": "Tools & Weapons" },
     "color": "#CFF3FF",
+    "secondaryColor": "CFFFF3",
     "orientation": "centered"
   },
-  "sprite": "moderntabs:example_banner",
-  "animation_mode": "play_continuously"
+  "banner": {
+    "sprite": "moderntabs:colored_banner",
+    "animation_mode": "not_animated",
+    "color": "#CFDBFF"
+  },
+  "overlay": {
+    "sprite": "moderntabs:overlay/default_banner_overlay"
+  }
 }

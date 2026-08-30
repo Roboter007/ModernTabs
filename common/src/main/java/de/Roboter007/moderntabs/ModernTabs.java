@@ -162,16 +162,5 @@ public class ModernTabs {
             return Optional.of(this.backgroundColor);
         }
 
-        @Override
-        public String toString() {
-            return "TabDesign{" +
-                    "sectionsEnabled=" + sectionsEnabled +
-                    ", tabIconBackground=" + tabIconBackground +
-                    ", tabIconLocation=" + tabIconLocation +
-                    ", tabScrollerLocation=" + tabScrollerLocation +
-                    ", customTabTitel=" + customTabTitel +
-                    ", backgroundColor=" + backgroundColor +
-                    '}';
-        }
     }
 }

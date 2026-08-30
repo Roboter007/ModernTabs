@@ -55,7 +55,7 @@ public final class ExampleTab {
 
     public static void init() {
         ModernColor example_color = new ModernColor("#36454F");
-        SpriteTabTitel spriteTabTitel = new SpriteTabTitel(TextOrientation.CENTERED, new ModernColor("#36454F").lighten(0.5f), ModernTabs.path("container/creative_inventory/titel"), 64, 10);
+        SpriteTabTitel spriteTabTitel = new SpriteTabTitel(TextOrientation.CENTERED, example_color.copy().lighten(0.6f), ModernTabs.path("container/creative_inventory/titel"), 64, 10);
         //AuraTabTitel auraTabTitel = new AuraTabTitel(TextOrientation.RIGHT, new ModernColor("#36454F").darken(0.75f), new ModernColor("#36454F"), 0.4f);
 
         SectionedItems.addItemList(SECTION_BUILDING_BLOCKS, BUILDING_BLOCKS);
