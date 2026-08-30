@@ -135,6 +135,8 @@ public final class SectionedTabRenderer {
             setPlaying(bannerSprite, isHovering);
         } else if (decoration.animationMode() == BannerAnimationMode.PLAY_CONTINUOUSLY) {
             setPlaying(bannerSprite, true);
+        } else if (decoration.animationMode() == BannerAnimationMode.NOT_ANIMATED) {
+            setPlaying(bannerSprite, false);
         }
 
         if (decoration.color().isPresent()) {
