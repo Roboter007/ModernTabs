@@ -10,9 +10,9 @@ import org.w3c.dom.Text;
 // uses a sprite as a tab titel
 public class SpriteTabTitel extends CustomTabTitel {
 
-    private final ResourceLocation spriteTitelLocation;
-    private final int width;
-    private final int height;
+    private ResourceLocation spriteTitelLocation;
+    private int width;
+    private int height;
 
     public SpriteTabTitel(@Nullable TextOrientation textOrientation, @Nullable ModernColor backgroundColor, @NotNull ResourceLocation spriteTitelLocation, int width, int height) {
         super(textOrientation, backgroundColor, null, null, null);
@@ -21,23 +21,37 @@ public class SpriteTabTitel extends CustomTabTitel {
         this.height = height;
     }
 
-    public SpriteTabTitel(@Nullable ModernColor backgroundColor, @NotNull ResourceLocation spriteTitelLocation, int width, int height) {
-        this(null, backgroundColor, spriteTitelLocation, width, height);
+    public SpriteTabTitel() {
+        this.spriteTitelLocation = null;
+        this.width = 0;
+        this.height = 0;
     }
 
-    public SpriteTabTitel(@NotNull ResourceLocation spriteTitelLocation, int width, int height) {
-        this(null, spriteTitelLocation, width, height);
+    public SpriteTabTitel spriteTitelLocation(ResourceLocation spriteTitelLocation) {
+        this.spriteTitelLocation = spriteTitelLocation;
+        return this;
     }
 
-    public ResourceLocation spriteTitelLocation() {
+    public SpriteTabTitel width(int width) {
+        this.width = width;
+        return this;
+    }
+
+    public SpriteTabTitel height(int height) {
+        this.height = height;
+        return this;
+    }
+
+
+    public ResourceLocation getSpriteTitelLocation() {
         return spriteTitelLocation;
     }
 
-    public int width() {
+    public int getWidth() {
         return width;
     }
 
-    public int height() {
+    public int getHeight() {
         return height;
     }
 }

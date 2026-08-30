@@ -8,9 +8,9 @@ import org.jetbrains.annotations.Nullable;
 // uses the same text style of the tab banners
 public class AuraTabTitel extends CustomTabTitel {
 
-    private final Font font2;
-    private final ModernColor color2;
-    private final Boolean dropShadow2;
+    private Font font2;
+    private ModernColor color2;
+    private Boolean dropShadow2;
 
     public AuraTabTitel(@Nullable TextOrientation textOrientation, @Nullable ModernColor backgroundColor, @Nullable Font font1, @Nullable Font font2, @Nullable ModernColor color1, @Nullable ModernColor color2, @Nullable Boolean dropShadow1, @Nullable Boolean dropShadow2) {
         super(textOrientation, backgroundColor, font1, color1, dropShadow1);
@@ -19,72 +19,37 @@ public class AuraTabTitel extends CustomTabTitel {
         this.dropShadow2 = dropShadow2;
     }
 
-    public AuraTabTitel(@Nullable ModernColor backgroundColor, @Nullable Font font1, @Nullable Font font2, @Nullable ModernColor color1, @Nullable ModernColor color2, @Nullable Boolean dropShadow1, @Nullable Boolean dropShadow2) {
-        this(null, backgroundColor, font1, font2, color1, color2, dropShadow1, dropShadow2);
+    public AuraTabTitel () {
+        this.font2 = null;
+        this.color2 = null;
+        this.dropShadow2 = null;
     }
 
-    public AuraTabTitel(@Nullable ModernColor backgroundColor, @Nullable Font font1, @Nullable Font font2, @Nullable ModernColor color1, @Nullable ModernColor color2) {
-        this(backgroundColor, font1, font2, color1, color2, true, false);
+    public AuraTabTitel font2(Font font2) {
+        this.font2 = font2;
+        return this;
     }
 
-    public AuraTabTitel(@Nullable ModernColor backgroundColor, @Nullable ModernColor color1, @Nullable ModernColor color2) {
-        this(backgroundColor,null,null, color1, color2, true, false);
+    public AuraTabTitel color2(ModernColor color2) {
+        this.color2 = color2;
+        return this;
     }
 
-    public AuraTabTitel(@Nullable ModernColor backgroundColor, @Nullable Font font1, @Nullable Font font2, @NotNull ModernColor color, float darknessAmount) {
-        this(backgroundColor, font1, font2, color, color.darken(darknessAmount), true, false);
-    }
-
-    public AuraTabTitel(@Nullable ModernColor backgroundColor, @NotNull ModernColor color, float darknessAmount) {
-        this(backgroundColor,null,null, color, color.darken(darknessAmount), true, false);
-    }
-
-    public AuraTabTitel(@Nullable TextOrientation textOrientation, @Nullable ModernColor backgroundColor, @NotNull ModernColor color, float darknessAmount) {
-        this(textOrientation, backgroundColor,null,null, color, color.darken(darknessAmount), true, false);
-    }
-
-    public AuraTabTitel(@Nullable Font font1, @Nullable Font font2, @Nullable ModernColor color1, @Nullable ModernColor color2, @Nullable Boolean dropShadow1, @Nullable Boolean dropShadow2) {
-        this(null, font1, font2, color1, color2, dropShadow1, dropShadow2);
-    }
-
-    public AuraTabTitel(@Nullable Font font1, @Nullable Font font2, @Nullable ModernColor color1, @Nullable ModernColor color2) {
-        this(null, font1, font2, color1, color2, true, false);
-    }
-
-    public AuraTabTitel(@Nullable ModernColor color1, @Nullable ModernColor color2) {
-        this(null,null,null, color1, color2, true, false);
-    }
-
-    public AuraTabTitel(@Nullable Font font1, @Nullable Font font2, @NotNull ModernColor color, float darknessAmount) {
-        this(null, font1, font2, color, color.darken(darknessAmount), true, false);
-    }
-
-    public AuraTabTitel(@Nullable TextOrientation textOrientation, @NotNull ModernColor color, float darknessAmount) {
-        this(textOrientation, null,null,null, color, color.darken(darknessAmount), true, false);
-    }
-
-    public AuraTabTitel(@NotNull ModernColor color, float darknessAmount) {
-        this(null,null,null, color, color.darken(darknessAmount), true, false);
-    }
-
-    public AuraTabTitel(@NotNull ModernColor color) {
-        this(null,null,null, color, color.darken(0.2f), true, false);
-    }
-
-    public AuraTabTitel(@Nullable TextOrientation textOrientation, @NotNull ModernColor color) {
-        this(textOrientation, null,null,null, color, color.darken(0.2f), true, false);
+    public AuraTabTitel dropShadow2(boolean dropShadow2) {
+        this.dropShadow2 = dropShadow2;
+        return this;
     }
 
 
-    public Font font2() {
+    public Font getFont2() {
         return font2;
     }
 
-    public ModernColor color2() {
+    public ModernColor getColor2() {
         return color2;
     }
 
-    public Boolean dropShadow2() {
+    public Boolean isDroppingShadow2() {
         return dropShadow2;
     }
 }

@@ -37,58 +37,58 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
 
             final int textWidth;
             if(customTabTitel instanceof SpriteTabTitel spriteTabTitel) {
-                textWidth = spriteTabTitel.width();
+                textWidth = spriteTabTitel.getWidth();
             } else {
                 textWidth = font.width(text);
             }
 
-            if(customTabTitel.textOrientation() == TextOrientation.CENTERED) {
+            if(customTabTitel.getTextOrientation() == TextOrientation.CENTERED) {
                 x += (160 - textWidth) / 2;
-            } else if(customTabTitel.textOrientation() == TextOrientation.RIGHT) {
+            } else if(customTabTitel.getTextOrientation() == TextOrientation.RIGHT) {
                 x += 160 - textWidth;
             }
 
-            if(customTabTitel.backgroundColor() != null) {
+            if(customTabTitel.getBackgroundColor() != null) {
                 final int height = 10;
-                guiGraphics.fill(x, y - 2, x + textWidth + 2, y + height, customTabTitel.backgroundColor().color());
+                guiGraphics.fill(x, y - 2, x + textWidth + 2, y + height, customTabTitel.getBackgroundColor().color());
                 x++;
                 y--;
             }
 
             Font titelFont = font;
-            if(customTabTitel.font() != null) {
-                titelFont = customTabTitel.font();
+            if(customTabTitel.getFont() != null) {
+                titelFont = customTabTitel.getFont();
             }
 
             ModernColor titelColor = new ModernColor(color);
-            if(customTabTitel.color() != null) {
-                titelColor = customTabTitel.color();
+            if(customTabTitel.getColor() != null) {
+                titelColor = customTabTitel.getColor();
             }
 
             boolean titelDropShadow = dropShadow;
-            if(customTabTitel.dropShadow() != null) {
-                titelDropShadow = customTabTitel.dropShadow();
+            if(customTabTitel.isDroppingShadow() != null) {
+                titelDropShadow = customTabTitel.isDroppingShadow();
             }
 
             if(customTabTitel instanceof AuraTabTitel auraTabTitel) {
                 Font titelFont2 = font;
-                if(auraTabTitel.font2() != null) {
-                    titelFont2 = auraTabTitel.font2();
+                if(auraTabTitel.getFont2() != null) {
+                    titelFont2 = auraTabTitel.getFont2();
                 }
 
                 ModernColor titelColor2 = new ModernColor(color);
-                if(auraTabTitel.color2() != null) {
-                    titelColor2 = auraTabTitel.color2();
+                if(auraTabTitel.getColor2() != null) {
+                    titelColor2 = auraTabTitel.getColor2();
                 }
 
                 boolean titelDropShadow2 = dropShadow;
-                if(auraTabTitel.dropShadow2() != null) {
-                    titelDropShadow2 = auraTabTitel.dropShadow2();
+                if(auraTabTitel.isDroppingShadow2() != null) {
+                    titelDropShadow2 = auraTabTitel.isDroppingShadow2();
                 }
 
                 TabTitelRenderer.drawAuraText(guiGraphics, text, titelFont, titelFont2, titelColor.color(), titelColor2.color(), titelDropShadow, titelDropShadow2, x, y);
             } else if(customTabTitel instanceof SpriteTabTitel spriteTabTitel) {
-                guiGraphics.blitSprite(spriteTabTitel.spriteTitelLocation(), x, y, spriteTabTitel.width(), spriteTabTitel.height());
+                guiGraphics.blitSprite(spriteTabTitel.getSpriteTitelLocation(), x, y, spriteTabTitel.getWidth(), spriteTabTitel.getHeight());
             } else {
                 guiGraphics.drawString(titelFont, text, x, y, titelColor.color(), titelDropShadow);
             }

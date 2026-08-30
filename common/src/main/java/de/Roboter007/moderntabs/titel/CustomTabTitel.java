@@ -8,12 +8,12 @@ import org.jetbrains.annotations.Nullable;
 // uses the vanilla Minecraft text style that can be configured
 public class CustomTabTitel {
 
-    private final ModernColor backgroundColor;
-    private final ModernColor color;
+    private ModernColor backgroundColor;
+    private ModernColor color;
 
-    private final TextOrientation tabTextOrientation;
-    private final Font font;
-    private final Boolean dropShadow;
+    private TextOrientation tabTextOrientation;
+    private Font font;
+    private Boolean dropShadow;
 
     public CustomTabTitel(@Nullable TextOrientation tabTextOrientation, @Nullable ModernColor backgroundColor, @Nullable Font font, @Nullable ModernColor color, @Nullable Boolean dropShadow) {
         this.tabTextOrientation = tabTextOrientation;
@@ -23,31 +23,58 @@ public class CustomTabTitel {
         this.dropShadow = dropShadow;
     }
 
-    public CustomTabTitel(@Nullable ModernColor backgroundColor, @Nullable Font font, @Nullable ModernColor color, @Nullable Boolean dropShadow) {
-        this(TextOrientation.LEFT, backgroundColor, font, color, dropShadow);
+    public CustomTabTitel() {
+        this(null, null, null, null, false);
     }
 
-    public CustomTabTitel(@Nullable TextOrientation tabTextOrientation, @Nullable Font font, @NotNull ModernColor color, @Nullable Boolean dropShadow) {
-        this(tabTextOrientation, null, font, color, dropShadow);
+    public CustomTabTitel textOrientation(TextOrientation textOrientation) {
+        this.tabTextOrientation = textOrientation;
+        return this;
     }
 
-    public TextOrientation textOrientation() {
+    public CustomTabTitel backgroundColor(ModernColor backgroundColor) {
+        this.backgroundColor = backgroundColor;
+        return this;
+    }
+
+    public CustomTabTitel font(Font font) {
+        this.font = font;
+        return this;
+    }
+
+    public CustomTabTitel color(ModernColor color) {
+        this.color = color;
+        return this;
+    }
+
+    public CustomTabTitel dropShadow(boolean dropShadow) {
+        this.dropShadow = dropShadow;
+        return this;
+    }
+
+
+    public TextOrientation getTextOrientation() {
         return tabTextOrientation;
     }
 
-    public ModernColor backgroundColor() {
+    public ModernColor getBackgroundColor() {
         return backgroundColor;
     }
 
-    public Font font() {
+    public Font getFont() {
         return font;
     }
 
-    public ModernColor color() {
+    public ModernColor getColor() {
         return color;
     }
 
-    public Boolean dropShadow() {
+    public Boolean isDroppingShadow() {
         return dropShadow;
+    }
+
+
+    public CustomTabTitel copy() {
+        return new CustomTabTitel(this.tabTextOrientation, this.backgroundColor, this.font, this.color, this.dropShadow);
     }
 }
