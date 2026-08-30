@@ -7,7 +7,7 @@
   },
   "banner": {
     "sprite": "moderntabs:animated_example_banner",
-    "animation_mode": "not_animated",
+    "animation_mode": "play_on_hover",
     "color": "#D1FFEA"
   },
   "overlay": {
