@@ -30,7 +30,7 @@ public abstract class GuiGraphicsMixin implements CustomGuiGraphics {
 
     @Unique
     public void moderntabs$blitSprite(ResourceLocation sprite, ResourceLocation defaultSprite, int x, int y, int width, int height) {
-        this.moderntabs$blitSprite((ResourceLocation)sprite, defaultSprite, x, y, 0, width, height);
+        this.moderntabs$blitSprite(sprite, defaultSprite, x, y, 0, width, height);
     }
 
     @Unique

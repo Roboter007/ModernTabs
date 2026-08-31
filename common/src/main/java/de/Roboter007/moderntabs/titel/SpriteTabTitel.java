@@ -27,6 +27,11 @@ public class SpriteTabTitel extends CustomTabTitel {
         this.height = 0;
     }
 
+    public SpriteTabTitel spriteTitelLocation(String spriteId) {
+        this.spriteTitelLocation = ResourceLocation.parse(spriteId);
+        return this;
+    }
+
     public SpriteTabTitel spriteTitelLocation(ResourceLocation spriteTitelLocation) {
         this.spriteTitelLocation = spriteTitelLocation;
         return this;
