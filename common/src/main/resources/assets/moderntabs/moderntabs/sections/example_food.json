@@ -7,7 +7,6 @@
     "orientation": "right"
   },
   "banner": {
-    "sprite": "moderntabs:colored_banner",
     "animation_mode": "not_animated",
     "color": "#EEFFB0"
   },

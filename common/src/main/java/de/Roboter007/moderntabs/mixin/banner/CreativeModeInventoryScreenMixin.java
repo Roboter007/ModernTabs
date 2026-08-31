@@ -1,9 +1,8 @@
 package de.Roboter007.moderntabs.mixin.banner;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.extensions.CreativeModeTabExtension;
-import de.Roboter007.moderntabs.section.client.SectionedTabRenderer;
+import de.Roboter007.moderntabs.section.renderer.SectionedTabRenderer;
 import de.Roboter007.moderntabs.section.item.SectionedItems;
 import de.Roboter007.moderntabs.section.Section;
 import de.Roboter007.moderntabs.section.Sections;

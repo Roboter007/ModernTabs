@@ -1,9 +1,10 @@
-package de.Roboter007.moderntabs.section.client;
+package de.Roboter007.moderntabs.section.renderer;
 
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.Roboter007.moderntabs.extensions.CreativeModeTabExtension;
+import de.Roboter007.moderntabs.iconBackground.CustomGuiGraphics;
 import de.Roboter007.moderntabs.section.BannerAnimationMode;
 import de.Roboter007.moderntabs.section.item.SectionedItems;
 import de.Roboter007.moderntabs.section.item.TabItemTransforms;
@@ -130,6 +131,7 @@ public final class SectionedTabRenderer {
 
     public static void renderSectionDecoration(CreativeModeTabExtension extension, GuiGraphics graphics, boolean isHovering, Section.Decoration decoration, int x, int y, int w, int h) {
         ResourceLocation bannerSprite = decoration.sprite();
+        CustomGuiGraphics customGraphics = (CustomGuiGraphics) graphics;
 
         if (decoration.animationMode() == BannerAnimationMode.PLAY_ON_HOVER) {
             setPlaying(bannerSprite, isHovering);
@@ -147,7 +149,7 @@ public final class SectionedTabRenderer {
             graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
         }
 
-        graphics.blitSprite(bannerSprite, x, y, w, h);
+        customGraphics.moderntabs$blitSprite(bannerSprite, Section.Banner.MISSING_BANNER, x, y, w, h);
 
         if (decoration.color().isPresent()) {
             graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);

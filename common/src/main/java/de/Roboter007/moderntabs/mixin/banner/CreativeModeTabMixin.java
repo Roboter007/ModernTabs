@@ -2,9 +2,8 @@ package de.Roboter007.moderntabs.mixin.banner;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.extensions.CreativeModeTabExtension;
-import de.Roboter007.moderntabs.section.client.SectionedTabRenderer;
+import de.Roboter007.moderntabs.section.renderer.SectionedTabRenderer;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;

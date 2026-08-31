@@ -1,6 +1,6 @@
 package de.Roboter007.moderntabs.mixin.banner;
 
-import de.Roboter007.moderntabs.section.client.SectionedTabRenderer;
+import de.Roboter007.moderntabs.section.renderer.SectionedTabRenderer;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

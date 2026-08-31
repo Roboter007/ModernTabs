@@ -48,14 +48,28 @@ public record Section(int priority, Title title, Banner banner, Optional<Overlay
                 ).apply(instance, Overlay::new));
     }
 
-    public record Banner(ResourceLocation sprite, BannerAnimationMode animationMode, Optional<Integer> color) implements Decoration {
-        private static final ResourceLocation MISSING_BANNER = ModernTabs.path("default_banner");
+    public record Banner(Optional<ResourceLocation> optionalSprite, BannerAnimationMode animationMode, Optional<Integer> color) implements Decoration {
+        public static final ResourceLocation MISSING_BANNER = ModernTabs.path("missing_banner");
+        public static final ResourceLocation COLORED_BANNER = ModernTabs.path("colored_banner");
 
         public static final Codec<Banner> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                ResourceLocation.CODEC.fieldOf("sprite").orElse(MISSING_BANNER).forGetter(Banner::sprite),
+                ResourceLocation.CODEC.optionalFieldOf("sprite").orElse(Optional.empty()).forGetter(Banner::optionalSprite),
                 StringRepresentable.fromEnum(BannerAnimationMode::values).fieldOf("animation_mode").orElse(BannerAnimationMode.NOT_ANIMATED).forGetter(Banner::animationMode),
                 ColorUtil.ARGB_CODEC.optionalFieldOf("color").orElse(Optional.of(0xFFFFFFFF)).forGetter(Banner::color)
         ).apply(instance, Banner::new));
+
+        @Override
+        public ResourceLocation sprite() {
+            if(optionalSprite.isEmpty()) {
+                if(color.isPresent()) {
+                    return COLORED_BANNER;
+                } else {
+                    return MISSING_BANNER;
+                }
+            } else {
+                return this.optionalSprite.get();
+            }
+        }
     }
 
     public interface Decoration {
