@@ -3,6 +3,7 @@ package de.Roboter007.moderntabs.example;
 import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
 import de.Roboter007.moderntabs.section.item.SectionedItems;
+import de.Roboter007.moderntabs.titel.AuraTabTitel;
 import de.Roboter007.moderntabs.titel.SpriteTabTitel;
 import de.Roboter007.moderntabs.titel.TextOrientation;
 import de.Roboter007.moderntabs.util.ModernColor;
@@ -56,7 +57,13 @@ public final class ExampleTab {
     public static void init() {
         ModernColor example_color = new ModernColor("#36454F");
         SpriteTabTitel spriteTabTitel = new SpriteTabTitel(TextOrientation.CENTERED, example_color.copy().lighten(0.6f), ModernTabs.path("container/creative_inventory/titel"), 64, 10);
-        //AuraTabTitel auraTabTitel = new AuraTabTitel(TextOrientation.RIGHT, new ModernColor("#36454F").darken(0.75f), new ModernColor("#36454F"), 0.4f);
+        /*AuraTabTitel auraTabTitel = (AuraTabTitel) new AuraTabTitel()
+                .color2(new ModernColor("#36454F").darken(0.4f))
+                .color(new ModernColor("#36454F"))
+                .textOrientation(TextOrientation.RIGHT)
+                .backgroundColor(new ModernColor("#36454F").darken(0.75f)); */
+
+
 
         SectionedItems.addItemList(SECTION_BUILDING_BLOCKS, BUILDING_BLOCKS);
         SectionedItems.addItemList(SECTION_TOOLS_AND_WEAPONS, TOOLS_AND_WEAPONS);
