@@ -52,7 +52,9 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
                 final int height = 10;
                 guiGraphics.fill(x, y - 2, x + textWidth + 2, y + height, customTabTitel.getBackgroundColor().color());
                 x++;
-                y--;
+                if(customTabTitel instanceof SpriteTabTitel) {
+                    y--;
+                }
             }
 
             Font titelFont = font;
