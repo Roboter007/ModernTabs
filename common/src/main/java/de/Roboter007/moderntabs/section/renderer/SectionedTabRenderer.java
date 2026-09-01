@@ -144,7 +144,7 @@ public final class SectionedTabRenderer {
         if (decoration.color().isPresent()) {
             ModernColor color = new ModernColor(decoration.color().get());
             graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
-        } else if (extension.moderntabs$hasCustomBackgroundColor()) {
+        } else if (extension.moderntabs$hasCustomBackgroundColor() && decoration instanceof Section.Overlay) {
             ModernColor color = extension.moderntabs$getBackgroundColor();
             graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
         }
@@ -153,7 +153,7 @@ public final class SectionedTabRenderer {
 
         if (decoration.color().isPresent()) {
             graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-        } else if (extension.moderntabs$hasCustomBackgroundColor()) {
+        } else if (extension.moderntabs$hasCustomBackgroundColor() && decoration instanceof Section.Overlay) {
             graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         }
     }
