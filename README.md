@@ -22,7 +22,7 @@
 </div>
 <p>Then you can define this in your <span style="text-decoration: underline;">gradle.properties</span> file:</p>
 <div>
-<pre>// for the latest version:<br>moderntabs_version=v1.6.0</pre>
+<pre>// for the latest version:<br>moderntabs_version=v1.6.1</pre>
 </div>
 <p>&nbsp;</p>
 <h2><span style="text-decoration: underline;">What you need to do in order to correctly customize creative tabs with your mod:</span></h2>
