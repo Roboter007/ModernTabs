@@ -11,7 +11,7 @@
   "icon": "assets/moderntabs/icon.png",
   "environment": "*",
   "entrypoints": {
-    "prelaunch": [
+    "preLaunch": [
       "de.Roboter007.moderntabs.fabric.ModernTabsPreLaunch"
     ],
     "main": [
