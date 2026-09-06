@@ -19,8 +19,6 @@ public final class ModernTabsFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        ModernTabsPlatform.init(new FabricPlatform());
-
         ClientLifecycleEvents.CLIENT_STARTED.register(client -> ModernTabs.applyTabDesign());
         CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> SectionedItems.resolveItemTags(registries));
 
@@ -28,5 +26,9 @@ public final class ModernTabsFabric implements ModInitializer {
             Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ExampleTab.TAB_ID, ExampleTab.TAB);
             ExampleTab.init();
         }
+    }
+
+    static {
+        ModernTabsPlatform.init(new FabricPlatform());
     }
 }

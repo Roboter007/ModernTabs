@@ -3,7 +3,6 @@ package de.Roboter007.moderntabs.example;
 import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
 import de.Roboter007.moderntabs.section.item.SectionedItems;
-import de.Roboter007.moderntabs.titel.AuraTabTitel;
 import de.Roboter007.moderntabs.titel.SpriteTabTitel;
 import de.Roboter007.moderntabs.titel.TextOrientation;
 import de.Roboter007.moderntabs.util.ModernColor;
@@ -62,8 +61,6 @@ public final class ExampleTab {
                 .color(new ModernColor("#36454F"))
                 .textOrientation(TextOrientation.RIGHT)
                 .backgroundColor(new ModernColor("#36454F").darken(0.75f)); */
-
-
 
         SectionedItems.addItemList(SECTION_BUILDING_BLOCKS, BUILDING_BLOCKS);
         SectionedItems.addItemList(SECTION_TOOLS_AND_WEAPONS, TOOLS_AND_WEAPONS);
