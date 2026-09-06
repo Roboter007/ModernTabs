@@ -8,6 +8,7 @@ import de.Roboter007.moderntabs.section.item.SectionedItems;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
+import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import org.slf4j.Logger;
@@ -26,9 +27,5 @@ public final class ModernTabsFabric implements ModInitializer {
             Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ExampleTab.TAB_ID, ExampleTab.TAB);
             ExampleTab.init();
         }
-    }
-
-    static {
-        ModernTabsPlatform.init(new FabricPlatform());
     }
 }
