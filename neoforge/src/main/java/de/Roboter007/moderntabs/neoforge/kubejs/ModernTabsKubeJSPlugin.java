@@ -1,14 +1,14 @@
 package de.Roboter007.moderntabs.neoforge.kubejs;
 
 import de.Roboter007.moderntabs.ModernTabs;
-import de.Roboter007.moderntabs.iconBackground.config.ColoredTabIconBackground;
-import de.Roboter007.moderntabs.iconBackground.config.TabIconBackground;
-import de.Roboter007.moderntabs.section.item.SectionedItems;
-import de.Roboter007.moderntabs.titel.AuraTabTitel;
-import de.Roboter007.moderntabs.titel.CustomTabTitel;
-import de.Roboter007.moderntabs.titel.SpriteTabTitel;
-import de.Roboter007.moderntabs.titel.TextOrientation;
+import de.Roboter007.moderntabs.tab.iconBackground.ColoredTabIconBackground;
+import de.Roboter007.moderntabs.tab.iconBackground.TabIconBackground;
+import de.Roboter007.moderntabs.tab.titel.AuraTabTitel;
+import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
+import de.Roboter007.moderntabs.tab.titel.SpriteTabTitel;
+import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
 import de.Roboter007.moderntabs.util.ModernColor;
+import de.Roboter007.moderntabs.util.SectionUtil;
 import dev.latvian.mods.kubejs.plugin.KubeJSPlugin;
 import dev.latvian.mods.kubejs.script.BindingRegistry;
 
@@ -16,16 +16,17 @@ public class ModernTabsKubeJSPlugin implements KubeJSPlugin {
 
     @Override
     public void registerBindings(BindingRegistry bindings) {
-        // ModernTabs
+        // ModernTabs bindings in KubeJs
         bindings.add("ModernTabs", ModernTabs.class);
         bindings.add("TabDesign", KubeJsTabDesign.class);
-        bindings.add("TextOrientation", TextOrientation.class);
+        bindings.add("ElementOrientation", ElementOrientation.class);
         bindings.add("ModernColor", ModernColor.class);
         bindings.add("AuraTabTitel", AuraTabTitel.class);
         bindings.add("SpriteTabTitel", SpriteTabTitel.class);
         bindings.add("CustomTabTitel", CustomTabTitel.class);
         bindings.add("TabIconBackground", TabIconBackground.class);
         bindings.add("ColoredTabIconBackground", ColoredTabIconBackground.class);
-        bindings.add("SectionedItems", SectionedItems.class);
+        bindings.add("SectionUtil", KubeJsSectionUtil.class);
+        bindings.add("ItemVisibility", SectionUtil.ItemVisibility.class);
     }
 }

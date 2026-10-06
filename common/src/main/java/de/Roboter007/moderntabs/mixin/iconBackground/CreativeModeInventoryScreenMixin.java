@@ -1,11 +1,11 @@
 package de.Roboter007.moderntabs.mixin.iconBackground;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import de.Roboter007.moderntabs.iconBackground.CustomGuiGraphics;
-import de.Roboter007.moderntabs.iconBackground.config.ColoredTabIconBackground;
-import de.Roboter007.moderntabs.iconBackground.config.TabIconBackground;
-import de.Roboter007.moderntabs.iconBackground.config.TabIconBackgroundImage;
-import de.Roboter007.moderntabs.extensions.CreativeModeTabExtension;
+import de.Roboter007.moderntabs.graphics.CustomGuiGraphics;
+import de.Roboter007.moderntabs.tab.iconBackground.ColoredTabIconBackground;
+import de.Roboter007.moderntabs.tab.iconBackground.TabIconBackground;
+import de.Roboter007.moderntabs.tab.iconBackground.TabIconBackgroundImage;
+import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.platform.CreativeModeInventoryScreenPlatform;
 import de.Roboter007.moderntabs.util.ModernColor;
 import net.minecraft.client.gui.GuiGraphics;

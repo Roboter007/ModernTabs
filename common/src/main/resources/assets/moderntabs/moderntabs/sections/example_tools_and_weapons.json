@@ -1,5 +1,9 @@
 {
   "priority": 1,
+  "sectionToggle": {
+    "defaultState": "expanded",
+    "orientation": "right"
+  },
   "title": {
     "text": { "text": "Tools & Weapons" },
     "color": "#CFF3FF",

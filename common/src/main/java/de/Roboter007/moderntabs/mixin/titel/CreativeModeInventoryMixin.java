@@ -1,7 +1,11 @@
 package de.Roboter007.moderntabs.mixin.titel;
 
-import de.Roboter007.moderntabs.extensions.CreativeModeTabExtension;
-import de.Roboter007.moderntabs.titel.*;
+import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
+import de.Roboter007.moderntabs.tab.section.renderer.TitelRenderer;
+import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
+import de.Roboter007.moderntabs.tab.titel.AuraTabTitel;
+import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
+import de.Roboter007.moderntabs.tab.titel.SpriteTabTitel;
 import de.Roboter007.moderntabs.util.ModernColor;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -42,9 +46,9 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
                 textWidth = font.width(text);
             }
 
-            if(customTabTitel.getTextOrientation() == TextOrientation.CENTERED) {
+            if(customTabTitel.getTextOrientation() == ElementOrientation.CENTERED) {
                 x += (160 - textWidth) / 2;
-            } else if(customTabTitel.getTextOrientation() == TextOrientation.RIGHT) {
+            } else if(customTabTitel.getTextOrientation() == ElementOrientation.RIGHT) {
                 x += 160 - textWidth;
             }
 
@@ -88,7 +92,7 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
                     titelDropShadow2 = auraTabTitel.isDroppingShadow2();
                 }
 
-                TabTitelRenderer.drawAuraText(guiGraphics, text, titelFont, titelFont2, titelColor.color(), titelColor2.color(), titelDropShadow, titelDropShadow2, x, y);
+                TitelRenderer.drawAuraText(guiGraphics, text, titelFont, titelFont2, titelColor.color(), titelColor2.color(), titelDropShadow, titelDropShadow2, x, y);
             } else if(customTabTitel instanceof SpriteTabTitel spriteTabTitel) {
                 guiGraphics.blitSprite(spriteTabTitel.getSpriteTitelLocation(), x, y, spriteTabTitel.getWidth(), spriteTabTitel.getHeight());
             } else {

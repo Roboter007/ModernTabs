@@ -1,7 +1,7 @@
 package de.Roboter007.moderntabs.fabric.section;
 
 import de.Roboter007.moderntabs.ModernTabs;
-import de.Roboter007.moderntabs.section.SectionReloadListener;
+import de.Roboter007.moderntabs.tab.section.SectionReloadListener;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.resources.ResourceLocation;
 

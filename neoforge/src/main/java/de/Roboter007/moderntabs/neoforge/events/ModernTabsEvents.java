@@ -1,7 +1,7 @@
 package de.Roboter007.moderntabs.neoforge.events;
 
 import de.Roboter007.moderntabs.ModernTabs;
-import de.Roboter007.moderntabs.section.item.SectionedItems;
+import de.Roboter007.moderntabs.util.SectionUtil;
 import net.minecraft.core.RegistryAccess;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -13,6 +13,6 @@ public class ModernTabsEvents {
     @SubscribeEvent
     public static void onTagsUpdated(TagsUpdatedEvent event) {
         RegistryAccess registries = event.getRegistryAccess();
-        SectionedItems.resolveItemTags(registries);
+        SectionUtil.resolveItemTags(registries);
     }
 }

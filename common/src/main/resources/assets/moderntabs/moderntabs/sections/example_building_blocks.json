@@ -1,5 +1,9 @@
 {
   "priority": 0,
+  "sectionToggle": {
+    "defaultState": "expanded",
+    "orientation": "centered"
+  },
   "title": {
     "text": { "text": "Building Blocks" },
     "color": "#D1FFD3",

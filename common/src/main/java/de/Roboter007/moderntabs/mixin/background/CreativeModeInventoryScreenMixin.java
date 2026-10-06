@@ -1,6 +1,6 @@
 package de.Roboter007.moderntabs.mixin.background;
 
-import de.Roboter007.moderntabs.extensions.CreativeModeTabExtension;
+import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.util.ModernColor;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;

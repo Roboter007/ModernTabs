@@ -1,8 +1,8 @@
 package de.Roboter007.moderntabs.mixin;
 
-import de.Roboter007.moderntabs.iconBackground.config.TabIconBackground;
-import de.Roboter007.moderntabs.extensions.CreativeModeTabExtension;
-import de.Roboter007.moderntabs.titel.CustomTabTitel;
+import de.Roboter007.moderntabs.tab.iconBackground.TabIconBackground;
+import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
+import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
 import de.Roboter007.moderntabs.util.ModernColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -12,7 +12,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 @Mixin(CreativeModeTab.class)

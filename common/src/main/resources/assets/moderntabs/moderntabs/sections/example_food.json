@@ -1,5 +1,9 @@
 {
   "priority": 2,
+  "sectionToggle": {
+    "defaultState": "collapsed",
+    "orientation": "left"
+  },
   "title": {
     "text": { "text": "Food" },
     "color": "#FFE9B0",

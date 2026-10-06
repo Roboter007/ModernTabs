@@ -1,7 +1,7 @@
 package de.Roboter007.moderntabs.neoforge.events;
 
 import de.Roboter007.moderntabs.ModernTabs;
-import de.Roboter007.moderntabs.section.Sections;
+import de.Roboter007.moderntabs.tab.section.Sections;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

@@ -1,7 +1,7 @@
 package de.Roboter007.moderntabs.neoforge;
 
 import de.Roboter007.moderntabs.ModernTabs;
-import de.Roboter007.moderntabs.example.ExampleTab;
+import de.Roboter007.moderntabs.tab.example.ExampleTab;
 import de.Roboter007.moderntabs.neoforge.platform.NeoForgePlatform;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
 import net.minecraft.core.registries.Registries;

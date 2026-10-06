@@ -1,6 +1,6 @@
 package de.Roboter007.moderntabs.mixin.banner;
 
-import de.Roboter007.moderntabs.section.extensions.SpriteContentsExtension;
+import de.Roboter007.moderntabs.tab.extensions.SpriteContentsExtension;
 import net.minecraft.client.renderer.texture.SpriteContents;
 import net.minecraft.client.renderer.texture.SpriteTicker;
 import org.spongepowered.asm.mixin.Mixin;

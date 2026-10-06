@@ -2,7 +2,7 @@ package de.Roboter007.moderntabs.mixin.banner;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import de.Roboter007.moderntabs.section.extensions.TickerExtension;
+import de.Roboter007.moderntabs.tab.extensions.TickerExtension;
 import net.minecraft.client.renderer.texture.SpriteContents;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
