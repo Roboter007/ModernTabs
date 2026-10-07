@@ -5,12 +5,16 @@ import net.minecraft.resources.ResourceLocation;
 
 public class KubeJsTabDesign extends ModernTabs.TabDesign {
 
-    public ModernTabs.TabDesign tabIconLocation(String tabIconId) {
-        return this.tabIconLocation(ResourceLocation.parse(tabIconId));
+    public ModernTabs.TabDesign fillerLocation(String fillerLocation) {
+        return this.fillerLocation(ResourceLocation.parse(fillerLocation));
     }
 
-    public ModernTabs.TabDesign tabScrollerLocation(String tabScrollerId) {
-        return this.tabScrollerLocation(ResourceLocation.parse(tabScrollerId));
+    public ModernTabs.TabDesign iconLocation(String tabIconId) {
+        return this.iconLocation(ResourceLocation.parse(tabIconId));
+    }
+
+    public ModernTabs.TabDesign scrollerLocation(String tabScrollerId) {
+        return this.scrollerLocation(ResourceLocation.parse(tabScrollerId));
     }
 
 }

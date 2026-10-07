@@ -1,12 +1,13 @@
-package de.Roboter007.moderntabs.tab.iconBackground;
+package de.Roboter007.moderntabs.tab.button;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import org.jetbrains.annotations.NotNull;
 
-public record TabIconBackgroundImage(String namespace, String tabIdentifier, CreativeModeTab.Row row, Column column, Selection selection) {
+// includes one possible position where the tab button can be placed and the texture the tab button has in this position
+public record TabButtonTexture(String namespace, String tabIdentifier, CreativeModeTab.Row row, Column column, Selection selection) {
 
-    public TabIconBackgroundImage(CreativeModeTab.Row row, Column column, Selection selection) {
+    public TabButtonTexture(CreativeModeTab.Row row, Column column, Selection selection) {
         this(null, null, row, column, selection);
     }
 

@@ -1,8 +1,8 @@
 package de.Roboter007.moderntabs.neoforge.kubejs;
 
 import de.Roboter007.moderntabs.ModernTabs;
-import de.Roboter007.moderntabs.tab.iconBackground.ColoredTabIconBackground;
-import de.Roboter007.moderntabs.tab.iconBackground.TabIconBackground;
+import de.Roboter007.moderntabs.tab.button.ColoredTabButtonStates;
+import de.Roboter007.moderntabs.tab.button.TabButtonStates;
 import de.Roboter007.moderntabs.tab.titel.AuraTabTitel;
 import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
 import de.Roboter007.moderntabs.tab.titel.SpriteTabTitel;
@@ -24,8 +24,8 @@ public class ModernTabsKubeJSPlugin implements KubeJSPlugin {
         bindings.add("AuraTabTitel", AuraTabTitel.class);
         bindings.add("SpriteTabTitel", SpriteTabTitel.class);
         bindings.add("CustomTabTitel", CustomTabTitel.class);
-        bindings.add("TabIconBackground", TabIconBackground.class);
-        bindings.add("ColoredTabIconBackground", ColoredTabIconBackground.class);
+        bindings.add("TabButtonStates", TabButtonStates.class);
+        bindings.add("ColoredTabButtonStates", ColoredTabButtonStates.class);
         bindings.add("SectionUtil", KubeJsSectionUtil.class);
         bindings.add("ItemVisibility", SectionUtil.ItemVisibility.class);
     }

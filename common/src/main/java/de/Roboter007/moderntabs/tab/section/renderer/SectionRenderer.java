@@ -39,6 +39,7 @@ public final class SectionRenderer {
 
     private static final int BANNER_WIDTH = 162;
     private static final int BANNER_HEIGHT = 18;
+    private static final int VISIBLE_ROWS = 5;
 
     public static int CURRENT_ROW = 0;
 
@@ -48,6 +49,7 @@ public final class SectionRenderer {
     public static final ResourceLocation EXTEND_BUTTON = ModernTabs.path("container/creative_inventory/toggle/extend_button");
 
     public static final Map<CreativeModeTab, Object2IntOpenHashMap<ResourceLocation>> SECTIONS = new IdentityHashMap<>();
+    public static final Map<CreativeModeTab, Integer> TOTAL_ROWS = new IdentityHashMap<>();
 
     private SectionRenderer() {
     }
@@ -70,6 +72,7 @@ public final class SectionRenderer {
         for (final Section section : Sections.sortedEntries()) {
             renderSection(tab, section, graphics, yValues, left, top, mouseX, mouseY);
         }
+        renderEmptyRows(tab, graphics);
 
         ps.popPose();
         RenderSystem.disableDepthTest();
@@ -136,37 +139,26 @@ public final class SectionRenderer {
 
         drawAuraText(graphics, text, dark, light, textX, y + 5);
 
-        renderSectionToggle(extension, graphics, section, x, y, BANNER_WIDTH, BANNER_HEIGHT, isHovering);
+        if(canToggle(tab, section)) {
+            renderSectionToggle(extension, graphics, section, x, y, BANNER_WIDTH, BANNER_HEIGHT, isHovering);
+        }
     }
 
-    public static void renderSectionToggle(CreativeModeTabExtension extension, GuiGraphics graphics, Section section, int sectionX, int sectionY, int sectionW, int sectionH, boolean isHovering) {
-        int width = 11;
-        int height = 8;
+    private static void renderEmptyRows(CreativeModeTab tab, GuiGraphics graphics) {
+        CreativeModeTabExtension extension = (CreativeModeTabExtension) tab;
 
-        if(Sections.isCollapsible(section)) {
-            int orientatedX;
-            if(section.sectionToggle().get().orientation() == ElementOrientation.CENTERED) {
-                orientatedX = sectionX + ((sectionW - width) / 2);
-            } else if (section.sectionToggle().get().orientation() == ElementOrientation.RIGHT) {
-                orientatedX = sectionX + sectionW - width - 2;
-            } else {
-                orientatedX = sectionX + 2;
-            }
-
-            boolean collapsed = Sections.sectionCollapsed(section);
-            ResourceLocation toggleButtonLocation;
-            if(isHovering) {
-                toggleButtonLocation = collapsed ? EXTEND_BUTTON_SELECTED : COLLAPSE_BUTTON_SELECTED;
-            } else {
-                toggleButtonLocation = collapsed ? EXTEND_BUTTON : COLLAPSE_BUTTON;
-            }
+        if(extension.moderntabs$hasFiller()) {
+            final int totalRows = TOTAL_ROWS.getOrDefault(tab, 0);
+            final int firstEmptyRow = Math.max(totalRows - CURRENT_ROW, 0);
 
             if (extension.moderntabs$hasCustomBackgroundColor()) {
                 ModernColor color = extension.moderntabs$getBackgroundColor();
                 graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
             }
 
-            graphics.blitSprite(toggleButtonLocation, orientatedX, sectionY + (sectionH / 2) - (height / 2), width, height);
+            for (int row = firstEmptyRow; row < VISIBLE_ROWS; row++) {
+                graphics.blitSprite(extension.moderntabs$getFiller(), 0, row * BANNER_HEIGHT, BANNER_WIDTH, BANNER_HEIGHT);
+            }
 
             if (extension.moderntabs$hasCustomBackgroundColor()) {
                 graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -234,6 +226,74 @@ public final class SectionRenderer {
         ps.popPose();
     }
 
+    public static void renderSectionToggle(CreativeModeTabExtension extension, GuiGraphics graphics, Section section, int sectionX, int sectionY, int sectionW, int sectionH, boolean isHovering) {
+        int width = 11;
+        int height = 8;
+
+        if(Sections.isCollapsible(section)) {
+            int orientatedX;
+            if(section.sectionToggle().get().orientation() == ElementOrientation.CENTERED) {
+                orientatedX = sectionX + ((sectionW - width) / 2);
+            } else if (section.sectionToggle().get().orientation() == ElementOrientation.RIGHT) {
+                orientatedX = sectionX + sectionW - width - 2;
+            } else {
+                orientatedX = sectionX + 2;
+            }
+
+            boolean collapsed = Sections.sectionCollapsed(section);
+            ResourceLocation toggleButtonLocation;
+            if(isHovering) {
+                toggleButtonLocation = collapsed ? EXTEND_BUTTON_SELECTED : COLLAPSE_BUTTON_SELECTED;
+            } else {
+                toggleButtonLocation = collapsed ? EXTEND_BUTTON : COLLAPSE_BUTTON;
+            }
+
+            if (extension.moderntabs$hasCustomBackgroundColor()) {
+                ModernColor color = extension.moderntabs$getBackgroundColor();
+                graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
+            }
+
+            graphics.blitSprite(toggleButtonLocation, orientatedX, sectionY + (sectionH / 2) - (height / 2), width, height);
+
+            if (extension.moderntabs$hasCustomBackgroundColor()) {
+                graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+            }
+        }
+    }
+
+    private static int itemRowsOf(final CreativeModeTab tab, final ResourceLocation id) {
+        final Object2IntOpenHashMap<ResourceLocation> yValues = SECTIONS.get(tab);
+        final int sectionRow = yValues.getInt(id);
+
+        int nextBannerRow = TOTAL_ROWS.getOrDefault(tab, 0);
+        for (final Object2IntMap.Entry<ResourceLocation> entry : yValues.object2IntEntrySet()) {
+            final int row = entry.getIntValue();
+            if (row > sectionRow && row < nextBannerRow) {
+                nextBannerRow = row;
+            }
+        }
+        return nextBannerRow - sectionRow - 1;
+    }
+
+    public static boolean canToggle(final CreativeModeTab tab, final Section section) {
+        if (Sections.isCollapsible(section)) {
+            final CreativeModeTabExtension extension = (CreativeModeTabExtension) tab;
+            if (!Sections.sectionCollapsed(section) && !extension.moderntabs$doesAllowLessVisibleRows()) {
+                final ResourceLocation id = Sections.getId(section);
+                final Object2IntOpenHashMap<ResourceLocation> yValues = SECTIONS.get(tab);
+
+                if (id != null && yValues != null && yValues.containsKey(id)) {
+                    return TOTAL_ROWS.getOrDefault(tab, 0) - itemRowsOf(tab, id) >= VISIBLE_ROWS;
+                } else {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static void processItems(final CreativeModeTab tab, final Collection<ItemStack> originalDisplayItems, final Consumer<ItemStack> displayItems, final Consumer<ItemStack> searchItems) {
         final Object2IntOpenHashMap<ResourceLocation> yValues = new Object2IntOpenHashMap<>();
         SECTIONS.put(tab, yValues);
@@ -293,6 +353,7 @@ public final class SectionRenderer {
                 displayItems.accept(ItemStack.EMPTY);
             }
         }
+        TOTAL_ROWS.put(tab, y);
     }
 
     private static int countLeftoverItems(boolean extended, final List<ItemStack> stacks, final Consumer<ItemStack> displayItems, final Consumer<ItemStack> searchItems) {
@@ -317,7 +378,7 @@ public final class SectionRenderer {
         final Object2IntOpenHashMap<ResourceLocation> yValues = SECTIONS.get(tab);
         final int visibleRow = (int) ((mouseY - top) / BANNER_HEIGHT);
 
-        if (!(yValues == null || yValues.isEmpty()) && !(mouseX < left || mouseX >= left + BANNER_WIDTH || mouseY < top)) {
+        if (!(yValues == null || yValues.isEmpty()) && !(mouseX < left || mouseX >= left + BANNER_WIDTH || mouseY < top) && visibleRow < VISIBLE_ROWS) {
             for (final Object2IntMap.Entry<ResourceLocation> entry : yValues.object2IntEntrySet()) {
                 if (entry.getIntValue() - CURRENT_ROW == visibleRow) {
                     return Sections.get(entry.getKey());

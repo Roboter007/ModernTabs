@@ -16,14 +16,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
-public record Section(int priority, Optional<SectionToggle> sectionToggle, Title title, Banner banner, Optional<Overlay> overlay) implements Comparable<Section> {
+public record Section(int priority, Title title, Banner banner, Optional<Overlay> overlay, Optional<SectionToggle> sectionToggle) implements Comparable<Section> {
 
     public static final Codec<Section> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ExtraCodecs.POSITIVE_INT.fieldOf("priority").orElse(0).forGetter(Section::priority),
-            SectionToggle.CODEC.optionalFieldOf("sectionToggle").forGetter(Section::sectionToggle),
             Title.CODEC.fieldOf("title").forGetter(Section::title),
             Banner.CODEC.fieldOf("banner").forGetter(Section::banner),
-            Overlay.CODEC.optionalFieldOf("overlay").forGetter(Section::overlay)
+            Overlay.CODEC.optionalFieldOf("overlay").forGetter(Section::overlay),
+            SectionToggle.CODEC.optionalFieldOf("sectionToggle").forGetter(Section::sectionToggle)
     ).apply(instance, Section::new));
 
     @Override
@@ -59,8 +59,8 @@ public record Section(int priority, Optional<SectionToggle> sectionToggle, Title
     }
 
     public record Banner(Optional<ResourceLocation> optionalSprite, AnimationMode animationMode, Optional<Integer> color) implements Decoration {
-        public static final ResourceLocation MISSING_BANNER = ModernTabs.path("missing_banner");
-        public static final ResourceLocation COLORED_BANNER = ModernTabs.path("colored_banner");
+        public static final ResourceLocation MISSING_BANNER = ModernTabs.path("banner/missing_banner");
+        public static final ResourceLocation COLORED_BANNER = ModernTabs.path("banner/colored_banner");
 
         public static final Codec<Banner> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 ResourceLocation.CODEC.optionalFieldOf("sprite").orElse(Optional.empty()).forGetter(Banner::optionalSprite),

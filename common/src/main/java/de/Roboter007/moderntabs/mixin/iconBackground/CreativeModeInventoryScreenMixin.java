@@ -2,9 +2,9 @@ package de.Roboter007.moderntabs.mixin.iconBackground;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import de.Roboter007.moderntabs.graphics.CustomGuiGraphics;
-import de.Roboter007.moderntabs.tab.iconBackground.ColoredTabIconBackground;
-import de.Roboter007.moderntabs.tab.iconBackground.TabIconBackground;
-import de.Roboter007.moderntabs.tab.iconBackground.TabIconBackgroundImage;
+import de.Roboter007.moderntabs.tab.button.ColoredTabButtonStates;
+import de.Roboter007.moderntabs.tab.button.TabButtonStates;
+import de.Roboter007.moderntabs.tab.button.TabButtonTexture;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.platform.CreativeModeInventoryScreenPlatform;
 import de.Roboter007.moderntabs.util.ModernColor;
@@ -35,13 +35,13 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
     protected void renderTabButton(GuiGraphics guiGraphics, ResourceLocation sprite, int x, int y, int width, int height, @Local(argsOnly = true) CreativeModeTab creativeModeTab) {
         CreativeModeTabExtension tabExtension = (CreativeModeTabExtension) creativeModeTab;
 
-        if(tabExtension.moderntabs$hasCustomTabIconBackground()) {
+        if(tabExtension.moderntabs$hasCustomTabButtonStates()) {
             CreativeModeInventoryScreenPlatform platform = (CreativeModeInventoryScreenPlatform) this;
 
-            TabIconBackground tabIconBackground = tabExtension.moderntabs$getCustomTabIconBackground();
-            TabIconBackgroundImage tabBackgroundImage = tabIconBackground.get(platform.moderntabs$row(creativeModeTab), platform.moderntabs$column(creativeModeTab), TabIconBackgroundImage.Selection.fromBoolean(creativeModeTab == selectedTab));
+            TabButtonStates tabIconBackground = tabExtension.moderntabs$getCustomTabButtonStates();
+            TabButtonTexture tabBackgroundImage = tabIconBackground.get(platform.moderntabs$row(creativeModeTab), platform.moderntabs$column(creativeModeTab), TabButtonTexture.Selection.fromBoolean(creativeModeTab == selectedTab));
 
-            if(tabIconBackground instanceof ColoredTabIconBackground coloredTabIconBackground) {
+            if(tabIconBackground instanceof ColoredTabButtonStates coloredTabIconBackground) {
                 // set color
                 ModernColor color = coloredTabIconBackground.color();
                 guiGraphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());

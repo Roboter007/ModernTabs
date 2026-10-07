@@ -10,7 +10,7 @@
     "secondaryColor": "#E6FFD1"
   },
   "banner": {
-    "sprite": "moderntabs:animated_example_banner",
+    "sprite": "moderntabs:banner/animated_example_banner",
     "animation_mode": "play_on_hover",
     "color": "#D1FFEA"
   },

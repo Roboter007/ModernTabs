@@ -1,6 +1,6 @@
 package de.Roboter007.moderntabs.mixin;
 
-import de.Roboter007.moderntabs.tab.iconBackground.TabIconBackground;
+import de.Roboter007.moderntabs.tab.button.TabButtonStates;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
 import de.Roboter007.moderntabs.util.ModernColor;
@@ -24,9 +24,13 @@ public class CreativeModeTabMixin implements CreativeModeTabExtension {
     @Unique
     public boolean moderntabs$sectionsEnabled = false;
     @Unique
+    public boolean moderntabs$allowLessVisibleRows = false;
+    @Unique
     public CustomTabTitel moderntabs$customTabTitel = null;
     @Unique
-    public TabIconBackground moderntabs$tabIconBackground = null;
+    public TabButtonStates moderntabs$tabButtonStates = null;
+    @Unique
+    public ResourceLocation moderntabs$filler = null;
     @Unique
     public ResourceLocation moderntabs$tabIcon = null;
     @Unique
@@ -54,6 +58,16 @@ public class CreativeModeTabMixin implements CreativeModeTabExtension {
     }
 
     @Override
+    public void moderntabs$setAllowLessVisibleRows(boolean allowLessVisibleRows) {
+        this.moderntabs$allowLessVisibleRows = allowLessVisibleRows;
+    }
+
+    @Override
+    public boolean moderntabs$doesAllowLessVisibleRows() {
+        return moderntabs$allowLessVisibleRows;
+    }
+
+    @Override
     public void moderntabs$setCustomTabTitel(CustomTabTitel customTabTitel) {
         this.moderntabs$customTabTitel = customTabTitel;
     }
@@ -64,15 +78,24 @@ public class CreativeModeTabMixin implements CreativeModeTabExtension {
     }
 
     @Override
-    public void moderntabs$setCustomTabIconBackground(TabIconBackground tabIconBackground) {
-        this.moderntabs$tabIconBackground = tabIconBackground;
+    public void moderntabs$setCustomTabButtonStates(TabButtonStates tabIconBackground) {
+        this.moderntabs$tabButtonStates = tabIconBackground;
     }
 
     @Override
-    public TabIconBackground moderntabs$getCustomTabIconBackground() {
-        return moderntabs$tabIconBackground;
+    public TabButtonStates moderntabs$getCustomTabButtonStates() {
+        return moderntabs$tabButtonStates;
     }
 
+    @Override
+    public ResourceLocation moderntabs$getFiller() {
+        return moderntabs$filler;
+    }
+
+    @Override
+    public void moderntabs$setFiller(ResourceLocation fillerLocation) {
+        this.moderntabs$filler = fillerLocation;
+    }
 
     @Override
     public ResourceLocation moderntabs$getCustomTabIcon() {
@@ -83,7 +106,6 @@ public class CreativeModeTabMixin implements CreativeModeTabExtension {
     public void moderntabs$setCustomTabIcon(ResourceLocation tabIconLocation) {
         this.moderntabs$tabIcon = tabIconLocation;
     }
-
 
     @Override
     public ResourceLocation moderntabs$getCustomScroller() {

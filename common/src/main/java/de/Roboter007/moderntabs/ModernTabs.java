@@ -1,7 +1,7 @@
 package de.Roboter007.moderntabs;
 
-import de.Roboter007.moderntabs.tab.iconBackground.ColoredTabIconBackground;
-import de.Roboter007.moderntabs.tab.iconBackground.TabIconBackground;
+import de.Roboter007.moderntabs.tab.button.ColoredTabButtonStates;
+import de.Roboter007.moderntabs.tab.button.TabButtonStates;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
 import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
@@ -65,24 +65,30 @@ public class ModernTabs {
     }
 
     public static class TabDesign {
+        private static final ResourceLocation DEFAULT_SPACE_FILLER = ModernTabs.path("filler/default_space_filler");
+
         private boolean sectionsEnabled;
-        private TabIconBackground tabIconBackground;
-        private ResourceLocation tabIconLocation;
-        private ResourceLocation tabScrollerLocation;
+        private boolean allowLessVisibleRows;
+        private TabButtonStates tabButtonStates;
+        private ResourceLocation fillerLocation;
+        private ResourceLocation iconLocation;
+        private ResourceLocation scrollerLocation;
         private CustomTabTitel customTabTitel;
         private ModernColor backgroundColor;
 
-        public TabDesign(boolean sectionsEnabled, @Nullable TabIconBackground tabIconBackground, @Nullable ResourceLocation tabIconLocation, @Nullable ResourceLocation tabScrollerLocation, @Nullable CustomTabTitel customTabTitel, @Nullable ModernColor backgroundColor) {
+        public TabDesign(boolean sectionsEnabled, boolean allowLessVisibleRows, @Nullable TabButtonStates tabButtonStates, @Nullable ResourceLocation fillerLocation, @Nullable ResourceLocation tabIconLocation, @Nullable ResourceLocation tabScrollerLocation, @Nullable CustomTabTitel customTabTitel, @Nullable ModernColor backgroundColor) {
             this.sectionsEnabled = sectionsEnabled;
-            this.tabIconBackground = tabIconBackground;
-            this.tabIconLocation = tabIconLocation;
-            this.tabScrollerLocation = tabScrollerLocation;
+            this.allowLessVisibleRows = allowLessVisibleRows;
+            this.tabButtonStates = tabButtonStates;
+            this.fillerLocation = fillerLocation;
+            this.iconLocation = tabIconLocation;
+            this.scrollerLocation = tabScrollerLocation;
             this.customTabTitel = customTabTitel;
             this.backgroundColor = backgroundColor;
         }
 
         public TabDesign() {
-            this(false, null, null, null, null, null);
+            this(false, true, null, DEFAULT_SPACE_FILLER, null, null, null, null);
         }
 
         public TabDesign sectionsEnabled(boolean sectionsEnabled) {
@@ -90,18 +96,28 @@ public class ModernTabs {
             return this;
         }
 
-        public TabDesign tabIconBackground(TabIconBackground tabIconBackground) {
-            this.tabIconBackground = tabIconBackground;
+        public TabDesign allowLessVisibleRows(boolean allowLessVisibleRows) {
+            this.allowLessVisibleRows = allowLessVisibleRows;
             return this;
         }
 
-        public TabDesign tabIconLocation(ResourceLocation tabIconLocation) {
-            this.tabIconLocation = tabIconLocation;
+        public TabDesign tabButtonStates(TabButtonStates tabButtonStates) {
+            this.tabButtonStates = tabButtonStates;
             return this;
         }
 
-        public TabDesign tabScrollerLocation(ResourceLocation tabScrollerLocation) {
-            this.tabScrollerLocation = tabScrollerLocation;
+        public TabDesign fillerLocation(ResourceLocation fillerLocation) {
+            this.fillerLocation = fillerLocation;
+            return this;
+        }
+
+        public TabDesign iconLocation(ResourceLocation tabIconLocation) {
+            this.iconLocation = tabIconLocation;
+            return this;
+        }
+
+        public TabDesign scrollerLocation(ResourceLocation tabScrollerLocation) {
+            this.scrollerLocation = tabScrollerLocation;
             return this;
         }
 
@@ -117,13 +133,13 @@ public class ModernTabs {
 
         public TabDesign color(ModernColor color) {
             this.backgroundColor = color;
-            this.tabIconBackground = new ColoredTabIconBackground(color);
+            this.tabButtonStates = new ColoredTabButtonStates(color);
             return this;
         }
 
         public TabDesign color(ModernColor color, String namespace, String tabIdentifier) {
             this.backgroundColor = color;
-            this.tabIconBackground = new ColoredTabIconBackground(color, namespace, tabIdentifier);
+            this.tabButtonStates = new ColoredTabButtonStates(color, namespace, tabIdentifier);
             return this;
         }
 
@@ -134,9 +150,11 @@ public class ModernTabs {
             CreativeModeTabExtension tabExtension = (CreativeModeTabExtension) tab;
 
             tabExtension.moderntabs$setSectionsEnabled(this.sectionsEnabled);
-            tabExtension.moderntabs$setCustomTabIconBackground(this.tabIconBackground);
-            tabExtension.moderntabs$setCustomTabIcon(this.tabIconLocation);
-            tabExtension.moderntabs$setCustomScroller(this.tabScrollerLocation);
+            tabExtension.moderntabs$setAllowLessVisibleRows(this.allowLessVisibleRows);
+            tabExtension.moderntabs$setCustomTabButtonStates(this.tabButtonStates);
+            tabExtension.moderntabs$setFiller(this.fillerLocation);
+            tabExtension.moderntabs$setCustomTabIcon(this.iconLocation);
+            tabExtension.moderntabs$setCustomScroller(this.scrollerLocation);
             tabExtension.moderntabs$setCustomTabTitel(this.customTabTitel);
             tabExtension.moderntabs$setBackgroundColor(this.backgroundColor);
         }
@@ -146,12 +164,24 @@ public class ModernTabs {
             return this.sectionsEnabled;
         }
 
-        public Optional<TabIconBackground> getTabIconBackground() {
-            return Optional.of(this.tabIconBackground);
+        public boolean allowLessVisibleRows() {
+            return this.allowLessVisibleRows;
         }
 
-        public Optional<ResourceLocation> getTabIconLocation() {
-            return Optional.of(this.tabIconLocation);
+        public Optional<TabButtonStates> getTabButtonStates() {
+            return Optional.of(this.tabButtonStates);
+        }
+
+        public Optional<ResourceLocation> getFillerLocation() {
+            return Optional.of(this.fillerLocation);
+        }
+
+        public Optional<ResourceLocation> getIconLocation() {
+            return Optional.of(this.iconLocation);
+        }
+
+        public Optional<ResourceLocation> getScrollerLocation() {
+            return Optional.of(this.scrollerLocation);
         }
 
         public Optional<CustomTabTitel> getCustomTabTitel() {

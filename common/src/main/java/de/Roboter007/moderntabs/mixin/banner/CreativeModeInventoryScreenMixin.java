@@ -41,12 +41,10 @@ public abstract class CreativeModeInventoryScreenMixin {
         if (button == 0 && tabExtension.moderntabs$hasCustomSections()) {
             final AbstractContainerScreenAccessor accessor = (AbstractContainerScreenAccessor) this;
             final Section section = SectionRenderer.findSectionAt(selectedTab, accessor.getLeftPos() + 8, accessor.getTopPos() + 17, mouseX, mouseY);
-            if (section == null || !Sections.toggleCollapsedState(section)) {
-                return;
+            if (section != null && SectionRenderer.canToggle(selectedTab, section) && Sections.toggleCollapsedState(section)) {
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+                this.refreshCurrentTabContents(selectedTab.getDisplayItems());
             }
-
-            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
-            this.refreshCurrentTabContents(selectedTab.getDisplayItems());
         }
     }
 

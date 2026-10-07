@@ -1,6 +1,6 @@
 package de.Roboter007.moderntabs.tab.extensions;
 
-import de.Roboter007.moderntabs.tab.iconBackground.TabIconBackground;
+import de.Roboter007.moderntabs.tab.button.TabButtonStates;
 import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
 import de.Roboter007.moderntabs.util.ModernColor;
 import net.minecraft.resources.ResourceLocation;
@@ -13,16 +13,25 @@ public interface CreativeModeTabExtension {
     void moderntabs$setSectionsEnabled(boolean sectionsEnabled);
     boolean moderntabs$hasCustomSections();
 
+    void moderntabs$setAllowLessVisibleRows(boolean allowLessVisibleRows);
+    boolean moderntabs$doesAllowLessVisibleRows();
+
     void moderntabs$setCustomTabTitel(CustomTabTitel customTabTitel);
     CustomTabTitel moderntabs$getCustomTabTitel();
     default boolean moderntabs$hasCustomTabTitelRendering() {
         return moderntabs$getCustomTabTitel() != null;
     }
 
-    void moderntabs$setCustomTabIconBackground(TabIconBackground tabIconBackground);
-    TabIconBackground moderntabs$getCustomTabIconBackground();
-    default boolean moderntabs$hasCustomTabIconBackground() {
-        return moderntabs$getCustomTabIconBackground() != null;
+    void moderntabs$setCustomTabButtonStates(TabButtonStates tabButtonStates);
+    TabButtonStates moderntabs$getCustomTabButtonStates();
+    default boolean moderntabs$hasCustomTabButtonStates() {
+        return moderntabs$getCustomTabButtonStates() != null;
+    }
+
+    ResourceLocation moderntabs$getFiller();
+    void moderntabs$setFiller(ResourceLocation tabIconLocation);
+    default boolean moderntabs$hasFiller() {
+        return moderntabs$getFiller() != null;
     }
 
     ResourceLocation moderntabs$getCustomTabIcon();

@@ -68,7 +68,7 @@ public final class ExampleTab {
 
         ModernTabs.TabDesign tabDesign = new ModernTabs.TabDesign()
                 .sectionsEnabled(true)
-                .tabIconLocation(ModernTabs.path("container/creative_inventory/icon"))
+                .iconLocation(ModernTabs.path("container/creative_inventory/icon"))
                 .color(example_color)
                 .customTabTitel(spriteTabTitel);
 
