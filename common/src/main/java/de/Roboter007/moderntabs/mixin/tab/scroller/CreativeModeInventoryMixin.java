@@ -1,4 +1,4 @@
-package de.Roboter007.moderntabs.mixin.scroller;
+package de.Roboter007.moderntabs.mixin.tab.scroller;
 
 import de.Roboter007.moderntabs.graphics.CustomGuiGraphics;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;

@@ -1,4 +1,4 @@
-package de.Roboter007.moderntabs.mixin.titel;
+package de.Roboter007.moderntabs.mixin.tab.titel;
 
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.tab.section.renderer.TitelRenderer;

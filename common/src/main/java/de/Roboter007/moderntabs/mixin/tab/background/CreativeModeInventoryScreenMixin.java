@@ -1,4 +1,4 @@
-package de.Roboter007.moderntabs.mixin.background;
+package de.Roboter007.moderntabs.mixin.tab.background;
 
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.util.ModernColor;

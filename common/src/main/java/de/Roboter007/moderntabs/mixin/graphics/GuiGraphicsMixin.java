@@ -1,4 +1,4 @@
-package de.Roboter007.moderntabs.mixin.iconBackground;
+package de.Roboter007.moderntabs.mixin.graphics;
 
 import de.Roboter007.moderntabs.graphics.CustomGuiGraphics;
 import de.Roboter007.moderntabs.graphics.CustomGuiSpriteManager;

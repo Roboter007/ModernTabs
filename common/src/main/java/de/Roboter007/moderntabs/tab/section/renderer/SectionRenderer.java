@@ -7,7 +7,7 @@ import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.graphics.CustomGuiGraphics;
 import de.Roboter007.moderntabs.tab.section.states.AnimationMode;
-import de.Roboter007.moderntabs.mixin.banner.AbstractContainerScreenAccessor;
+import de.Roboter007.moderntabs.mixin.tab.banner.AbstractContainerScreenAccessor;
 import de.Roboter007.moderntabs.tab.section.Section;
 import de.Roboter007.moderntabs.tab.extensions.SpriteContentsExtension;
 import de.Roboter007.moderntabs.tab.extensions.TickerExtension;

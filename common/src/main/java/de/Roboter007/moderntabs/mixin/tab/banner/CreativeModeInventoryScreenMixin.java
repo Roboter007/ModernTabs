@@ -1,4 +1,4 @@
-package de.Roboter007.moderntabs.mixin.banner;
+package de.Roboter007.moderntabs.mixin.tab.banner;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;

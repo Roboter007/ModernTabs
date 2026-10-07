@@ -1,4 +1,4 @@
-package de.Roboter007.moderntabs.mixin.banner;
+package de.Roboter007.moderntabs.mixin.tab.banner;
 
 import de.Roboter007.moderntabs.tab.extensions.SpriteContentsExtension;
 import net.minecraft.client.renderer.texture.SpriteContents;

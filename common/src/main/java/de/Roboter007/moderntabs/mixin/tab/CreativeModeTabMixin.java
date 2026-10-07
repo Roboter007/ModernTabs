@@ -1,4 +1,4 @@
-package de.Roboter007.moderntabs.mixin;
+package de.Roboter007.moderntabs.mixin.tab;
 
 import de.Roboter007.moderntabs.tab.button.TabButtonStates;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;

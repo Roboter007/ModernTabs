@@ -1,4 +1,4 @@
-package de.Roboter007.moderntabs.mixin.iconBackground;
+package de.Roboter007.moderntabs.mixin.tab.button;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import de.Roboter007.moderntabs.graphics.CustomGuiGraphics;

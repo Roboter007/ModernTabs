@@ -1,4 +1,4 @@
-package de.Roboter007.moderntabs.mixin.banner;
+package de.Roboter007.moderntabs.mixin.tab.banner;
 
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import org.spongepowered.asm.mixin.Mixin;
