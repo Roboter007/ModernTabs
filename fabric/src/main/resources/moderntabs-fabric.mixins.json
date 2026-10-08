@@ -5,9 +5,12 @@
   "minVersion": "0.8",
   "refmap": "moderntabs-fabric-refmap.json",
   "client": [
-    "CreativeModeInventoryScreenMixin"
+    "tab.button.CreativeModeInventoryScreenMixin",
+    "tab.searchbar.CreativeModeInventoryScreenMixin",
+    "tab.searchbar.SessionSearchTreesMixin"
   ],
   "mixins": [
+    "tab.searchbar.CreativeModeTabMixin"
   ],
   "injectors": {
     "defaultRequire": 1

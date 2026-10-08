@@ -1,4 +1,4 @@
-package de.Roboter007.moderntabs.neoforge.events;
+package de.Roboter007.moderntabs.neoforge.tab.events;
 
 import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.util.SectionUtil;

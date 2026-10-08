@@ -1,6 +1,6 @@
 package de.Roboter007.moderntabs.fabric;
 
-import de.Roboter007.moderntabs.fabric.section.SectionReloadListenerFabric;
+import de.Roboter007.moderntabs.fabric.tab.section.SectionReloadListenerFabric;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.server.packs.PackType;

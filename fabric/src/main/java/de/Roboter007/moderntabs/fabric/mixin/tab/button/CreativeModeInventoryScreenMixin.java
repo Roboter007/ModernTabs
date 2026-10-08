@@ -1,4 +1,4 @@
-package de.Roboter007.moderntabs.neoforge.mixin;
+package de.Roboter007.moderntabs.fabric.mixin.tab.button;
 
 import de.Roboter007.moderntabs.tab.button.TabButtonTexture.Column;
 import de.Roboter007.moderntabs.platform.CreativeModeInventoryScreenPlatform;
@@ -8,17 +8,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTab.Row;
-import net.neoforged.neoforge.client.gui.CreativeTabsScreenPage;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 
 import static de.Roboter007.moderntabs.tab.button.TabButtonTexture.Column.*;
 
 @Mixin(CreativeModeInventoryScreen.class)
 public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingInventoryScreen<CreativeModeInventoryScreen.ItemPickerMenu> implements CreativeModeInventoryScreenPlatform {
-
-    @Shadow
-    private CreativeTabsScreenPage currentPage;
 
     public CreativeModeInventoryScreenMixin(CreativeModeInventoryScreen.ItemPickerMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -26,16 +21,12 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
 
     @Override
     public Row moderntabs$row(CreativeModeTab creativeModeTab) {
-        if(this.currentPage.isTop(creativeModeTab)) {
-            return Row.TOP;
-        } else {
-            return Row.BOTTOM;
-        }
+        return creativeModeTab.row();
     }
 
     @Override
     public Column moderntabs$column(CreativeModeTab creativeModeTab) {
-        int column = this.currentPage.getColumn(creativeModeTab);
+        int column = creativeModeTab.column();
         if(column == 0) {
             return LEFT;
         } else {

@@ -4,8 +4,10 @@ import de.Roboter007.moderntabs.tab.button.ColoredTabButtonStates;
 import de.Roboter007.moderntabs.tab.button.TabButtonStates;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
+import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtensionPlatform;
 import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
 import de.Roboter007.moderntabs.util.ModernColor;
+import net.minecraft.client.renderer.debug.PathfindingRenderer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -69,6 +71,8 @@ public class ModernTabs {
 
         private boolean sectionsEnabled;
         private boolean allowLessVisibleRows;
+        private boolean hasSearchbar;
+        private int searchbarLength;
         private TabButtonStates tabButtonStates;
         private ResourceLocation fillerLocation;
         private ResourceLocation iconLocation;
@@ -76,9 +80,11 @@ public class ModernTabs {
         private CustomTabTitel customTabTitel;
         private ModernColor backgroundColor;
 
-        public TabDesign(boolean sectionsEnabled, boolean allowLessVisibleRows, @Nullable TabButtonStates tabButtonStates, @Nullable ResourceLocation fillerLocation, @Nullable ResourceLocation tabIconLocation, @Nullable ResourceLocation tabScrollerLocation, @Nullable CustomTabTitel customTabTitel, @Nullable ModernColor backgroundColor) {
+        public TabDesign(boolean sectionsEnabled, boolean allowLessVisibleRows, boolean hasSearchbar, int searchbarLength, @Nullable TabButtonStates tabButtonStates, @Nullable ResourceLocation fillerLocation, @Nullable ResourceLocation tabIconLocation, @Nullable ResourceLocation tabScrollerLocation, @Nullable CustomTabTitel customTabTitel, @Nullable ModernColor backgroundColor) {
             this.sectionsEnabled = sectionsEnabled;
             this.allowLessVisibleRows = allowLessVisibleRows;
+            this.hasSearchbar = hasSearchbar;
+            this.searchbarLength = searchbarLength;
             this.tabButtonStates = tabButtonStates;
             this.fillerLocation = fillerLocation;
             this.iconLocation = tabIconLocation;
@@ -88,11 +94,27 @@ public class ModernTabs {
         }
 
         public TabDesign() {
-            this(false, true, null, DEFAULT_SPACE_FILLER, null, null, null, null);
+            this(false, true, false, 89, null, DEFAULT_SPACE_FILLER, null, null, null, null);
         }
 
         public TabDesign sectionsEnabled(boolean sectionsEnabled) {
             this.sectionsEnabled = sectionsEnabled;
+            return this;
+        }
+
+        public TabDesign searchbar(boolean hasSearchbar) {
+            this.hasSearchbar = hasSearchbar;
+            return this;
+        }
+
+        public TabDesign searchbarLength(int searchbarLength) {
+            this.searchbarLength = searchbarLength;
+            return this;
+        }
+
+        public TabDesign searchbarWithLength(boolean hasSearchbar, int searchbarLength) {
+            this.hasSearchbar = hasSearchbar;
+            this.searchbarLength = searchbarLength;
             return this;
         }
 
@@ -148,9 +170,12 @@ public class ModernTabs {
                 throw new NullPointerException(ModernTabs.MOD_NAME +  "ModernTabs - couldn't find tab in the registry!");
             }
             CreativeModeTabExtension tabExtension = (CreativeModeTabExtension) tab;
+            CreativeModeTabExtensionPlatform tabExtensionPlatform = (CreativeModeTabExtensionPlatform) tab;
 
             tabExtension.moderntabs$setSectionsEnabled(this.sectionsEnabled);
             tabExtension.moderntabs$setAllowLessVisibleRows(this.allowLessVisibleRows);
+            tabExtensionPlatform.moderntabs$setSearchbar(this.hasSearchbar);
+            tabExtensionPlatform.moderntabs$setSearchbarLength(this.searchbarLength);
             tabExtension.moderntabs$setCustomTabButtonStates(this.tabButtonStates);
             tabExtension.moderntabs$setFiller(this.fillerLocation);
             tabExtension.moderntabs$setCustomTabIcon(this.iconLocation);
@@ -166,6 +191,14 @@ public class ModernTabs {
 
         public boolean allowLessVisibleRows() {
             return this.allowLessVisibleRows;
+        }
+
+        public boolean hasSearchbar() {
+            return this.hasSearchbar;
+        }
+
+        public int getSearchbarLength() {
+            return this.searchbarLength;
         }
 
         public Optional<TabButtonStates> getTabButtonStates() {

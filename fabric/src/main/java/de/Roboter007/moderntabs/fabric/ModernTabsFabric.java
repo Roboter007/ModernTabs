@@ -17,7 +17,7 @@ public final class ModernTabsFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        ClientLifecycleEvents.CLIENT_STARTED.register(client -> ModernTabs.applyTabDesign());
+        ModernTabs.applyTabDesign();
         CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> SectionUtil.resolveItemTags(registries));
 
         if(ModernTabs.isExampleTabEnabled()) {

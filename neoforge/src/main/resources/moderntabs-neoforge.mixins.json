@@ -5,9 +5,10 @@
   "minVersion": "0.8",
   "refmap": "moderntabs-neoforge-refmap.json",
   "client": [
-    "CreativeModeInventoryScreenMixin"
+    "tab.button.CreativeModeInventoryScreenMixin"
   ],
   "mixins": [
+    "tab.searchbar.CreativeModeTabMixin"
   ],
   "injectors": {
     "defaultRequire": 1

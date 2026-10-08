@@ -1,0 +1,7 @@
+accessWidener v2 named
+
+accessible class net/minecraft/client/multiplayer/SessionSearchTrees$Key
+accessible field net/minecraft/client/multiplayer/SessionSearchTrees RECIPE_COLLECTIONS Lnet/minecraft/client/multiplayer/SessionSearchTrees$Key;
+accessible field net/minecraft/client/multiplayer/SessionSearchTrees CREATIVE_NAMES Lnet/minecraft/client/multiplayer/SessionSearchTrees$Key;
+accessible field net/minecraft/client/multiplayer/SessionSearchTrees CREATIVE_TAGS Lnet/minecraft/client/multiplayer/SessionSearchTrees$Key;
+accessible method net/minecraft/client/multiplayer/SessionSearchTrees$Key <init> ()V

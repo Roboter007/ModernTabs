@@ -61,4 +61,5 @@ remapJar {
 
 loom {
     accessWidenerPath = project(':common').file("src/main/resources/moderntabs-common.accesswidener")
+    accessWidenerPath = project.file("src/main/resources/moderntabs-fabric.accesswidener")
 }
