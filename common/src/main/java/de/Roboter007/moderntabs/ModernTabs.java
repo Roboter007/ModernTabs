@@ -5,9 +5,9 @@ import de.Roboter007.moderntabs.tab.button.TabButtonStates;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtensionPlatform;
+import de.Roboter007.moderntabs.tab.searchbar.Searchbar;
 import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
 import de.Roboter007.moderntabs.util.ModernColor;
-import net.minecraft.client.renderer.debug.PathfindingRenderer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -71,8 +71,7 @@ public class ModernTabs {
 
         private boolean sectionsEnabled;
         private boolean allowLessVisibleRows;
-        private boolean hasSearchbar;
-        private int searchbarLength;
+        private Searchbar searchbar;
         private TabButtonStates tabButtonStates;
         private ResourceLocation fillerLocation;
         private ResourceLocation iconLocation;
@@ -80,11 +79,10 @@ public class ModernTabs {
         private CustomTabTitel customTabTitel;
         private ModernColor backgroundColor;
 
-        public TabDesign(boolean sectionsEnabled, boolean allowLessVisibleRows, boolean hasSearchbar, int searchbarLength, @Nullable TabButtonStates tabButtonStates, @Nullable ResourceLocation fillerLocation, @Nullable ResourceLocation tabIconLocation, @Nullable ResourceLocation tabScrollerLocation, @Nullable CustomTabTitel customTabTitel, @Nullable ModernColor backgroundColor) {
+        public TabDesign(boolean sectionsEnabled, boolean allowLessVisibleRows, Searchbar searchbar, @Nullable TabButtonStates tabButtonStates, @Nullable ResourceLocation fillerLocation, @Nullable ResourceLocation tabIconLocation, @Nullable ResourceLocation tabScrollerLocation, @Nullable CustomTabTitel customTabTitel, @Nullable ModernColor backgroundColor) {
             this.sectionsEnabled = sectionsEnabled;
             this.allowLessVisibleRows = allowLessVisibleRows;
-            this.hasSearchbar = hasSearchbar;
-            this.searchbarLength = searchbarLength;
+            this.searchbar = searchbar;
             this.tabButtonStates = tabButtonStates;
             this.fillerLocation = fillerLocation;
             this.iconLocation = tabIconLocation;
@@ -94,7 +92,12 @@ public class ModernTabs {
         }
 
         public TabDesign() {
-            this(false, true, false, 89, null, DEFAULT_SPACE_FILLER, null, null, null, null);
+            this(false, true, null, null, DEFAULT_SPACE_FILLER, null, null, null, null);
+        }
+
+        public TabDesign withSections() {
+            this.sectionsEnabled = true;
+            return this;
         }
 
         public TabDesign sectionsEnabled(boolean sectionsEnabled) {
@@ -102,24 +105,23 @@ public class ModernTabs {
             return this;
         }
 
-        public TabDesign searchbar(boolean hasSearchbar) {
-            this.hasSearchbar = hasSearchbar;
-            return this;
-        }
-
-        public TabDesign searchbarLength(int searchbarLength) {
-            this.searchbarLength = searchbarLength;
-            return this;
-        }
-
-        public TabDesign searchbarWithLength(boolean hasSearchbar, int searchbarLength) {
-            this.hasSearchbar = hasSearchbar;
-            this.searchbarLength = searchbarLength;
+        public TabDesign withLessVisibleRows() {
+            this.allowLessVisibleRows = true;
             return this;
         }
 
         public TabDesign allowLessVisibleRows(boolean allowLessVisibleRows) {
             this.allowLessVisibleRows = allowLessVisibleRows;
+            return this;
+        }
+
+        public TabDesign searchbar(Searchbar searchbar) {
+            this.searchbar = searchbar;
+            return this;
+        }
+
+        public TabDesign withSearchbar() {
+            this.searchbar = new Searchbar();
             return this;
         }
 
@@ -174,16 +176,28 @@ public class ModernTabs {
 
             tabExtension.moderntabs$setSectionsEnabled(this.sectionsEnabled);
             tabExtension.moderntabs$setAllowLessVisibleRows(this.allowLessVisibleRows);
-            tabExtensionPlatform.moderntabs$setSearchbar(this.hasSearchbar);
-            tabExtensionPlatform.moderntabs$setSearchbarLength(this.searchbarLength);
             tabExtension.moderntabs$setCustomTabButtonStates(this.tabButtonStates);
             tabExtension.moderntabs$setFiller(this.fillerLocation);
             tabExtension.moderntabs$setCustomTabIcon(this.iconLocation);
             tabExtension.moderntabs$setCustomScroller(this.scrollerLocation);
             tabExtension.moderntabs$setCustomTabTitel(this.customTabTitel);
             tabExtension.moderntabs$setBackgroundColor(this.backgroundColor);
+
+            applySearchbar(tabExtension, tabExtensionPlatform);
         }
 
+        private void applySearchbar(CreativeModeTabExtension tabExtension, CreativeModeTabExtensionPlatform tabExtensionPlatform) {
+            tabExtensionPlatform.moderntabs$setSearchbarEnabled(this.searchbar != null);
+            if(searchbar != null) {
+                tabExtension.moderntabs$setSearchbarLocation(searchbar.getSearchbarLocation());
+                tabExtension.moderntabs$setSearchbarFontLocation(searchbar.getFontLocation());
+                tabExtension.moderntabs$setSearchbarOrientation(searchbar.getOrientation());
+                tabExtension.moderntabs$setSearchbarWidth(searchbar.getWidth());
+                tabExtension.moderntabs$setSearchbarHeight(searchbar.getHeight());
+                tabExtension.moderntabs$setSearchbarEditBoxHeight(searchbar.getEditBoxHeight());
+                tabExtensionPlatform.moderntabs$setSearchbarEditBoxWidth(searchbar.getEditBoxWidth());
+            }
+        }
 
         public boolean areSectionsEnabled() {
             return this.sectionsEnabled;
@@ -193,12 +207,8 @@ public class ModernTabs {
             return this.allowLessVisibleRows;
         }
 
-        public boolean hasSearchbar() {
-            return this.hasSearchbar;
-        }
-
-        public int getSearchbarLength() {
-            return this.searchbarLength;
+        public Searchbar getSearchbar() {
+            return this.searchbar;
         }
 
         public Optional<TabButtonStates> getTabButtonStates() {

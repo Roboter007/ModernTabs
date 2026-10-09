@@ -2,9 +2,9 @@ package de.Roboter007.moderntabs.tab.extensions;
 
 public interface CreativeModeTabExtensionPlatform {
 
-    void moderntabs$setSearchbar(boolean hasSearchbar);
+    void moderntabs$setSearchbarEnabled(boolean hasSearchbar);
     boolean moderntabs$hasSearchbar();
 
-    void moderntabs$setSearchbarLength(int searchbarLength);
-    int moderntabs$getSearchbarLength();
+    void moderntabs$setSearchbarEditBoxWidth(int searchbarLength);
+    int moderntabs$getSearchbarEditBoxWidth();
 }

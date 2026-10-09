@@ -23,7 +23,7 @@ public class CreativeModeTabMixin implements CreativeModeTabExtensionPlatform {
     private CreativeModeTab.Type type;
 
     @Override
-    public void moderntabs$setSearchbar(boolean hasSearchbar) {
+    public void moderntabs$setSearchbarEnabled(boolean hasSearchbar) {
         this.hasSearchBar = hasSearchbar;
         if(hasSearchbar) {
             type = CreativeModeTab.Type.SEARCH;
@@ -36,12 +36,12 @@ public class CreativeModeTabMixin implements CreativeModeTabExtensionPlatform {
     }
 
     @Override
-    public void moderntabs$setSearchbarLength(int searchbarLength) {
+    public void moderntabs$setSearchbarEditBoxWidth(int searchbarLength) {
         this.searchBarWidth = searchbarLength;
     }
 
     @Override
-    public int moderntabs$getSearchbarLength() {
+    public int moderntabs$getSearchbarEditBoxWidth() {
         return this.searchBarWidth;
     }
 }

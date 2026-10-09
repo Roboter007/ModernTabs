@@ -7,12 +7,14 @@ import de.Roboter007.moderntabs.tab.titel.AuraTabTitel;
 import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
 import de.Roboter007.moderntabs.tab.titel.SpriteTabTitel;
 import de.Roboter007.moderntabs.util.ModernColor;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
 import net.minecraft.client.multiplayer.SessionSearchTrees;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.CreativeModeTab;
 import org.spongepowered.asm.mixin.Mixin;
@@ -62,9 +64,11 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
                 }
             }
 
-            Font titelFont = font;
-            if(customTabTitel.getFont() != null) {
-                titelFont = customTabTitel.getFont();
+            ResourceLocation titelFontLocation;
+            if(customTabTitel.getFontLocation() != null) {
+                titelFontLocation = customTabTitel.getFontLocation();
+            } else {
+                titelFontLocation = Minecraft.DEFAULT_FONT;
             }
 
             ModernColor titelColor = new ModernColor(color);
@@ -78,9 +82,9 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
             }
 
             if(customTabTitel instanceof AuraTabTitel auraTabTitel) {
-                Font titelFont2 = font;
-                if(auraTabTitel.getFont2() != null) {
-                    titelFont2 = auraTabTitel.getFont2();
+                ResourceLocation titelFont2Location = Minecraft.DEFAULT_FONT;
+                if(auraTabTitel.getFont2Location() != null) {
+                    titelFont2Location = auraTabTitel.getFont2Location();
                 }
 
                 ModernColor titelColor2 = new ModernColor(color);
@@ -93,11 +97,11 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
                     titelDropShadow2 = auraTabTitel.isDroppingShadow2();
                 }
 
-                TitelRenderer.drawAuraText(guiGraphics, text, titelFont, titelFont2, titelColor.color(), titelColor2.color(), titelDropShadow, titelDropShadow2, x, y);
+                TitelRenderer.drawAuraText(guiGraphics, text, titelFontLocation, titelFont2Location, titelColor.color(), titelColor2.color(), titelDropShadow, titelDropShadow2, x, y);
             } else if(customTabTitel instanceof SpriteTabTitel spriteTabTitel) {
                 guiGraphics.blitSprite(spriteTabTitel.getSpriteTitelLocation(), x, y, spriteTabTitel.getWidth(), spriteTabTitel.getHeight());
             } else {
-                guiGraphics.drawString(titelFont, text, x, y, titelColor.color(), titelDropShadow);
+                guiGraphics.drawString(font, text.copy().withStyle(style -> style.withFont(titelFontLocation)), x, y, titelColor.color(), titelDropShadow);
             }
         } else {
             guiGraphics.drawString(this.font, text, x, y, color, dropShadow);

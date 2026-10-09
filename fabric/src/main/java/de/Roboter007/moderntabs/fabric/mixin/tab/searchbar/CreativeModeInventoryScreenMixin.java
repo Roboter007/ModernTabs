@@ -45,8 +45,7 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
         CreativeModeTabExtensionPlatform extension = (CreativeModeTabExtensionPlatform) tab;
 
         if(extension.moderntabs$hasSearchbar()) {
-            this.searchBox.setWidth(extension.moderntabs$getSearchbarLength());
-            this.searchBox.setX(this.leftPos + 171 - this.searchBox.getWidth());
+            this.searchBox.setWidth(extension.moderntabs$getSearchbarEditBoxWidth());
         }
     }
 

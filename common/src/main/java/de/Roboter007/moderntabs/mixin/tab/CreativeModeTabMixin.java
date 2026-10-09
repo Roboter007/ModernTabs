@@ -2,14 +2,19 @@ package de.Roboter007.moderntabs.mixin.tab;
 
 import de.Roboter007.moderntabs.tab.button.TabButtonStates;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
+import de.Roboter007.moderntabs.tab.searchbar.Searchbar;
+import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
 import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
 import de.Roboter007.moderntabs.util.ModernColor;
+import net.minecraft.client.gui.Font;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.*;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 @Mixin(CreativeModeTab.class)
@@ -19,6 +24,8 @@ public class CreativeModeTabMixin implements CreativeModeTabExtension {
     private Collection<ItemStack> displayItems;
     @Shadow
     private Set<ItemStack> displayItemsSearchTab;
+    @Shadow
+    boolean showTitle;
     @Unique
     public boolean moderntabs$sectionsEnabled = false;
     @Unique
@@ -35,6 +42,20 @@ public class CreativeModeTabMixin implements CreativeModeTabExtension {
     public ResourceLocation moderntabs$scroller = null;
     @Unique
     public ModernColor moderntabs$backgroundColor = null;
+
+    @Unique
+    public ResourceLocation moderntabs$searchbarLocation = null;
+    @Unique
+    public ResourceLocation moderntabs$searchbarFontLocation = null;
+    @Unique
+    public ElementOrientation moderntabs$searchbarOrientation = null;
+    @Unique
+    public int moderntabs$searchbarWidth = 0;
+    @Unique
+    public int moderntabs$searchbarHeight = 0;
+    @Unique
+    public int moderntabs$searchbarEditBoxHeight = 0;
+
 
 
     @Override
@@ -83,6 +104,67 @@ public class CreativeModeTabMixin implements CreativeModeTabExtension {
     @Override
     public TabButtonStates moderntabs$getCustomTabButtonStates() {
         return moderntabs$tabButtonStates;
+    }
+
+    @Override
+    @NotNull
+    public ResourceLocation moderntabs$getSearchbarLocation() {
+        return Objects.requireNonNullElse(this.moderntabs$searchbarLocation, Searchbar.DEFAULT_SEARCHBAR_LOCATION);
+    }
+
+    @Override
+    public void moderntabs$setSearchbarLocation(ResourceLocation searchbarLocation) {
+        this.moderntabs$searchbarLocation = searchbarLocation;
+    }
+
+    @Override
+    public ResourceLocation moderntabs$getSearchbarFontLocation() {
+        return this.moderntabs$searchbarFontLocation;
+    }
+
+    @Override
+    public void moderntabs$setSearchbarFontLocation(ResourceLocation fontLocation) {
+        this.moderntabs$searchbarFontLocation = fontLocation;
+    }
+
+    @Override
+    public ElementOrientation moderntabs$getSearchbarOrientation() {
+        return this.moderntabs$searchbarOrientation;
+    }
+
+    @Override
+    public void moderntabs$setSearchbarOrientation(ElementOrientation orientation) {
+        this.moderntabs$searchbarOrientation = orientation;
+    }
+
+    @Override
+    public int moderntabs$getSearchbarWidth() {
+        return this.moderntabs$searchbarWidth;
+    }
+
+    @Override
+    public void moderntabs$setSearchbarWidth(int searchbarWidth) {
+        this.moderntabs$searchbarWidth = searchbarWidth;
+    }
+
+    @Override
+    public int moderntabs$getSearchbarHeight() {
+        return this.moderntabs$searchbarHeight;
+    }
+
+    @Override
+    public void moderntabs$setSearchbarHeight(int searchbarHeight) {
+        this.moderntabs$searchbarHeight = searchbarHeight;
+    }
+
+    @Override
+    public int moderntabs$getSearchbarEditBoxHeight() {
+        return this.moderntabs$searchbarEditBoxHeight;
+    }
+
+    @Override
+    public void moderntabs$setSearchbarEditBoxHeight(int searchbarEditBoxHeight) {
+        this.moderntabs$searchbarEditBoxHeight = searchbarEditBoxHeight;
     }
 
     @Override

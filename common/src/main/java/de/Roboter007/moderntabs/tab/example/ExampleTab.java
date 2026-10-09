@@ -2,6 +2,7 @@ package de.Roboter007.moderntabs.tab.example;
 
 import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
+import de.Roboter007.moderntabs.tab.searchbar.Searchbar;
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
 import de.Roboter007.moderntabs.tab.titel.SpriteTabTitel;
 import de.Roboter007.moderntabs.util.ModernColor;
@@ -55,20 +56,22 @@ public final class ExampleTab {
 
     public static void init() {
         ModernColor example_color = new ModernColor("#36454F");
-        SpriteTabTitel spriteTabTitel = new SpriteTabTitel(ElementOrientation.CENTERED, example_color.copy().lighten(0.6f), ModernTabs.path("container/creative_inventory/titel"), 64, 10);
+        SpriteTabTitel spriteTabTitel = new SpriteTabTitel(ElementOrientation.LEFT, example_color.copy().lighten(0.6f), ModernTabs.path("container/creative_inventory/titel"), 64, 10);
+        Searchbar searchbar = new Searchbar().orientation(ElementOrientation.RIGHT);
+
         /*AuraTabTitel auraTabTitel = (AuraTabTitel) new AuraTabTitel()
                 .color2(new ModernColor("#36454F").darken(0.4f))
                 .color(new ModernColor("#36454F"))
                 .textOrientation(ElementOrientation.RIGHT)
                 .backgroundColor(new ModernColor("#36454F").darken(0.75f)); */
 
-        de.Roboter007.moderntabs.util.SectionUtil.addItemList(SECTION_BUILDING_BLOCKS, BUILDING_BLOCKS);
-        de.Roboter007.moderntabs.util.SectionUtil.addItemList(SECTION_TOOLS_AND_WEAPONS, TOOLS_AND_WEAPONS);
+        SectionUtil.addItemList(SECTION_BUILDING_BLOCKS, BUILDING_BLOCKS);
+        SectionUtil.addItemList(SECTION_TOOLS_AND_WEAPONS, TOOLS_AND_WEAPONS);
         SectionUtil.addItemList(SECTION_FOOD, FOOD);
 
         ModernTabs.TabDesign tabDesign = new ModernTabs.TabDesign()
                 .sectionsEnabled(true)
-                .searchbar(true)
+                .searchbar(searchbar)
                 .iconLocation(ModernTabs.path("container/creative_inventory/icon"))
                 .color(example_color)
                 .customTabTitel(spriteTabTitel);
