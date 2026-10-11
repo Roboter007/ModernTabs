@@ -2,7 +2,7 @@
   "priority": 2,
   "sectionToggle": {
     "defaultState": "collapsed",
-    "orientation": "left"
+    "orientation": "centered"
   },
   "title": {
     "text": { "translate": "moderntabs.creativeTab.section.food" },
@@ -11,7 +11,8 @@
     "orientation": "right"
   },
   "banner": {
-    "animation_mode": "not_animated",
+    "sprite": "moderntabs:banner/animated_example_2_banner",
+    "animation_mode": "play_continuously",
     "color": "#EEFFB0"
   },
   "overlay": {

@@ -2,7 +2,7 @@
   "priority": 1,
   "sectionToggle": {
     "defaultState": "expanded",
-    "orientation": "right"
+    "orientation": "left"
   },
   "title": {
     "text": { "translate": "moderntabs.creativeTab.section.tools_and_weapons" },
@@ -11,7 +11,8 @@
     "orientation": "centered"
   },
   "banner": {
-    "animation_mode": "not_animated",
+    "sprite": "moderntabs:banner/animated_example_banner",
+    "animation_mode": "play_on_hover",
     "color": "#CFDBFF"
   },
   "overlay": {

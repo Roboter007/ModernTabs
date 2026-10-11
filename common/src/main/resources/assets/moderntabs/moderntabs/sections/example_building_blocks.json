@@ -2,7 +2,7 @@
   "priority": 0,
   "sectionToggle": {
     "defaultState": "expanded",
-    "orientation": "centered"
+    "orientation": "right"
   },
   "title": {
     "text": { "translate": "moderntabs.creativeTab.section.building_blocks" },
@@ -10,8 +10,7 @@
     "secondaryColor": "#E6FFD1"
   },
   "banner": {
-    "sprite": "moderntabs:banner/animated_example_banner",
-    "animation_mode": "play_on_hover",
+    "animation_mode": "not_animated",
     "color": "#D1FFEA"
   },
   "overlay": {
