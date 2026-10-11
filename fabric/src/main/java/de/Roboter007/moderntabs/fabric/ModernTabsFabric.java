@@ -1,10 +1,11 @@
 package de.Roboter007.moderntabs.fabric;
 
 import de.Roboter007.moderntabs.ModernTabs;
+import de.Roboter007.moderntabs.command.ModernTabsCommand;
 import de.Roboter007.moderntabs.tab.example.ExampleTab;
 import de.Roboter007.moderntabs.util.SectionUtil;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -19,6 +20,7 @@ public final class ModernTabsFabric implements ModInitializer {
     public void onInitialize() {
         ModernTabs.applyTabDesign();
         CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> SectionUtil.resolveItemTags(registries));
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> ModernTabsCommand.register(dispatcher));
 
         if(ModernTabs.isExampleTabEnabled()) {
             Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ExampleTab.TAB_ID, ExampleTab.TAB);

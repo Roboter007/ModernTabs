@@ -5,7 +5,7 @@
     "orientation": "right"
   },
   "title": {
-    "text": { "text": "Tools & Weapons" },
+    "text": { "translate": "moderntabs.creativeTab.section.tools_and_weapons" },
     "color": "#CFF3FF",
     "secondaryColor": "CFFFF3",
     "orientation": "centered"

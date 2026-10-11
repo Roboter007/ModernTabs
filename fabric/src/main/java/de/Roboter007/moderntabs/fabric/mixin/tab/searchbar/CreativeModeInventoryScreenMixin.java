@@ -4,7 +4,6 @@ import de.Roboter007.moderntabs.fabric.tab.searchbar.SessionSearchTreesExtension
 import de.Roboter007.moderntabs.fabric.tab.section.CreativeModeTabSearchRegistry;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtensionPlatform;
 
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
@@ -81,9 +80,5 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
             key = SessionSearchTrees.CREATIVE_TAGS;
         }
         return ((SessionSearchTreesExtension) searchTrees).moderntabs$creativeTagSearch(key);
-    }
-
-    @Inject(method = "render", at = @At("TAIL"))
-    private void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
     }
 }

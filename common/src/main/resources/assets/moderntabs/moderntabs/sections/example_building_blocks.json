@@ -5,7 +5,7 @@
     "orientation": "centered"
   },
   "title": {
-    "text": { "text": "Building Blocks" },
+    "text": { "translate": "moderntabs.creativeTab.section.building_blocks" },
     "color": "#D1FFD3",
     "secondaryColor": "#E6FFD1"
   },

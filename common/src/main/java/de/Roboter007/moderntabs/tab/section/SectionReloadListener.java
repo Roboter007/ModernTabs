@@ -24,10 +24,10 @@ public class SectionReloadListener extends SimpleJsonResourceReloadListener {
     }
 
     @Override
-    protected void apply(final Map<ResourceLocation, JsonElement> map, final ResourceManager resourceManager, final ProfilerFiller profilerFiller) {
-        final Map<ResourceLocation, Section> parsed = new HashMap<>();
-        for (final Map.Entry<ResourceLocation, JsonElement> entry : map.entrySet()) {
-            final DataResult<Section> result = Section.CODEC.parse(JsonOps.INSTANCE, entry.getValue());
+    protected void apply(Map<ResourceLocation, JsonElement> map, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
+        Map<ResourceLocation, Section> parsed = new HashMap<>();
+        for (Map.Entry<ResourceLocation, JsonElement> entry : map.entrySet()) {
+            DataResult<Section> result = Section.CODEC.parse(JsonOps.INSTANCE, entry.getValue());
             if (result.isSuccess()) {
                 parsed.put(entry.getKey(), result.getOrThrow());
             } else {

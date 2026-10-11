@@ -59,12 +59,11 @@ public abstract class CreativeModeInventoryScreenMixin {
     @Inject(method = "getTooltipFromContainerItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/CreativeModeTabs;tabs()Ljava/util/List;"))
     private void moderntabs$getTooltipFromContainerItem(final ItemStack stack, final CallbackInfoReturnable<List<Component>> cir, @Local(ordinal = 1) final List<Component> list1, @Local final int i) {
         final ResourceLocation sectionId = SectionUtil.sectionOf(stack.getItem());
-        if (sectionId == null) {
-            return;
-        }
-        final Section section = Sections.get(sectionId);
-        if (section != null) {
-            list1.add(i, section.title().text().copy().withStyle(ChatFormatting.BLUE));
+        if (sectionId != null) {
+            final Section section = Sections.get(sectionId);
+            if (section != null) {
+                list1.add(i, section.title().text().copy().withStyle(ChatFormatting.BLUE));
+            }
         }
     }
 }

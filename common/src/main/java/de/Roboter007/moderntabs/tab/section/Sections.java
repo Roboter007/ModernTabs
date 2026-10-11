@@ -20,8 +20,7 @@ public final class Sections {
 
     private static Set<ResourceLocation> COLLAPSED_IDS = new HashSet<>();
 
-    private Sections() {
-    }
+    private Sections() {}
 
     public static boolean isCollapsible(Section section) {
         return section.sectionToggle().isPresent();
@@ -61,11 +60,11 @@ public final class Sections {
         return COLLAPSED_IDS;
     }
 
-    public static Section get(final ResourceLocation id) {
+    public static Section get(ResourceLocation id) {
         return SECTION_BY_ID.get(id);
     }
 
-    public static ResourceLocation getId(final Section section) {
+    public static ResourceLocation getId(Section section) {
         return IDS_BY_SECTION.get(section);
     }
 
@@ -73,16 +72,16 @@ public final class Sections {
         return SORTED;
     }
 
-    public static void reload(final Map<ResourceLocation, Section> newEntries) {
-        final Map<ResourceLocation, Section> byIdCopy = new HashMap<>(newEntries);
-        final Map<Section, ResourceLocation> idsCopy = new HashMap<>();
+    public static void reload(Map<ResourceLocation, Section> newEntries) {
+        Map<ResourceLocation, Section> byIdCopy = new HashMap<>(newEntries);
+        Map<Section, ResourceLocation> idsCopy = new HashMap<>();
         newEntries.forEach((id, section) -> idsCopy.put(section, id));
 
         SECTION_BY_ID = Map.copyOf(byIdCopy);
         IDS_BY_SECTION = Map.copyOf(idsCopy);
         SORTED = newEntries.values().stream().sorted().toList();
 
-        final Set<ResourceLocation> collapsed = new HashSet<>();
+        Set<ResourceLocation> collapsed = new HashSet<>();
 
         newEntries.forEach((id, section) -> {
             if (isCollapsedByDefault(section)) {

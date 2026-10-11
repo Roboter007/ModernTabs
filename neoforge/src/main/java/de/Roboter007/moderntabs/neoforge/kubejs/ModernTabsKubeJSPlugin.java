@@ -28,7 +28,7 @@ public class ModernTabsKubeJSPlugin implements KubeJSPlugin {
         bindings.add("TabButtonStates", TabButtonStates.class);
         bindings.add("ColoredTabButtonStates", ColoredTabButtonStates.class);
         bindings.add("SectionUtil", KubeJsSectionUtil.class);
-        bindings.add("Searchbar", Searchbar.class);
+        bindings.add("Searchbar", KubeJsSearchbar.class);
         bindings.add("ItemVisibility", SectionUtil.ItemVisibility.class);
     }
 }

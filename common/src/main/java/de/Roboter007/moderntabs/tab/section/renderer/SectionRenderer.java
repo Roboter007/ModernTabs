@@ -1,6 +1,5 @@
 package de.Roboter007.moderntabs.tab.section.renderer;
 
-import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.Roboter007.moderntabs.ModernTabs;
@@ -29,13 +28,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
 
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.ToIntFunction;
 
-public final class SectionRenderer {
+public class SectionRenderer {
 
     private static final int BANNER_WIDTH = 162;
     private static final int BANNER_HEIGHT = 18;
@@ -50,97 +48,94 @@ public final class SectionRenderer {
 
     public static final Map<CreativeModeTab, Object2IntOpenHashMap<ResourceLocation>> SECTIONS = new IdentityHashMap<>();
     public static final Map<CreativeModeTab, Integer> TOTAL_ROWS = new IdentityHashMap<>();
+    private static final Map<CreativeModeTab, List<Section>> TAB_SECTIONS = new IdentityHashMap<>();
+    private static final Map<CreativeModeTab, Set<ResourceLocation>> SEARCH_COLLAPSED = new IdentityHashMap<>();
 
     private SectionRenderer() {
     }
 
-    public static void renderBanners(final CreativeModeTab tab, final CreativeModeInventoryScreen screen, final GuiGraphics graphics, final int mouseX, final int mouseY) {
-        final Object2IntOpenHashMap<ResourceLocation> yValues = SECTIONS.get(tab);
-        if (yValues == null || yValues.isEmpty()) {
-            return;
+    public static void renderBanners(CreativeModeTab tab, CreativeModeInventoryScreen screen, GuiGraphics graphics, int mouseX, int mouseY) {
+        Object2IntOpenHashMap<ResourceLocation> yValues = SECTIONS.get(tab);
+        if (yValues != null && !yValues.isEmpty()) {
+            PoseStack ps = graphics.pose();
+            ps.pushPose();
+
+            RenderSystem.enableDepthTest();
+            RenderSystem.setShaderColor(1, 1, 1, 1);
+            int left = ((AbstractContainerScreenAccessor) screen).getLeftPos() + 8;
+            int top = ((AbstractContainerScreenAccessor) screen).getTopPos() + 17;
+            ps.translate(left, top, 0);
+
+            for (Section section : Sections.sortedEntries()) {
+                renderSection(tab, section, graphics, yValues, left, top, mouseX, mouseY);
+            }
+            renderEmptyRows(tab, graphics);
+
+            ps.popPose();
+            RenderSystem.disableDepthTest();
         }
-
-        final PoseStack ps = graphics.pose();
-        ps.pushPose();
-
-        RenderSystem.enableDepthTest();
-        RenderSystem.setShaderColor(1, 1, 1, 1);
-        final int left = ((AbstractContainerScreenAccessor) screen).getLeftPos() + 8;
-        final int top = ((AbstractContainerScreenAccessor) screen).getTopPos() + 17;
-        ps.translate(left, top, 0);
-
-        for (final Section section : Sections.sortedEntries()) {
-            renderSection(tab, section, graphics, yValues, left, top, mouseX, mouseY);
-        }
-        renderEmptyRows(tab, graphics);
-
-        ps.popPose();
-        RenderSystem.disableDepthTest();
     }
 
-    public static void renderSection(final CreativeModeTab tab, Section section, GuiGraphics graphics, final Object2IntOpenHashMap<ResourceLocation> yValues, final int left, final int top, final int mouseX, final int mouseY) {
+    public static void renderSection(CreativeModeTab tab, Section section, GuiGraphics graphics, Object2IntOpenHashMap<ResourceLocation> yValues, int left, int top, int mouseX, int mouseY) {
         CreativeModeTabExtension extension = (CreativeModeTabExtension) tab;
-        final ResourceLocation id = Sections.getId(section);
-        if (!yValues.containsKey(id)) {
-            return;
-        }
+        ResourceLocation id = Sections.getId(section);
+        if (yValues.containsKey(id)) {
+            int yValue = yValues.getInt(id);
+            int sectionRow = yValue - CURRENT_ROW;
+            if (sectionRow >= 0 && sectionRow <= 4) {
+                int x = 0;
+                int y = sectionRow * 18;
 
-        final int yValue = yValues.getInt(id);
-        final int sectionRow = yValue - CURRENT_ROW;
-        if (sectionRow < 0 || sectionRow > 4) {
-            return;
-        }
+                boolean isHovering = mouseX >= left + x && mouseX <= left + x + BANNER_WIDTH && mouseY >= top + y && mouseY <= top + y + BANNER_HEIGHT;
 
-        final int x = 0;
-        final int y = sectionRow * 18;
+                // render main banner sprite
+                renderSectionDecoration(extension, graphics, isHovering, section.banner(), x, y, BANNER_WIDTH, BANNER_HEIGHT);
 
-        final boolean isHovering = mouseX >= left + x && mouseX <= left + x + BANNER_WIDTH && mouseY >= top + y && mouseY <= top + y + BANNER_HEIGHT;
+                // render banner overlay sprite
+                if(section.overlay().isPresent()) {
+                    renderSectionDecoration(extension, graphics, isHovering, section.overlay().get(), x, y, BANNER_WIDTH, BANNER_HEIGHT);
+                }
 
-        // render main banner sprite
-        renderSectionDecoration(extension, graphics, isHovering, section.banner(), x, y, BANNER_WIDTH, BANNER_HEIGHT);
+                // render text
+                Component text = section.title().text();
+                Font font = Minecraft.getInstance().font;
+                int textWidth = font.width(text);
 
-        // render banner overlay sprite
-        if(section.overlay().isPresent()) {
-            renderSectionDecoration(extension, graphics, isHovering, section.overlay().get(), x, y, BANNER_WIDTH, BANNER_HEIGHT);
-        }
+                int orientatedX;
+                int backgroundMinX;
+                int backgroundMaxX;
+                int textX;
 
-        // render text
-        final Component text = section.title().text();
-        final Font font = Minecraft.getInstance().font;
-        final int textWidth = font.width(text);
+                if(section.title().orientation() == ElementOrientation.CENTERED) {
+                    orientatedX = (BANNER_WIDTH - textWidth) / 2;
+                    backgroundMinX = orientatedX - 2;
+                    backgroundMaxX = orientatedX + textWidth + 2;
+                    textX = orientatedX;
+                } else if (section.title().orientation() == ElementOrientation.RIGHT) {
+                    orientatedX = BANNER_WIDTH - textWidth;
+                    backgroundMinX = orientatedX - 8;
+                    backgroundMaxX = orientatedX + textWidth - 2;
+                    textX = orientatedX - 5;
+                } else {
+                    orientatedX = x;
+                    backgroundMinX = orientatedX + 2;
+                    backgroundMaxX = orientatedX + textWidth + 8;
+                    textX = orientatedX + 5;
+                }
 
-        final int orientatedX;
-        final int backgroundMinX;
-        final int backgroundMaxX;
-        final int textX;
+                int background = section.title().background();
+                graphics.fill(backgroundMinX, y + 2, backgroundMaxX, y + BANNER_HEIGHT - 2, background);
 
-        if(section.title().orientation() == ElementOrientation.CENTERED) {
-            orientatedX = (BANNER_WIDTH - textWidth) / 2;
-            backgroundMinX = orientatedX - 2;
-            backgroundMaxX = orientatedX + textWidth + 2;
-            textX = orientatedX;
-        } else if (section.title().orientation() == ElementOrientation.RIGHT) {
-            orientatedX = BANNER_WIDTH - textWidth;
-            backgroundMinX = orientatedX - 8;
-            backgroundMaxX = orientatedX + textWidth - 2;
-            textX = orientatedX - 5;
-        } else {
-            orientatedX = x;
-            backgroundMinX = orientatedX + 2;
-            backgroundMaxX = orientatedX + textWidth + 8;
-            textX = orientatedX + 5;
-        }
+                int light = section.title().color();
+                int dark = section.title().secondaryColor().orElseGet(() -> ColorUtil.darken(light, 0.2f));
 
-        final int background = section.title().background();
-        graphics.fill(backgroundMinX, y + 2, backgroundMaxX, y + BANNER_HEIGHT - 2, background);
+                TextRenderer.drawAuraText(graphics, text, dark, light, textX, y + 5);
 
-        final int light = section.title().color();
-        final int dark = section.title().secondaryColor().orElseGet(() -> ColorUtil.darken(light, 0.2f));
-
-        drawAuraText(graphics, text, dark, light, textX, y + 5);
-
-        if(canToggle(tab, section)) {
-            renderSectionToggle(extension, graphics, section, x, y, BANNER_WIDTH, BANNER_HEIGHT, isHovering);
+                boolean searching = isSearching(tab);
+                if(searching ? Sections.isCollapsible(section) : canToggle(tab, section)) {
+                    renderSectionToggle(extension, graphics, section, isCollapsed(tab, section), x, y, BANNER_WIDTH, BANNER_HEIGHT, isHovering && !searching);
+                }
+            }
         }
     }
 
@@ -148,8 +143,8 @@ public final class SectionRenderer {
         CreativeModeTabExtension extension = (CreativeModeTabExtension) tab;
 
         if(extension.moderntabs$hasFiller()) {
-            final int totalRows = TOTAL_ROWS.getOrDefault(tab, 0);
-            final int firstEmptyRow = Math.max(totalRows - CURRENT_ROW, 0);
+            int totalRows = TOTAL_ROWS.getOrDefault(tab, 0);
+            int firstEmptyRow = Math.max(totalRows - CURRENT_ROW, 0);
 
             if (extension.moderntabs$hasCustomBackgroundColor()) {
                 ModernColor color = extension.moderntabs$getBackgroundColor();
@@ -195,38 +190,7 @@ public final class SectionRenderer {
         }
     }
 
-    public static void drawAuraText(final GuiGraphics graphics, final Component text, final int color1, final int color2, final int x, final int y) {
-        final Font font = Minecraft.getInstance().font;
-        final Window window = Minecraft.getInstance().getWindow();
-        final float scale = (float) window.getGuiScale();
-
-        graphics.drawString(font, text, x, y, color1, true);
-
-        final PoseStack ps = graphics.pose();
-        ps.pushPose();
-        ps.translate(0, 0, 1);
-        final Matrix4f pose = ps.last().copy().pose();
-        final Vector3f position = pose.transformPosition(new Vector3f(x, y, 0));
-        final Vector3f corner = pose.transformPosition(new Vector3f(x + font.width(text), y + font.lineHeight / 1.8f, 0));
-
-        position.mul(scale);
-        corner.mul(scale);
-        final int height = (int) (corner.y - position.y);
-        final int width = (int) (corner.x - position.x);
-        RenderSystem.enableScissor(
-                (int) position.x,
-                window.getHeight() - (int) position.y - height,
-                width,
-                height
-        );
-
-        graphics.drawString(font, text, x, y, color2, false);
-
-        RenderSystem.disableScissor();
-        ps.popPose();
-    }
-
-    public static void renderSectionToggle(CreativeModeTabExtension extension, GuiGraphics graphics, Section section, int sectionX, int sectionY, int sectionW, int sectionH, boolean isHovering) {
+    public static void renderSectionToggle(CreativeModeTabExtension extension, GuiGraphics graphics, Section section, boolean collapsed, int sectionX, int sectionY, int sectionW, int sectionH, boolean isHovering) {
         int width = 11;
         int height = 8;
 
@@ -240,7 +204,6 @@ public final class SectionRenderer {
                 orientatedX = sectionX + 2;
             }
 
-            boolean collapsed = Sections.sectionCollapsed(section);
             ResourceLocation toggleButtonLocation;
             if(isHovering) {
                 toggleButtonLocation = collapsed ? EXTEND_BUTTON_SELECTED : COLLAPSE_BUTTON_SELECTED;
@@ -261,13 +224,13 @@ public final class SectionRenderer {
         }
     }
 
-    private static int itemRowsOf(final CreativeModeTab tab, final ResourceLocation id) {
-        final Object2IntOpenHashMap<ResourceLocation> yValues = SECTIONS.get(tab);
-        final int sectionRow = yValues.getInt(id);
+    private static int itemRowsOf(CreativeModeTab tab, ResourceLocation id) {
+        Object2IntOpenHashMap<ResourceLocation> yValues = SECTIONS.get(tab);
+        int sectionRow = yValues.getInt(id);
 
         int nextBannerRow = TOTAL_ROWS.getOrDefault(tab, 0);
-        for (final Object2IntMap.Entry<ResourceLocation> entry : yValues.object2IntEntrySet()) {
-            final int row = entry.getIntValue();
+        for (Object2IntMap.Entry<ResourceLocation> entry : yValues.object2IntEntrySet()) {
+            int row = entry.getIntValue();
             if (row > sectionRow && row < nextBannerRow) {
                 nextBannerRow = row;
             }
@@ -275,12 +238,12 @@ public final class SectionRenderer {
         return nextBannerRow - sectionRow - 1;
     }
 
-    public static boolean canToggle(final CreativeModeTab tab, final Section section) {
-        if (Sections.isCollapsible(section)) {
-            final CreativeModeTabExtension extension = (CreativeModeTabExtension) tab;
+    public static boolean canToggle(CreativeModeTab tab, Section section) {
+        if (Sections.isCollapsible(section) && !isSearching(tab)) {
+            CreativeModeTabExtension extension = (CreativeModeTabExtension) tab;
             if (!Sections.sectionCollapsed(section) && !extension.moderntabs$doesAllowLessVisibleRows()) {
-                final ResourceLocation id = Sections.getId(section);
-                final Object2IntOpenHashMap<ResourceLocation> yValues = SECTIONS.get(tab);
+                ResourceLocation id = Sections.getId(section);
+                Object2IntOpenHashMap<ResourceLocation> yValues = SECTIONS.get(tab);
 
                 if (id != null && yValues != null && yValues.containsKey(id)) {
                     return TOTAL_ROWS.getOrDefault(tab, 0) - itemRowsOf(tab, id) >= VISIBLE_ROWS;
@@ -294,16 +257,24 @@ public final class SectionRenderer {
         }
     }
 
-    public static void processItems(final CreativeModeTab tab, final Collection<ItemStack> originalDisplayItems, final Consumer<ItemStack> displayItems, final Consumer<ItemStack> searchItems) {
-        final Object2IntOpenHashMap<ResourceLocation> yValues = new Object2IntOpenHashMap<>();
+
+    private static boolean isCollapsed(CreativeModeTab tab, Section section) {
+        Set<ResourceLocation> searchCollapsed = SEARCH_COLLAPSED.get(tab);
+        return searchCollapsed != null ? searchCollapsed.contains(Sections.getId(section)) :  Sections.sectionCollapsed(section);
+    }
+
+    public static void processItems(CreativeModeTab tab, Collection<ItemStack> originalDisplayItems, Consumer<ItemStack> layoutItems, Consumer<ItemStack> contentItems, Consumer<ItemStack> searchItems) {
+        Object2IntOpenHashMap<ResourceLocation> yValues = new Object2IntOpenHashMap<>();
         SECTIONS.put(tab, yValues);
+        SEARCH_COLLAPSED.remove(tab);
 
-        final Map<Section, List<ItemStack>> sectionMap = new LinkedHashMap<>();
-        final List<ItemStack> unassigned = new ArrayList<>();
+        Map<Section, List<ItemStack>> sectionMap = new LinkedHashMap<>();
+        List<ItemStack> unassigned = new ArrayList<>();
 
-        for (final ItemStack stack : originalDisplayItems) {
-            final ResourceLocation sectionId = SectionUtil.sectionOf(stack.getItem());
-            final Section section = sectionId == null ? null : Sections.get(sectionId);
+        for (ItemStack stack : originalDisplayItems) {
+            ResourceLocation sectionId = SectionUtil.sectionOf(stack.getItem());
+            Section section = sectionId == null ? null : Sections.get(sectionId);
+
             if (section == null) {
                 unassigned.add(stack);
             } else {
@@ -314,58 +285,124 @@ public final class SectionRenderer {
         int y = 0;
 
         if (!unassigned.isEmpty()) {
-            final int count = countLeftoverItems(true, unassigned, displayItems, searchItems);
-            y = (int) Math.ceil(count / 9.0f);
-            final int remainder = count % 9;
-            if (remainder != 0) {
-                for (int i = 0; i < 9 - remainder; i++) {
-                    displayItems.accept(ItemStack.EMPTY);
+            int count = countLeftoverItems(true, unassigned, layoutItems, contentItems, searchItems);
+            y = (count + 8) / 9;
+            padToFullRow(count, layoutItems);
+        }
+
+        if (!sectionMap.isEmpty()) {
+            List<Section> sectionKeys = sectionMap.keySet().stream().sorted().toList();
+            TAB_SECTIONS.put(tab, sectionKeys);
+
+            int totalRows = layoutSections(sectionKeys, y, yValues, layoutItems, section -> countLeftoverItems(!Sections.sectionCollapsed(section), sectionMap.get(section), layoutItems, contentItems, searchItems));
+            TOTAL_ROWS.put(tab, totalRows);
+        } else {
+            TAB_SECTIONS.put(tab, List.of());
+        }
+    }
+
+    @Nullable
+    public static List<ItemStack> layoutSearchResults(CreativeModeTab tab, List<ItemStack> results) {
+        List<Section> tabSections = TAB_SECTIONS.get(tab);
+        if (tabSections != null && !tabSections.isEmpty()) {
+            Set<ResourceLocation> tabSectionIds = new HashSet<>();
+            for (Section section : tabSections) {
+                tabSectionIds.add(Sections.getId(section));
+            }
+
+            Map<ResourceLocation, List<ItemStack>> matches = new HashMap<>();
+            List<ItemStack> unassigned = new ArrayList<>();
+
+            for (ItemStack stack : results) {
+                ResourceLocation sectionId = SectionUtil.sectionOf(stack.getItem());
+                if (sectionId != null && tabSectionIds.contains(sectionId)) {
+                    matches.computeIfAbsent(sectionId, id -> new ArrayList<>()).add(stack);
+                } else {
+                    unassigned.add(stack);
+                }
+            }
+
+            List<ItemStack> layout = new ArrayList<>();
+            Object2IntOpenHashMap<ResourceLocation> yValues = new Object2IntOpenHashMap<>();
+            Set<ResourceLocation> collapsed = new HashSet<>();
+
+            int y = 0;
+            if (!unassigned.isEmpty()) {
+                layout.addAll(unassigned);
+                y = (unassigned.size() + 8) / 9;
+                padToFullRow(unassigned.size(), layout::add);
+            }
+
+            int totalRows = layoutSections(tabSections, y, yValues, layout::add, section -> {
+                ResourceLocation id = Sections.getId(section);
+                List<ItemStack> sectionMatches = matches.getOrDefault(id, List.of());
+
+                if (sectionMatches.isEmpty() && Sections.isCollapsible(section)) {
+                    collapsed.add(id);
+                    return 0;
+                } else {
+                    layout.addAll(sectionMatches);
+                    return sectionMatches.size();
+                }
+            });
+
+            SECTIONS.put(tab, yValues);
+            TOTAL_ROWS.put(tab, totalRows);
+            SEARCH_COLLAPSED.put(tab, collapsed);
+            return layout;
+        } else {
+            return null;
+        }
+    }
+
+    private static int layoutSections(List<Section> sections, int startRow, Object2IntOpenHashMap<ResourceLocation> yValues, Consumer<ItemStack> layoutItems, ToIntFunction<Section> emitItems) {
+        int y = startRow;
+
+        for (int i = 0; i < 9; i++) {
+            layoutItems.accept(ItemStack.EMPTY);
+        }
+
+        for (int index = 0; index < sections.size(); index++) {
+            Section section = sections.get(index);
+            int itemCount = emitItems.applyAsInt(section);
+
+            yValues.put(Sections.getId(section), y);
+            y += (itemCount + 8) / 9 + 1;
+
+            if (index != sections.size() - 1) {
+                int padding = 9 - itemCount % 9;
+                if (padding < 9) {
+                    padding += 9;
+                }
+                for (int i = 0; i < padding; i++) {
+                    layoutItems.accept(ItemStack.EMPTY);
                 }
             }
         }
-
-        if (sectionMap.isEmpty()) {
-            return;
-        }
-
-        for (int i = 0; i < 9; i++) {
-            displayItems.accept(ItemStack.EMPTY);
-        }
-
-        final List<Section> sectionKeys = sectionMap.keySet().stream().sorted().toList();
-        for (final Section section : sectionKeys) {
-            final int itemCount = countLeftoverItems(!Sections.sectionCollapsed(section), sectionMap.get(section), displayItems, searchItems);
-
-            final ResourceLocation id = Sections.getId(section);
-            yValues.put(id, y);
-            final int rowCount = (int) Math.ceil(itemCount / 9.0f);
-            y += rowCount + 1;
-
-            if (section.equals(sectionKeys.getLast())) {
-                break;
-            }
-
-            int padding = 9 - itemCount % 9;
-            if (padding < 9) {
-                padding += 9;
-            }
-            for (int i = 0; i < padding; i++) {
-                displayItems.accept(ItemStack.EMPTY);
-            }
-        }
-        TOTAL_ROWS.put(tab, y);
+        return y;
     }
 
-    private static int countLeftoverItems(boolean extended, final List<ItemStack> stacks, final Consumer<ItemStack> displayItems, final Consumer<ItemStack> searchItems) {
+    private static void padToFullRow(int count, Consumer<ItemStack> layoutItems) {
+        int remainder = count % 9;
+        if (remainder != 0) {
+            for (int i = 0; i < 9 - remainder; i++) {
+                layoutItems.accept(ItemStack.EMPTY);
+            }
+        }
+    }
+
+    private static int countLeftoverItems(boolean extended, List<ItemStack> stacks, Consumer<ItemStack> layoutItems, Consumer<ItemStack> contentItems, Consumer<ItemStack> searchItems) {
         int count = 0;
-        for (final ItemStack stack : stacks) {
-            final ItemStack transformed = SectionUtil.applyTransform(stack);
+        for (ItemStack stack : stacks) {
+            ItemStack transformed = SectionUtil.applyTransform(stack);
             if (SectionUtil.ItemVisibility.SEARCH_ONLY.has(transformed.getItem())) {
                 searchItems.accept(transformed);
             } else if (!SectionUtil.ItemVisibility.INVISIBLE.has(transformed.getItem())) {
                 searchItems.accept(transformed);
+                contentItems.accept(transformed);
+
                 if(extended) {
-                    displayItems.accept(transformed);
+                    layoutItems.accept(transformed);
                     count++;
                 }
             }
@@ -373,13 +410,17 @@ public final class SectionRenderer {
         return count;
     }
 
-    @Nullable
-    public static Section findSectionAt(final CreativeModeTab tab, final int left, final int top, final double mouseX, final double mouseY) {
-        final Object2IntOpenHashMap<ResourceLocation> yValues = SECTIONS.get(tab);
-        final int visibleRow = (int) ((mouseY - top) / BANNER_HEIGHT);
+    private static boolean isSearching(CreativeModeTab tab) {
+        return SEARCH_COLLAPSED.containsKey(tab);
+    }
 
-        if (!(yValues == null || yValues.isEmpty()) && !(mouseX < left || mouseX >= left + BANNER_WIDTH || mouseY < top) && visibleRow < VISIBLE_ROWS) {
-            for (final Object2IntMap.Entry<ResourceLocation> entry : yValues.object2IntEntrySet()) {
+    @Nullable
+    public static Section findSectionAt(CreativeModeTab tab, int left, int top, double mouseX, double mouseY) {
+        Object2IntOpenHashMap<ResourceLocation> yValues = SECTIONS.get(tab);
+        int visibleRow = (int) ((mouseY - top) / BANNER_HEIGHT);
+
+        if (yValues != null && !yValues.isEmpty() && mouseX >= left && mouseX < left + BANNER_WIDTH && mouseY >= top && visibleRow < VISIBLE_ROWS) {
+            for (Object2IntMap.Entry<ResourceLocation> entry : yValues.object2IntEntrySet()) {
                 if (entry.getIntValue() - CURRENT_ROW == visibleRow) {
                     return Sections.get(entry.getKey());
                 }
@@ -388,10 +429,10 @@ public final class SectionRenderer {
         return null;
     }
 
+    public static void setPlaying(ResourceLocation resourceLocation, boolean playing) {
+        TextureAtlasSprite sprite = Minecraft.getInstance().getGuiSprites().getSprite(resourceLocation);
+        SpriteContents.Ticker ticker = ((SpriteContentsExtension) sprite.contents()).moderntabs$getTicker();
 
-    public static void setPlaying(final ResourceLocation resourceLocation, final boolean playing) {
-        final TextureAtlasSprite sprite = Minecraft.getInstance().getGuiSprites().getSprite(resourceLocation);
-        final SpriteContents.Ticker ticker = ((SpriteContentsExtension) sprite.contents()).moderntabs$getTicker();
         if (ticker instanceof TickerExtension extension) {
             extension.moderntabs$setPlaying(playing);
         }

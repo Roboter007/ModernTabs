@@ -2,8 +2,9 @@ package de.Roboter007.moderntabs.mixin.tab.searchbar;
 
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtensionPlatform;
+import de.Roboter007.moderntabs.tab.extensions.SectionLayoutExtension;
+import de.Roboter007.moderntabs.tab.section.renderer.SectionRenderer;
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
-import de.Roboter007.moderntabs.util.FontUtil;
 import de.Roboter007.moderntabs.util.ModernColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -16,11 +17,16 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Collection;
+import java.util.List;
 
 @Mixin(CreativeModeInventoryScreen.class)
 public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingInventoryScreen<CreativeModeInventoryScreen.ItemPickerMenu> {
@@ -95,5 +101,30 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
     private void selectTab$IfNotSelected(CreativeModeTab tab, CallbackInfo ci) {
         this.searchBox.setX(this.leftPos + 82);
         this.searchBox.setFormatter((text, start) -> FormattedCharSequence.forward(text, Style.EMPTY.withFont(Minecraft.DEFAULT_FONT)));
+    }
+
+    @Redirect(method = {"selectTab", "refreshSearchResults", "tryRefreshInvalidatedTabs"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/CreativeModeTab;getDisplayItems()Ljava/util/Collection;"))
+    private Collection<ItemStack> moderntabs$useSectionLayout(CreativeModeTab tab) {
+        if (((CreativeModeTabExtension) tab).moderntabs$hasCustomSections()) {
+            return ((SectionLayoutExtension) tab).moderntabs$layoutSections();
+        }
+        return tab.getDisplayItems();
+    }
+
+
+    @Inject(method = "refreshSearchResults", at = @At("TAIL"))
+    private void moderntabs$layoutSearchResults(CallbackInfo ci) {
+        CreativeModeTabExtension tabExtension = (CreativeModeTabExtension) selectedTab;
+        CreativeModeTabExtensionPlatform tabExtensionPlatform = (CreativeModeTabExtensionPlatform) selectedTab;
+
+        if(tabExtension.moderntabs$hasCustomSections() && tabExtensionPlatform.moderntabs$hasSearchbar() && !this.searchBox.getValue().isEmpty()) {
+            List<ItemStack> layout = SectionRenderer.layoutSearchResults(selectedTab, List.copyOf(this.menu.items));
+
+            if (layout != null) {
+                this.menu.items.clear();
+                this.menu.items.addAll(layout);
+                this.menu.scrollTo(0.0F);
+            }
+        }
     }
 }

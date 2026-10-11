@@ -1,6 +1,8 @@
 {
-  "itemGroup.moderntabs.example": "ModernTabs Example",
-  "itemGroup.moderntabs.section.basics": "Basics",
-  "itemGroup.moderntabs.section.resources": "Resources",
-  "itemGroup.moderntabs.section.redstone": "Redstone"
+  "moderntabs.creativeTab.example": "ModernTabs Example",
+  "moderntabs.creativeTab.section.building_blocks": "Building Blocks",
+  "moderntabs.creativeTab.section.tools_and_weapons": "Tools & Weapons",
+  "moderntabs.creativeTab.section.food": "Food",
+  "moderntabs.command.tabList": "All tabs created by - %s:",
+  "moderntabs.command.clickToCopy": "[Click to copy]%s"
 }

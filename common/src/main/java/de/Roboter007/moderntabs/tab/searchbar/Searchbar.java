@@ -2,7 +2,6 @@ package de.Roboter007.moderntabs.tab.searchbar;
 
 import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
-import net.minecraft.client.gui.Font;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
@@ -48,10 +47,6 @@ public class Searchbar {
     public Searchbar orientation(ElementOrientation orientation) {
         this.orientation = orientation;
         return this;
-    }
-
-    public Searchbar font(String fontId) {
-        return this.font(ResourceLocation.parse(fontId));
     }
 
     public Searchbar font(@Nullable ResourceLocation fontLocation) {

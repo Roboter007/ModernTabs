@@ -42,7 +42,7 @@ public final class ExampleTab {
     );
 
     public static final CreativeModeTab TAB = ModernTabsPlatform.get().creativeBuilder()
-            .title(Component.translatable("itemGroup.moderntabs.example"))
+            .title(Component.translatable("moderntabs.creativeTab.example"))
             .displayItems((parameters, output) -> {
                 BUILDING_BLOCKS.forEach(output::accept);
                 TOOLS_AND_WEAPONS.forEach(output::accept);
@@ -70,7 +70,7 @@ public final class ExampleTab {
         SectionUtil.addItemList(SECTION_FOOD, FOOD);
 
         ModernTabs.TabDesign tabDesign = new ModernTabs.TabDesign()
-                .sectionsEnabled(true)
+                .withSections()
                 .searchbar(searchbar)
                 .iconLocation(ModernTabs.path("container/creative_inventory/icon"))
                 .color(example_color)

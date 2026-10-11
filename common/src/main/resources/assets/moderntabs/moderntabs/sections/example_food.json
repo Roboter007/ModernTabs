@@ -5,7 +5,7 @@
     "orientation": "left"
   },
   "title": {
-    "text": { "text": "Food" },
+    "text": { "translate": "moderntabs.creativeTab.section.food" },
     "color": "#FFE9B0",
     "secondaryColor": "#FFC1B0",
     "orientation": "right"

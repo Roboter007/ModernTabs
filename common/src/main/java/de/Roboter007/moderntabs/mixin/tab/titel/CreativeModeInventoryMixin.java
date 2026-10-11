@@ -1,7 +1,7 @@
 package de.Roboter007.moderntabs.mixin.tab.titel;
 
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
-import de.Roboter007.moderntabs.tab.section.renderer.TitelRenderer;
+import de.Roboter007.moderntabs.tab.section.renderer.TextRenderer;
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
 import de.Roboter007.moderntabs.tab.titel.AuraTabTitel;
 import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
@@ -12,7 +12,6 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
-import net.minecraft.client.multiplayer.SessionSearchTrees;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -97,7 +96,7 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
                     titelDropShadow2 = auraTabTitel.isDroppingShadow2();
                 }
 
-                TitelRenderer.drawAuraText(guiGraphics, text, titelFontLocation, titelFont2Location, titelColor.color(), titelColor2.color(), titelDropShadow, titelDropShadow2, x, y);
+                TextRenderer.drawAuraText(guiGraphics, text, titelFontLocation, titelFont2Location, titelColor.color(), titelColor2.color(), titelDropShadow, titelDropShadow2, x, y);
             } else if(customTabTitel instanceof SpriteTabTitel spriteTabTitel) {
                 guiGraphics.blitSprite(spriteTabTitel.getSpriteTitelLocation(), x, y, spriteTabTitel.getWidth(), spriteTabTitel.getHeight());
             } else {

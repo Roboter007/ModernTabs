@@ -2,74 +2,64 @@ package de.Roboter007.moderntabs.mixin.tab.banner;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
-import de.Roboter007.moderntabs.tab.section.Sections;
+import de.Roboter007.moderntabs.tab.extensions.SectionLayoutExtension;
 import de.Roboter007.moderntabs.tab.section.renderer.SectionRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackLinkedSet;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 @Mixin(CreativeModeTab.class)
-public class CreativeModeTabMixin {
+public class CreativeModeTabMixin implements SectionLayoutExtension {
 
     @Shadow
     private Collection<ItemStack> displayItems;
     @Shadow
     private Set<ItemStack> displayItemsSearchTab;
+
     @Unique
     private Collection<ItemStack> moderntabs$sourceDisplayItems = null;
-    @Unique
-    private Set<ResourceLocation> moderntabs$appliedCollapsedState = null;
 
     @WrapMethod(method = "buildContents")
     private void moderntabs$buildContents(final CreativeModeTab.ItemDisplayParameters parameters, final Operation<Void> original) {
         original.call(parameters);
 
-        final CreativeModeTabExtension tabExtension = (CreativeModeTabExtension) this;
+        CreativeModeTabExtension tabExtension = (CreativeModeTabExtension) this;
 
-        if(tabExtension.moderntabs$hasCustomSections()) {
+        if (tabExtension.moderntabs$hasCustomSections()) {
             this.moderntabs$sourceDisplayItems = this.displayItems;
-            this.moderntabs$rebuildSections();
+            Collection<ItemStack> content = ItemStackLinkedSet.createTypeAndComponentsSet();
+            Set<ItemStack> searchable = ItemStackLinkedSet.createTypeAndComponentsSet();
+
+            SectionRenderer.processItems((CreativeModeTab) (Object) this, this.moderntabs$sourceDisplayItems, stack -> {}, content::add, searchable::add);
+
+            this.displayItems = content;
+            this.displayItemsSearchTab = searchable;
         } else {
             this.moderntabs$sourceDisplayItems = null;
         }
     }
 
-    @Unique
-    public void moderntabs$rebuildSections() {
-        if (this.moderntabs$sourceDisplayItems != null) {
-            final CreativeModeTab self = (CreativeModeTab) (Object) this;
-            final List<ItemStack> newDisplayItems = new LinkedList<>();
-            final Set<ItemStack> newSearchItems = new LinkedHashSet<>();
-            SectionRenderer.processItems(self, this.moderntabs$sourceDisplayItems, newDisplayItems::add, newSearchItems::add);
-
-            this.displayItems = newDisplayItems;
-            this.displayItemsSearchTab = newSearchItems;
-            this.moderntabs$appliedCollapsedState = Sections.collapsedState();
+    @Override
+    public Collection<ItemStack> moderntabs$layoutSections() {
+        if (this.moderntabs$sourceDisplayItems == null) {
+            return this.displayItems;
+        } else {
+            List<ItemStack> layout = new ArrayList<>();
+            SectionRenderer.processItems((CreativeModeTab) (Object) this, this.moderntabs$sourceDisplayItems, layout::add, stack -> {}, stack -> {});
+            return layout;
         }
-    }
-
-    @Unique
-    public void moderntabs$rebuildSectionsIfOutdated() {
-        if (this.moderntabs$appliedCollapsedState != Sections.collapsedState()) {
-            this.moderntabs$rebuildSections();
-        }
-    }
-
-    @Inject(method = "getDisplayItems", at = @At("HEAD"))
-    private void moderntabs$syncSections(final CallbackInfoReturnable<Collection<ItemStack>> cir) {
-        this.moderntabs$rebuildSectionsIfOutdated();
     }
 }

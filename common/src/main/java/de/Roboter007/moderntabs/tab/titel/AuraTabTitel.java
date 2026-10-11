@@ -1,9 +1,7 @@
 package de.Roboter007.moderntabs.tab.titel;
 
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
-import de.Roboter007.moderntabs.util.FontUtil;
 import de.Roboter007.moderntabs.util.ModernColor;
-import net.minecraft.client.gui.Font;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
