@@ -16,7 +16,7 @@
     "tab.banner.SpriteContentsTickerMixin",
     "tab.button.CreativeModeInventoryScreenMixin",
     "tab.icon.CreativeModeInventoryMixin",
-    "tab.scroller.CreativeModeInventoryMixin",
+    "tab.scrollbar.CreativeModeInventoryMixin",
     "tab.searchbar.CreativeModeInventoryScreenMixin",
     "tab.titel.CreativeModeInventoryMixin"
   ],

@@ -4,10 +4,9 @@ import de.Roboter007.moderntabs.tab.button.ColoredTabButtonStates;
 import de.Roboter007.moderntabs.tab.button.TabButtonStates;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
-import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtensionPlatform;
 import de.Roboter007.moderntabs.tab.searchbar.Searchbar;
 import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
-import de.Roboter007.moderntabs.util.ModernColor;
+import de.Roboter007.moderntabs.color.ModernColor;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -76,10 +75,10 @@ public class ModernTabs {
         private ResourceLocation fillerLocation;
         private ResourceLocation iconLocation;
         private ResourceLocation scrollerLocation;
-        private CustomTabTitel customTabTitel;
+        private CustomTabTitel<?> customTabTitel;
         private ModernColor backgroundColor;
 
-        public TabDesign(boolean sectionsEnabled, boolean allowLessVisibleRows, Searchbar searchbar, @Nullable TabButtonStates tabButtonStates, @Nullable ResourceLocation fillerLocation, @Nullable ResourceLocation tabIconLocation, @Nullable ResourceLocation tabScrollerLocation, @Nullable CustomTabTitel customTabTitel, @Nullable ModernColor backgroundColor) {
+        public TabDesign(boolean sectionsEnabled, boolean allowLessVisibleRows, Searchbar searchbar, @Nullable TabButtonStates tabButtonStates, @Nullable ResourceLocation fillerLocation, @Nullable ResourceLocation tabIconLocation, @Nullable ResourceLocation tabScrollerLocation, @Nullable CustomTabTitel<?> customTabTitel, @Nullable ModernColor backgroundColor) {
             this.sectionsEnabled = sectionsEnabled;
             this.allowLessVisibleRows = allowLessVisibleRows;
             this.searchbar = searchbar;
@@ -92,7 +91,7 @@ public class ModernTabs {
         }
 
         public TabDesign() {
-            this(false, true, null, null, DEFAULT_SPACE_FILLER, null, null, null, null);
+            this(false, false, null, null, DEFAULT_SPACE_FILLER, null, null, null, null);
         }
 
         public TabDesign withSections() {
@@ -145,7 +144,7 @@ public class ModernTabs {
             return this;
         }
 
-        public TabDesign customTabTitel(CustomTabTitel customTabTitel) {
+        public TabDesign customTabTitel(CustomTabTitel<?> customTabTitel) {
             this.customTabTitel = customTabTitel;
             return this;
         }
@@ -172,31 +171,16 @@ public class ModernTabs {
                 throw new NullPointerException(ModernTabs.MOD_NAME +  "ModernTabs - couldn't find tab in the registry!");
             }
             CreativeModeTabExtension tabExtension = (CreativeModeTabExtension) tab;
-            CreativeModeTabExtensionPlatform tabExtensionPlatform = (CreativeModeTabExtensionPlatform) tab;
 
             tabExtension.moderntabs$setSectionsEnabled(this.sectionsEnabled);
             tabExtension.moderntabs$setAllowLessVisibleRows(this.allowLessVisibleRows);
             tabExtension.moderntabs$setCustomTabButtonStates(this.tabButtonStates);
+            tabExtension.moderntabs$setCustomSearchbar(this.searchbar);
             tabExtension.moderntabs$setFiller(this.fillerLocation);
             tabExtension.moderntabs$setCustomTabIcon(this.iconLocation);
             tabExtension.moderntabs$setCustomScroller(this.scrollerLocation);
             tabExtension.moderntabs$setCustomTabTitel(this.customTabTitel);
             tabExtension.moderntabs$setBackgroundColor(this.backgroundColor);
-
-            applySearchbar(tabExtension, tabExtensionPlatform);
-        }
-
-        private void applySearchbar(CreativeModeTabExtension tabExtension, CreativeModeTabExtensionPlatform tabExtensionPlatform) {
-            tabExtensionPlatform.moderntabs$setSearchbarEnabled(this.searchbar != null);
-            if(searchbar != null) {
-                tabExtension.moderntabs$setSearchbarLocation(searchbar.getSearchbarLocation());
-                tabExtension.moderntabs$setSearchbarFontLocation(searchbar.getFontLocation());
-                tabExtension.moderntabs$setSearchbarOrientation(searchbar.getOrientation());
-                tabExtension.moderntabs$setSearchbarWidth(searchbar.getWidth());
-                tabExtension.moderntabs$setSearchbarHeight(searchbar.getHeight());
-                tabExtension.moderntabs$setSearchbarEditBoxHeight(searchbar.getEditBoxHeight());
-                tabExtensionPlatform.moderntabs$setSearchbarEditBoxWidth(searchbar.getEditBoxWidth());
-            }
         }
 
         public boolean areSectionsEnabled() {
@@ -227,7 +211,7 @@ public class ModernTabs {
             return Optional.of(this.scrollerLocation);
         }
 
-        public Optional<CustomTabTitel> getCustomTabTitel() {
+        public Optional<CustomTabTitel<?>> getCustomTabTitel() {
             return Optional.of(this.customTabTitel);
         }
 

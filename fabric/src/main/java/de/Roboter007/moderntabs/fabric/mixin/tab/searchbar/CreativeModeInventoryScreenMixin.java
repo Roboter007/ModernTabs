@@ -2,8 +2,8 @@ package de.Roboter007.moderntabs.fabric.mixin.tab.searchbar;
 
 import de.Roboter007.moderntabs.fabric.tab.searchbar.SessionSearchTreesExtension;
 import de.Roboter007.moderntabs.fabric.tab.section.CreativeModeTabSearchRegistry;
-import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtensionPlatform;
 
+import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
@@ -41,10 +41,10 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
 
     @Inject(method = "selectTab", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/inventory/CreativeModeInventoryScreen;refreshSearchResults()V", shift = At.Shift.BEFORE))
     private void selectTab(CreativeModeTab tab, CallbackInfo ci) {
-        CreativeModeTabExtensionPlatform extension = (CreativeModeTabExtensionPlatform) tab;
+        CreativeModeTabExtension tabExtension = (CreativeModeTabExtension) tab;
 
-        if(extension.moderntabs$hasSearchbar()) {
-            this.searchBox.setWidth(extension.moderntabs$getSearchbarEditBoxWidth());
+        if(tabExtension.moderntabs$hasCustomSearchbar()) {
+            this.searchBox.setWidth(tabExtension.moderntabs$getCustomSearchbar().getEditBoxWidth());
         }
     }
 
@@ -54,8 +54,10 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
             SessionSearchTreesExtension extension = (SessionSearchTreesExtension) searchTrees;
 
             for (CreativeModeTab tab : CreativeModeTabs.allTabs()) {
+                CreativeModeTabExtension tabExtension = (CreativeModeTabExtension) tab;
+
                 // search tab is already handled -> ignore it here
-                if (tab != CreativeModeTabs.searchTab() && ((CreativeModeTabExtensionPlatform) tab).moderntabs$hasSearchbar()) {
+                if (tab != CreativeModeTabs.searchTab() && tabExtension.moderntabs$hasCustomSearchbar()) {
                     List<ItemStack> list = List.copyOf(tab.getDisplayItems());
                     extension.moderntabs$updateCreativeTooltips(registries, list, CreativeModeTabSearchRegistry.getNameSearchKey(tab));
                     extension.moderntabs$updateCreativeTags(list, CreativeModeTabSearchRegistry.getTagSearchKey(tab));

@@ -33,7 +33,7 @@ public class KubeJsSectionUtil {
         }
     }
 
-    public static void setVisibility(String itemId, final SectionUtil.ItemVisibility type) {
+    public static void setVisibility(String itemId, SectionUtil.ItemVisibility type) {
         SectionUtil.setVisibility(ResourceLocation.parse(itemId), type);
     }
 

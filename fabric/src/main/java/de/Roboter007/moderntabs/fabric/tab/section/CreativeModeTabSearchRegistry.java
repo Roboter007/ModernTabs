@@ -9,7 +9,7 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtensionPlatform;
+import de.Roboter007.moderntabs.platform.SearchbarPlatform;
 import net.minecraft.client.multiplayer.SessionSearchTrees;
 import net.minecraft.client.searchtree.SearchTree;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -56,7 +56,7 @@ public class CreativeModeTabSearchRegistry {
 
     @Nullable
     public static SessionSearchTrees.Key getNameSearchKey(CreativeModeTab tab) {
-        CreativeModeTabExtensionPlatform tabExtensionPlatform = (CreativeModeTabExtensionPlatform) tab;
+        SearchbarPlatform tabExtensionPlatform = (SearchbarPlatform) tab;
         if (tab == CreativeModeTabs.searchTab())
             return SessionSearchTrees.CREATIVE_NAMES;
 
@@ -68,7 +68,7 @@ public class CreativeModeTabSearchRegistry {
 
     @Nullable
     public static SessionSearchTrees.Key getTagSearchKey(CreativeModeTab tab) {
-        CreativeModeTabExtensionPlatform tabExtensionPlatform = (CreativeModeTabExtensionPlatform) tab;
+        SearchbarPlatform tabExtensionPlatform = (SearchbarPlatform) tab;
 
         if (tab == CreativeModeTabs.searchTab())
             return SessionSearchTrees.CREATIVE_TAGS;

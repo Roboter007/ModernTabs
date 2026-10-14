@@ -76,23 +76,23 @@ public final class SectionUtil {
         }
     }
 
-    public static ResourceLocation sectionOf(final ItemLike item) {
+    public static ResourceLocation sectionOf(ItemLike item) {
         return ITEM_TO_SECTION.get(BuiltInRegistries.ITEM.getKey(item.asItem()));
     }
 
-    public static void setVisibility(final ItemLike item, final ItemVisibility type) {
+    public static void setVisibility(ItemLike item, ItemVisibility type) {
         ITEM_VISIBILITY.put(BuiltInRegistries.ITEM.getKey(item.asItem()), type);
     }
 
-    public static void setVisibility(final ResourceLocation item, final ItemVisibility type) {
+    public static void setVisibility(ResourceLocation item, ItemVisibility type) {
         ITEM_VISIBILITY.put(item, type);
     }
 
-    public static void setStackTransform(final ItemLike item, final Function<Item, ItemStack> transform) {
+    public static void setStackTransform(ItemLike item, Function<Item, ItemStack> transform) {
         STACK_TRANSFORM.put(item.asItem(), transform);
     }
 
-    public static ItemStack applyTransform(final ItemStack stack) {
+    public static ItemStack applyTransform(ItemStack stack) {
         final Function<Item, ItemStack> transform = STACK_TRANSFORM.get(stack.getItem());
         return transform == null ? stack : transform.apply(stack.getItem());
     }
@@ -101,7 +101,7 @@ public final class SectionUtil {
         INVISIBLE,
         SEARCH_ONLY;
 
-        public boolean has(final Item item) {
+        public boolean has(Item item) {
             return this == ITEM_VISIBILITY.get(BuiltInRegistries.ITEM.getKey(item));
         }
     }

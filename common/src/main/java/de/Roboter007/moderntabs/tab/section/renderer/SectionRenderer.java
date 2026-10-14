@@ -13,7 +13,7 @@ import de.Roboter007.moderntabs.tab.extensions.TickerExtension;
 import de.Roboter007.moderntabs.tab.section.Sections;
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
 import de.Roboter007.moderntabs.util.ColorUtil;
-import de.Roboter007.moderntabs.util.ModernColor;
+import de.Roboter007.moderntabs.color.ModernColor;
 import de.Roboter007.moderntabs.util.SectionUtil;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;

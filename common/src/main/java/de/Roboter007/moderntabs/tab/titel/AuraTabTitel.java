@@ -1,19 +1,20 @@
 package de.Roboter007.moderntabs.tab.titel;
 
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
-import de.Roboter007.moderntabs.util.ModernColor;
+import de.Roboter007.moderntabs.color.ModernColor;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector2i;
 
 // uses the same text style of the tab banners
-public class AuraTabTitel extends CustomTabTitel {
+public class AuraTabTitel extends CustomTabTitel<AuraTabTitel> {
 
     private ResourceLocation font2Location;
     private ModernColor color2;
     private Boolean dropShadow2;
 
-    public AuraTabTitel(@Nullable ElementOrientation textOrientation, @Nullable ModernColor backgroundColor, @Nullable ResourceLocation font1Location, @Nullable ResourceLocation font2Location, @Nullable ModernColor color1, @Nullable ModernColor color2, @Nullable Boolean dropShadow1, @Nullable Boolean dropShadow2) {
-        super(textOrientation, backgroundColor, font1Location, color1, dropShadow1);
+    public AuraTabTitel(@Nullable ElementOrientation textOrientation, @Nullable Vector2i offset, @Nullable ModernColor backgroundColor, @Nullable ResourceLocation font1Location, @Nullable ResourceLocation font2Location, @Nullable ModernColor color1, @Nullable ModernColor color2, @Nullable Boolean dropShadow1, @Nullable Boolean dropShadow2) {
+        super(textOrientation, offset, backgroundColor, font1Location, color1, dropShadow1);
         this.font2Location = font2Location;
         this.color2 = color2;
         this.dropShadow2 = dropShadow2;

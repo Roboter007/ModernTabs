@@ -1,8 +1,8 @@
-package de.Roboter007.moderntabs.mixin.tab.scroller;
+package de.Roboter007.moderntabs.mixin.tab.scrollbar;
 
 import de.Roboter007.moderntabs.graphics.CustomGuiGraphics;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
-import de.Roboter007.moderntabs.util.ModernColor;
+import de.Roboter007.moderntabs.color.ModernColor;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.resources.ResourceLocation;

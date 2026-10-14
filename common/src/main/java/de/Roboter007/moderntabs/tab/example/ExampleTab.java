@@ -1,11 +1,13 @@
 package de.Roboter007.moderntabs.tab.example;
 
 import de.Roboter007.moderntabs.ModernTabs;
+import de.Roboter007.moderntabs.color.ColorPresets;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
 import de.Roboter007.moderntabs.tab.searchbar.Searchbar;
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
+import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
 import de.Roboter007.moderntabs.tab.titel.SpriteTabTitel;
-import de.Roboter007.moderntabs.util.ModernColor;
+import de.Roboter007.moderntabs.color.ModernColor;
 import de.Roboter007.moderntabs.util.SectionUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -56,7 +58,13 @@ public final class ExampleTab {
 
     public static void init() {
         ModernColor example_color = new ModernColor("#36454F");
-        SpriteTabTitel spriteTabTitel = new SpriteTabTitel(ElementOrientation.LEFT, example_color.copy().lighten(0.6f), ModernTabs.path("container/creative_inventory/titel"), 64, 10);
+        SpriteTabTitel spriteTabTitel = new SpriteTabTitel()
+                .backgroundColor(example_color.copy().lighten(0.6f))
+                .textOrientation(ElementOrientation.LEFT)
+                .spriteTitelLocation(ModernTabs.path("container/creative_inventory/titel"))
+                .width(64)
+                .height(10);
+
         Searchbar searchbar = new Searchbar().orientation(ElementOrientation.RIGHT);
 
         /*AuraTabTitel auraTabTitel = (AuraTabTitel) new AuraTabTitel()

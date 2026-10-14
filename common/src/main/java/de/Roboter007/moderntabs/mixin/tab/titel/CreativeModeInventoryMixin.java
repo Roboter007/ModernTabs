@@ -6,7 +6,7 @@ import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
 import de.Roboter007.moderntabs.tab.titel.AuraTabTitel;
 import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
 import de.Roboter007.moderntabs.tab.titel.SpriteTabTitel;
-import de.Roboter007.moderntabs.util.ModernColor;
+import de.Roboter007.moderntabs.color.ModernColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -39,7 +39,7 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
     protected int renderLabels(GuiGraphics guiGraphics, Font font, Component text, int x, int y, int color, boolean dropShadow) {
         CreativeModeTabExtension creativeModeTabExtension = (CreativeModeTabExtension) selectedTab;
         if(creativeModeTabExtension.moderntabs$hasCustomTabTitelRendering()) {
-            CustomTabTitel customTabTitel = creativeModeTabExtension.moderntabs$getCustomTabTitel();
+            CustomTabTitel<?> customTabTitel = creativeModeTabExtension.moderntabs$getCustomTabTitel();
 
             final int textWidth;
             if(customTabTitel instanceof SpriteTabTitel spriteTabTitel) {
@@ -79,6 +79,9 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
             if(customTabTitel.isDroppingShadow() != null) {
                 titelDropShadow = customTabTitel.isDroppingShadow();
             }
+
+            x = x + customTabTitel.getOffset().x();
+            y = y + customTabTitel.getOffset().y();
 
             if(customTabTitel instanceof AuraTabTitel auraTabTitel) {
                 ResourceLocation titelFont2Location = Minecraft.DEFAULT_FONT;

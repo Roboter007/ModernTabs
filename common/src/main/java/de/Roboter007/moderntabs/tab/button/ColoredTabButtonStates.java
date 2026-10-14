@@ -1,6 +1,6 @@
 package de.Roboter007.moderntabs.tab.button;
 
-import de.Roboter007.moderntabs.util.ModernColor;
+import de.Roboter007.moderntabs.color.ModernColor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

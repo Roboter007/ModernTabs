@@ -1,13 +1,15 @@
 package de.Roboter007.moderntabs.tab.searchbar;
 
 import de.Roboter007.moderntabs.ModernTabs;
+import de.Roboter007.moderntabs.tab.TabElement;
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector2i;
 
 import java.util.Objects;
 
-public class Searchbar {
+public class Searchbar extends TabElement<Searchbar> {
 
     public static final ResourceLocation DEFAULT_SEARCHBAR_LOCATION = ModernTabs.path("searchbar/default_searchbar");
 
@@ -21,7 +23,8 @@ public class Searchbar {
     private int editBoxWidth;
     private int editBoxHeight;
 
-    public Searchbar(@Nullable ResourceLocation searchbarLocation, @Nullable ResourceLocation fontLocation, ElementOrientation orientation, int width, int height, int editBoxWidth, int editBoxHeight) {
+    public Searchbar(@Nullable ResourceLocation searchbarLocation, @Nullable ResourceLocation fontLocation, ElementOrientation orientation, Vector2i offset, int width, int height, int editBoxWidth, int editBoxHeight) {
+        super(offset);
         this.searchbarLocation = searchbarLocation;
         this.fontLocation = fontLocation;
         this.orientation = orientation;
@@ -31,12 +34,12 @@ public class Searchbar {
         this.editBoxHeight = editBoxHeight;
     }
 
-    public Searchbar(ElementOrientation orientation, int width, int height, int editBoxWidth, int editBoxHeight) {
-        this(null, null, orientation, width, height, editBoxWidth, editBoxHeight);
+    public Searchbar(ElementOrientation orientation, Vector2i offset, int width, int height, int editBoxWidth, int editBoxHeight) {
+        this(null, null, orientation, offset, width, height, editBoxWidth, editBoxHeight);
     }
 
     public Searchbar() {
-        this(ElementOrientation.RIGHT, 90, 12, 89, 9);
+        this(ElementOrientation.RIGHT, new Vector2i(), 90, 12, 89, 9);
     }
 
     public Searchbar searchbarLocation(@Nullable ResourceLocation searchbarLocation) {

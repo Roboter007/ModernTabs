@@ -1,14 +1,14 @@
 package de.Roboter007.moderntabs.tab.titel;
 
+import de.Roboter007.moderntabs.tab.TabElement;
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
-import de.Roboter007.moderntabs.util.FontUtil;
-import de.Roboter007.moderntabs.util.ModernColor;
-import net.minecraft.client.gui.Font;
+import de.Roboter007.moderntabs.color.ModernColor;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector2i;
 
 // uses the vanilla Minecraft text style that can be configured
-public class CustomTabTitel {
+public class CustomTabTitel<T extends CustomTabTitel<?>> extends TabElement<T> {
 
     private ModernColor backgroundColor;
     private ModernColor color;
@@ -17,7 +17,8 @@ public class CustomTabTitel {
     private ResourceLocation fontLocation;
     private Boolean dropShadow;
 
-    public CustomTabTitel(@Nullable ElementOrientation tabTextOrientation, @Nullable ModernColor backgroundColor, @Nullable ResourceLocation fontLocation, @Nullable ModernColor color, @Nullable Boolean dropShadow) {
+    public CustomTabTitel(@Nullable ElementOrientation tabTextOrientation, @Nullable Vector2i offset, @Nullable ModernColor backgroundColor, @Nullable ResourceLocation fontLocation, @Nullable ModernColor color, @Nullable Boolean dropShadow) {
+        super(offset);
         this.tabTextOrientation = tabTextOrientation;
         this.backgroundColor = backgroundColor;
         this.fontLocation = fontLocation;
@@ -26,36 +27,36 @@ public class CustomTabTitel {
     }
 
     public CustomTabTitel() {
-        this(null, null, null, null, false);
+        this(null, null, null, null, null, false);
     }
 
-    public CustomTabTitel textOrientation(ElementOrientation textOrientation) {
+    public T textOrientation(ElementOrientation textOrientation) {
         this.tabTextOrientation = textOrientation;
-        return this;
+        return this.self();
     }
 
-    public CustomTabTitel backgroundColor(ModernColor backgroundColor) {
+    public T backgroundColor(ModernColor backgroundColor) {
         this.backgroundColor = backgroundColor;
-        return this;
+        return this.self();
     }
 
-    public CustomTabTitel font(String fontId) {
+    public T font(String fontId) {
         return this.font(ResourceLocation.parse(fontId));
     }
 
-    public CustomTabTitel font(ResourceLocation fontLocation) {
+    public T font(ResourceLocation fontLocation) {
         this.fontLocation = fontLocation;
-        return this;
+        return this.self();
     }
 
-    public CustomTabTitel color(ModernColor color) {
+    public T color(ModernColor color) {
         this.color = color;
-        return this;
+        return this.self();
     }
 
-    public CustomTabTitel dropShadow(boolean dropShadow) {
+    public T dropShadow(boolean dropShadow) {
         this.dropShadow = dropShadow;
-        return this;
+        return this.self();
     }
 
 
@@ -80,7 +81,7 @@ public class CustomTabTitel {
     }
 
 
-    public CustomTabTitel copy() {
-        return new CustomTabTitel(this.tabTextOrientation, this.backgroundColor, this.fontLocation, this.color, this.dropShadow);
+    public CustomTabTitel<?> copy() {
+        return new CustomTabTitel<>(this.tabTextOrientation, this.offset, this.backgroundColor, this.fontLocation, this.color, this.dropShadow);
     }
 }

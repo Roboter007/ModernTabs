@@ -1,6 +1,6 @@
-package de.Roboter007.moderntabs.tab.extensions;
+package de.Roboter007.moderntabs.platform;
 
-public interface CreativeModeTabExtensionPlatform {
+public interface SearchbarPlatform {
 
     void moderntabs$setSearchbarEnabled(boolean hasSearchbar);
     boolean moderntabs$hasSearchbar();

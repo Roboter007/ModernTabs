@@ -1,11 +1,11 @@
 package de.Roboter007.moderntabs.neoforge.mixin.tab.searchbar;
 
-import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtensionPlatform;
+import de.Roboter007.moderntabs.platform.SearchbarPlatform;
 import net.minecraft.world.item.CreativeModeTab;
 import org.spongepowered.asm.mixin.*;
 
-@Mixin(CreativeModeTab.class)
-public class CreativeModeTabMixin implements CreativeModeTabExtensionPlatform {
+@Mixin(value = CreativeModeTab.class, priority = 500)
+public class CreativeModeTabMixin implements SearchbarPlatform {
 
     @Mutable
     @Shadow

@@ -3,8 +3,6 @@ package de.Roboter007.moderntabs.tab.section.renderer;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import de.Roboter007.moderntabs.util.ColorUtil;
-import de.Roboter007.moderntabs.util.ModernColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -13,8 +11,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-
-import java.util.Optional;
 
 public class TextRenderer {
 

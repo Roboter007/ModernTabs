@@ -1,13 +1,11 @@
 package de.Roboter007.moderntabs.tab.extensions;
 
 import de.Roboter007.moderntabs.tab.button.TabButtonStates;
-import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
+import de.Roboter007.moderntabs.tab.searchbar.Searchbar;
 import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
-import de.Roboter007.moderntabs.util.ModernColor;
-import net.minecraft.client.gui.Font;
+import de.Roboter007.moderntabs.color.ModernColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
 public interface CreativeModeTabExtension {
 
@@ -22,7 +20,12 @@ public interface CreativeModeTabExtension {
     boolean moderntabs$doesAllowLessVisibleRows();
 
     // searchbar
-    @NotNull
+
+    Searchbar moderntabs$getCustomSearchbar();
+    void moderntabs$setCustomSearchbar(Searchbar searchbar);
+    boolean moderntabs$hasCustomSearchbar();
+
+    /*@NotNull
     ResourceLocation moderntabs$getSearchbarLocation();
     void moderntabs$setSearchbarLocation(ResourceLocation fontLocation);
 
@@ -42,11 +45,11 @@ public interface CreativeModeTabExtension {
     void moderntabs$setSearchbarHeight(int searchbarHeight);
 
     int moderntabs$getSearchbarEditBoxHeight();
-    void moderntabs$setSearchbarEditBoxHeight(int searchbarEditBoxHeight);
+    void moderntabs$setSearchbarEditBoxHeight(int searchbarEditBoxHeight); */
 
     // tab titles
-    void moderntabs$setCustomTabTitel(CustomTabTitel customTabTitel);
-    CustomTabTitel moderntabs$getCustomTabTitel();
+    void moderntabs$setCustomTabTitel(CustomTabTitel<?> customTabTitel);
+    CustomTabTitel<?> moderntabs$getCustomTabTitel();
     default boolean moderntabs$hasCustomTabTitelRendering() {
         return moderntabs$getCustomTabTitel() != null;
     }
