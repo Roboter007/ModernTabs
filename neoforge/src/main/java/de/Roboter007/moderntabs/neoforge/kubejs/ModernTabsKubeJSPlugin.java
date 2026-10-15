@@ -1,6 +1,7 @@
 package de.Roboter007.moderntabs.neoforge.kubejs;
 
 import de.Roboter007.moderntabs.ModernTabs;
+import de.Roboter007.moderntabs.color.ColorPresets;
 import de.Roboter007.moderntabs.color.SimpleColor;
 import de.Roboter007.moderntabs.tab.button.ColoredTabButtonStates;
 import de.Roboter007.moderntabs.tab.button.TabButtonStates;
@@ -23,6 +24,7 @@ public class ModernTabsKubeJSPlugin implements KubeJSPlugin {
         bindings.add("ElementOrientation", ElementOrientation.class);
         bindings.add("ComplexColor", ComplexColor.class);
         bindings.add("SimpleColor", SimpleColor.class);
+        bindings.add("ColorPresets", ColorPresets.class);
         bindings.add("AuraTabTitel", AuraTabTitel.class);
         bindings.add("SpriteTabTitel", SpriteTabTitel.class);
         bindings.add("CustomTabTitel", CustomTabTitel.class);
