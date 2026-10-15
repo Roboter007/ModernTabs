@@ -40,7 +40,8 @@ processResources {
             mod_description        : rootProject.mod_description,
             license                : rootProject.license,
             minecraft_version_range: rootProject.minecraft_version_range,
-            neoforge_version       : rootProject.neoforge_version
+            minecraft_version      : rootProject.minecraft_version,
+            fabric_loader_version  : rootProject.fabric_loader_version
     ]
 
     inputs.properties(props)

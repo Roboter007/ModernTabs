@@ -45,17 +45,19 @@ dependencies {
     common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
     shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')
 
-    compileOnly "dev.latvian.mods:rhino:2101.2.8-build.91"
+    compileOnly "dev.latvian.mods:rhino:$rhino_version"
     compileOnly "dev.latvian.mods:kubejs-neoforge:$kubejs_version"
 }
 
 processResources {
     def props = [
             version                : project.version,
+            neoforge_loader_version: rootProject.neoforge_loader_version,
             mod_id                 : rootProject.mod_id,
             mod_name               : rootProject.mod_name,
             mod_author             : rootProject.mod_author,
             mod_description        : rootProject.mod_description,
+            mod_side               : rootProject.mod_side,
             license                : rootProject.license,
             minecraft_version_range: rootProject.minecraft_version_range,
             neoforge_version       : rootProject.neoforge_version
