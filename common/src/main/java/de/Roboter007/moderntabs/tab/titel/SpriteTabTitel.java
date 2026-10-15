@@ -1,7 +1,7 @@
 package de.Roboter007.moderntabs.tab.titel;
 
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
-import de.Roboter007.moderntabs.color.ModernColor;
+import de.Roboter007.moderntabs.color.ComplexColor;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -14,7 +14,7 @@ public class SpriteTabTitel extends CustomTabTitel<SpriteTabTitel> {
     private int width;
     private int height;
 
-    public SpriteTabTitel(@Nullable ElementOrientation textOrientation, @Nullable Vector2i offset, @Nullable ModernColor backgroundColor, @NotNull ResourceLocation spriteTitelLocation, int width, int height) {
+    public SpriteTabTitel(@Nullable ElementOrientation textOrientation, @Nullable Vector2i offset, @Nullable ComplexColor backgroundColor, @NotNull ResourceLocation spriteTitelLocation, int width, int height) {
         super(textOrientation, offset, backgroundColor, null, null, null);
         this.spriteTitelLocation = spriteTitelLocation;
         this.width = width;

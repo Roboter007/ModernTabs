@@ -2,7 +2,7 @@ package de.Roboter007.moderntabs.tab.titel;
 
 import de.Roboter007.moderntabs.tab.TabElement;
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
-import de.Roboter007.moderntabs.color.ModernColor;
+import de.Roboter007.moderntabs.color.SimpleColor;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector2i;
@@ -10,14 +10,14 @@ import org.joml.Vector2i;
 // uses the vanilla Minecraft text style that can be configured
 public class CustomTabTitel<T extends CustomTabTitel<?>> extends TabElement<T> {
 
-    private ModernColor backgroundColor;
-    private ModernColor color;
+    private SimpleColor backgroundColor;
+    private SimpleColor color;
 
     private ElementOrientation tabTextOrientation;
     private ResourceLocation fontLocation;
     private Boolean dropShadow;
 
-    public CustomTabTitel(@Nullable ElementOrientation tabTextOrientation, @Nullable Vector2i offset, @Nullable ModernColor backgroundColor, @Nullable ResourceLocation fontLocation, @Nullable ModernColor color, @Nullable Boolean dropShadow) {
+    public CustomTabTitel(@Nullable ElementOrientation tabTextOrientation, @Nullable Vector2i offset, @Nullable SimpleColor backgroundColor, @Nullable ResourceLocation fontLocation, @Nullable SimpleColor color, @Nullable Boolean dropShadow) {
         super(offset);
         this.tabTextOrientation = tabTextOrientation;
         this.backgroundColor = backgroundColor;
@@ -35,7 +35,7 @@ public class CustomTabTitel<T extends CustomTabTitel<?>> extends TabElement<T> {
         return this.self();
     }
 
-    public T backgroundColor(ModernColor backgroundColor) {
+    public T backgroundColor(SimpleColor backgroundColor) {
         this.backgroundColor = backgroundColor;
         return this.self();
     }
@@ -49,7 +49,7 @@ public class CustomTabTitel<T extends CustomTabTitel<?>> extends TabElement<T> {
         return this.self();
     }
 
-    public T color(ModernColor color) {
+    public T color(SimpleColor color) {
         this.color = color;
         return this.self();
     }
@@ -64,7 +64,7 @@ public class CustomTabTitel<T extends CustomTabTitel<?>> extends TabElement<T> {
         return tabTextOrientation;
     }
 
-    public ModernColor getBackgroundColor() {
+    public SimpleColor getBackgroundColor() {
         return backgroundColor;
     }
 
@@ -72,7 +72,7 @@ public class CustomTabTitel<T extends CustomTabTitel<?>> extends TabElement<T> {
         return fontLocation;
     }
 
-    public ModernColor getColor() {
+    public SimpleColor getColor() {
         return color;
     }
 

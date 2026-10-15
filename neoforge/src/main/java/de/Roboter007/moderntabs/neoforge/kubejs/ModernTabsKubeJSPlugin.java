@@ -1,13 +1,14 @@
 package de.Roboter007.moderntabs.neoforge.kubejs;
 
 import de.Roboter007.moderntabs.ModernTabs;
+import de.Roboter007.moderntabs.color.SimpleColor;
 import de.Roboter007.moderntabs.tab.button.ColoredTabButtonStates;
 import de.Roboter007.moderntabs.tab.button.TabButtonStates;
 import de.Roboter007.moderntabs.tab.titel.AuraTabTitel;
 import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
 import de.Roboter007.moderntabs.tab.titel.SpriteTabTitel;
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
-import de.Roboter007.moderntabs.color.ModernColor;
+import de.Roboter007.moderntabs.color.ComplexColor;
 import de.Roboter007.moderntabs.util.SectionUtil;
 import dev.latvian.mods.kubejs.plugin.KubeJSPlugin;
 import dev.latvian.mods.kubejs.script.BindingRegistry;
@@ -20,7 +21,8 @@ public class ModernTabsKubeJSPlugin implements KubeJSPlugin {
         bindings.add("ModernTabs", ModernTabs.class);
         bindings.add("TabDesign", KubeJsTabDesign.class);
         bindings.add("ElementOrientation", ElementOrientation.class);
-        bindings.add("ModernColor", ModernColor.class);
+        bindings.add("ComplexColor", ComplexColor.class);
+        bindings.add("SimpleColor", SimpleColor.class);
         bindings.add("AuraTabTitel", AuraTabTitel.class);
         bindings.add("SpriteTabTitel", SpriteTabTitel.class);
         bindings.add("CustomTabTitel", CustomTabTitel.class);

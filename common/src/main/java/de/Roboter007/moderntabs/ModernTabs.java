@@ -1,12 +1,12 @@
 package de.Roboter007.moderntabs;
 
+import de.Roboter007.moderntabs.color.SimpleColor;
 import de.Roboter007.moderntabs.tab.button.ColoredTabButtonStates;
 import de.Roboter007.moderntabs.tab.button.TabButtonStates;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
 import de.Roboter007.moderntabs.tab.searchbar.Searchbar;
 import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
-import de.Roboter007.moderntabs.color.ModernColor;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -76,9 +76,9 @@ public class ModernTabs {
         private ResourceLocation iconLocation;
         private ResourceLocation scrollerLocation;
         private CustomTabTitel<?> customTabTitel;
-        private ModernColor backgroundColor;
+        private SimpleColor backgroundColor;
 
-        public TabDesign(boolean sectionsEnabled, boolean allowLessVisibleRows, Searchbar searchbar, @Nullable TabButtonStates tabButtonStates, @Nullable ResourceLocation fillerLocation, @Nullable ResourceLocation tabIconLocation, @Nullable ResourceLocation tabScrollerLocation, @Nullable CustomTabTitel<?> customTabTitel, @Nullable ModernColor backgroundColor) {
+        public TabDesign(boolean sectionsEnabled, boolean allowLessVisibleRows, Searchbar searchbar, @Nullable TabButtonStates tabButtonStates, @Nullable ResourceLocation fillerLocation, @Nullable ResourceLocation tabIconLocation, @Nullable ResourceLocation tabScrollerLocation, @Nullable CustomTabTitel<?> customTabTitel, @Nullable SimpleColor backgroundColor) {
             this.sectionsEnabled = sectionsEnabled;
             this.allowLessVisibleRows = allowLessVisibleRows;
             this.searchbar = searchbar;
@@ -91,7 +91,7 @@ public class ModernTabs {
         }
 
         public TabDesign() {
-            this(false, false, null, null, DEFAULT_SPACE_FILLER, null, null, null, null);
+            this(false, true, null, null, DEFAULT_SPACE_FILLER, null, null, null, null);
         }
 
         public TabDesign withSections() {
@@ -149,18 +149,18 @@ public class ModernTabs {
             return this;
         }
 
-        public TabDesign backgroundColor(ModernColor backgroundColor) {
+        public TabDesign backgroundColor(SimpleColor backgroundColor) {
             this.backgroundColor = backgroundColor;
             return this;
         }
 
-        public TabDesign color(ModernColor color) {
+        public TabDesign color(SimpleColor color) {
             this.backgroundColor = color;
             this.tabButtonStates = new ColoredTabButtonStates(color);
             return this;
         }
 
-        public TabDesign color(ModernColor color, String namespace, String tabIdentifier) {
+        public TabDesign color(SimpleColor color, String namespace, String tabIdentifier) {
             this.backgroundColor = color;
             this.tabButtonStates = new ColoredTabButtonStates(color, namespace, tabIdentifier);
             return this;
@@ -215,7 +215,7 @@ public class ModernTabs {
             return Optional.of(this.customTabTitel);
         }
 
-        public Optional<ModernColor> getBackgroundColor() {
+        public Optional<SimpleColor> getBackgroundColor() {
             return Optional.of(this.backgroundColor);
         }
 

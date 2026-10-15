@@ -1,13 +1,13 @@
 package de.Roboter007.moderntabs.mixin.tab.button;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import de.Roboter007.moderntabs.color.SimpleColor;
 import de.Roboter007.moderntabs.graphics.CustomGuiGraphics;
 import de.Roboter007.moderntabs.tab.button.ColoredTabButtonStates;
 import de.Roboter007.moderntabs.tab.button.TabButtonStates;
 import de.Roboter007.moderntabs.tab.button.TabButtonTexture;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.platform.CreativeModeInventoryScreenPlatform;
-import de.Roboter007.moderntabs.color.ModernColor;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
@@ -43,7 +43,7 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
 
             if(tabIconBackground instanceof ColoredTabButtonStates coloredTabIconBackground) {
                 // set color
-                ModernColor color = coloredTabIconBackground.color();
+                SimpleColor color = coloredTabIconBackground.color();
                 guiGraphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
 
                 // render

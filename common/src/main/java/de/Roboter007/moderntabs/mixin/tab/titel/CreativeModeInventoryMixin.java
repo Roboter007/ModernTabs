@@ -1,12 +1,12 @@
 package de.Roboter007.moderntabs.mixin.tab.titel;
 
+import de.Roboter007.moderntabs.color.SimpleColor;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.tab.section.renderer.TextRenderer;
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
 import de.Roboter007.moderntabs.tab.titel.AuraTabTitel;
 import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
 import de.Roboter007.moderntabs.tab.titel.SpriteTabTitel;
-import de.Roboter007.moderntabs.color.ModernColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -70,7 +70,7 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
                 titelFontLocation = Minecraft.DEFAULT_FONT;
             }
 
-            ModernColor titelColor = new ModernColor(color);
+            SimpleColor titelColor = new SimpleColor(color);
             if(customTabTitel.getColor() != null) {
                 titelColor = customTabTitel.getColor();
             }
@@ -89,7 +89,7 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
                     titelFont2Location = auraTabTitel.getFont2Location();
                 }
 
-                ModernColor titelColor2 = new ModernColor(color);
+                SimpleColor titelColor2 = new SimpleColor(color);
                 if(auraTabTitel.getColor2() != null) {
                     titelColor2 = auraTabTitel.getColor2();
                 }

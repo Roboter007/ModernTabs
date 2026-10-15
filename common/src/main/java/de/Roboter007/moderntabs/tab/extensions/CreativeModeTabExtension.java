@@ -1,9 +1,9 @@
 package de.Roboter007.moderntabs.tab.extensions;
 
+import de.Roboter007.moderntabs.color.SimpleColor;
 import de.Roboter007.moderntabs.tab.button.TabButtonStates;
 import de.Roboter007.moderntabs.tab.searchbar.Searchbar;
 import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
-import de.Roboter007.moderntabs.color.ModernColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -24,28 +24,6 @@ public interface CreativeModeTabExtension {
     Searchbar moderntabs$getCustomSearchbar();
     void moderntabs$setCustomSearchbar(Searchbar searchbar);
     boolean moderntabs$hasCustomSearchbar();
-
-    /*@NotNull
-    ResourceLocation moderntabs$getSearchbarLocation();
-    void moderntabs$setSearchbarLocation(ResourceLocation fontLocation);
-
-    ResourceLocation moderntabs$getSearchbarFontLocation();
-    void moderntabs$setSearchbarFontLocation(ResourceLocation fontLocation);
-    default boolean moderntabs$searchbarHasCustomFont() {
-        return moderntabs$getSearchbarFontLocation() != null;
-    }
-
-    ElementOrientation moderntabs$getSearchbarOrientation();
-    void moderntabs$setSearchbarOrientation(ElementOrientation orientation);
-
-    int moderntabs$getSearchbarWidth();
-    void moderntabs$setSearchbarWidth(int searchbarWidth);
-
-    int moderntabs$getSearchbarHeight();
-    void moderntabs$setSearchbarHeight(int searchbarHeight);
-
-    int moderntabs$getSearchbarEditBoxHeight();
-    void moderntabs$setSearchbarEditBoxHeight(int searchbarEditBoxHeight); */
 
     // tab titles
     void moderntabs$setCustomTabTitel(CustomTabTitel<?> customTabTitel);
@@ -83,8 +61,8 @@ public interface CreativeModeTabExtension {
     }
 
     // tab background color
-    ModernColor moderntabs$getBackgroundColor();
-    void moderntabs$setBackgroundColor(ModernColor backgroundColor);
+    SimpleColor moderntabs$getBackgroundColor();
+    void moderntabs$setBackgroundColor(SimpleColor backgroundColor);
     default boolean moderntabs$hasCustomBackgroundColor() {
         return moderntabs$getBackgroundColor() != null;
     }

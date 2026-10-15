@@ -4,8 +4,8 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import de.Roboter007.moderntabs.color.ComplexColor;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
-import de.Roboter007.moderntabs.color.ModernColor;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
@@ -33,9 +33,9 @@ public class ModernTabsCommand {
         return context -> {
             String modId = StringArgumentType.getString(context, "modId");
             if(ModernTabsPlatform.get().getLoadedMods().contains(modId)) {
-                int basicColor = new ModernColor("B5B5B5").color();
-                int modIdColor = new ModernColor("F58727").color();
-                int tabColor = new ModernColor("4DFFE7").color();
+                int basicColor = new ComplexColor("B5B5B5").color();
+                int modIdColor = new ComplexColor("F58727").color();
+                int tabColor = new ComplexColor("4DFFE7").color();
 
                 MutableComponent tabs = Component.literal("\n");
                 List<String> tabList = getTabsBy(modId);

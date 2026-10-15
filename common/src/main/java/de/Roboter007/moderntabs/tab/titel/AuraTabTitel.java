@@ -1,7 +1,7 @@
 package de.Roboter007.moderntabs.tab.titel;
 
+import de.Roboter007.moderntabs.color.SimpleColor;
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
-import de.Roboter007.moderntabs.color.ModernColor;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector2i;
@@ -10,10 +10,10 @@ import org.joml.Vector2i;
 public class AuraTabTitel extends CustomTabTitel<AuraTabTitel> {
 
     private ResourceLocation font2Location;
-    private ModernColor color2;
+    private SimpleColor color2;
     private Boolean dropShadow2;
 
-    public AuraTabTitel(@Nullable ElementOrientation textOrientation, @Nullable Vector2i offset, @Nullable ModernColor backgroundColor, @Nullable ResourceLocation font1Location, @Nullable ResourceLocation font2Location, @Nullable ModernColor color1, @Nullable ModernColor color2, @Nullable Boolean dropShadow1, @Nullable Boolean dropShadow2) {
+    public AuraTabTitel(@Nullable ElementOrientation textOrientation, @Nullable Vector2i offset, @Nullable SimpleColor backgroundColor, @Nullable ResourceLocation font1Location, @Nullable ResourceLocation font2Location, @Nullable SimpleColor color1, @Nullable SimpleColor color2, @Nullable Boolean dropShadow1, @Nullable Boolean dropShadow2) {
         super(textOrientation, offset, backgroundColor, font1Location, color1, dropShadow1);
         this.font2Location = font2Location;
         this.color2 = color2;
@@ -35,7 +35,7 @@ public class AuraTabTitel extends CustomTabTitel<AuraTabTitel> {
         return this;
     }
 
-    public AuraTabTitel color2(ModernColor color2) {
+    public AuraTabTitel color2(SimpleColor color2) {
         this.color2 = color2;
         return this;
     }
@@ -50,7 +50,7 @@ public class AuraTabTitel extends CustomTabTitel<AuraTabTitel> {
         return font2Location;
     }
 
-    public ModernColor getColor2() {
+    public SimpleColor getColor2() {
         return color2;
     }
 

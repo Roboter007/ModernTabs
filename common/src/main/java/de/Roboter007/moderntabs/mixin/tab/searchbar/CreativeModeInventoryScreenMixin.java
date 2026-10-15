@@ -1,11 +1,11 @@
 package de.Roboter007.moderntabs.mixin.tab.searchbar;
 
+import de.Roboter007.moderntabs.color.SimpleColor;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.tab.extensions.SectionLayoutExtension;
 import de.Roboter007.moderntabs.tab.searchbar.Searchbar;
 import de.Roboter007.moderntabs.tab.section.renderer.SectionRenderer;
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
-import de.Roboter007.moderntabs.color.ModernColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
@@ -50,7 +50,7 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
             ResourceLocation searchbarLocation = searchbar.getSearchbarLocation();
 
             if (tabExtension.moderntabs$hasCustomBackgroundColor()) {
-                ModernColor color = tabExtension.moderntabs$getBackgroundColor();
+                SimpleColor color = tabExtension.moderntabs$getBackgroundColor();
                 guiGraphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
             }
 

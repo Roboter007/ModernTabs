@@ -2,7 +2,7 @@ package de.Roboter007.moderntabs.mixin.tab.scrollbar;
 
 import de.Roboter007.moderntabs.graphics.CustomGuiGraphics;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
-import de.Roboter007.moderntabs.color.ModernColor;
+import de.Roboter007.moderntabs.color.SimpleColor;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +23,7 @@ public class CreativeModeInventoryMixin {
         CreativeModeTabExtension tabExtension = (CreativeModeTabExtension) selectedTab;
         // set color
         if(tabExtension.moderntabs$hasCustomBackgroundColor()) {
-            ModernColor scrollerColor = tabExtension.moderntabs$getBackgroundColor();
+            SimpleColor scrollerColor = tabExtension.moderntabs$getBackgroundColor();
             guiGraphics.setColor(scrollerColor.normalizedRed(), scrollerColor.normalizedGreen(), scrollerColor.normalizedBlue(), scrollerColor.normalizedAlpha());
         }
 

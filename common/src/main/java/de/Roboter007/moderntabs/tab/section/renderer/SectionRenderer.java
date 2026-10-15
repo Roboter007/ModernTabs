@@ -3,6 +3,7 @@ package de.Roboter007.moderntabs.tab.section.renderer;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.Roboter007.moderntabs.ModernTabs;
+import de.Roboter007.moderntabs.color.SimpleColor;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.graphics.CustomGuiGraphics;
 import de.Roboter007.moderntabs.tab.section.states.AnimationMode;
@@ -13,7 +14,6 @@ import de.Roboter007.moderntabs.tab.extensions.TickerExtension;
 import de.Roboter007.moderntabs.tab.section.Sections;
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
 import de.Roboter007.moderntabs.util.ColorUtil;
-import de.Roboter007.moderntabs.color.ModernColor;
 import de.Roboter007.moderntabs.util.SectionUtil;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
@@ -147,7 +147,7 @@ public class SectionRenderer {
             int firstEmptyRow = Math.max(totalRows - CURRENT_ROW, 0);
 
             if (extension.moderntabs$hasCustomBackgroundColor()) {
-                ModernColor color = extension.moderntabs$getBackgroundColor();
+                SimpleColor color = extension.moderntabs$getBackgroundColor();
                 graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
             }
 
@@ -174,10 +174,10 @@ public class SectionRenderer {
         }
 
         if (decoration.color().isPresent()) {
-            ModernColor color = new ModernColor(decoration.color().get());
+            SimpleColor color = new SimpleColor(decoration.color().get());
             graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
         } else if (extension.moderntabs$hasCustomBackgroundColor() && decoration instanceof Section.Overlay) {
-            ModernColor color = extension.moderntabs$getBackgroundColor();
+            SimpleColor color = extension.moderntabs$getBackgroundColor();
             graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
         }
 
@@ -212,7 +212,7 @@ public class SectionRenderer {
             }
 
             if (extension.moderntabs$hasCustomBackgroundColor()) {
-                ModernColor color = extension.moderntabs$getBackgroundColor();
+                SimpleColor color = extension.moderntabs$getBackgroundColor();
                 graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
             }
 

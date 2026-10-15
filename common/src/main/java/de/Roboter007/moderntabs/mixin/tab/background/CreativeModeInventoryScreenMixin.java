@@ -1,7 +1,7 @@
 package de.Roboter007.moderntabs.mixin.tab.background;
 
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
-import de.Roboter007.moderntabs.color.ModernColor;
+import de.Roboter007.moderntabs.color.SimpleColor;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
@@ -29,7 +29,7 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
         CreativeModeTabExtension extension = (CreativeModeTabExtension) selectedTab;
         if(extension.moderntabs$hasCustomBackgroundColor()) {
             // set color
-            ModernColor backgroundColor = extension.moderntabs$getBackgroundColor();
+            SimpleColor backgroundColor = extension.moderntabs$getBackgroundColor();
             guiGraphics.setColor(backgroundColor.normalizedRed(), backgroundColor.normalizedGreen(), backgroundColor.normalizedBlue(), backgroundColor.normalizedAlpha());
 
             // render

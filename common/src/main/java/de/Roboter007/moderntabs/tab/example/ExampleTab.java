@@ -2,12 +2,12 @@ package de.Roboter007.moderntabs.tab.example;
 
 import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.color.ColorPresets;
+import de.Roboter007.moderntabs.color.ComplexColor;
+import de.Roboter007.moderntabs.color.SimpleColor;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
 import de.Roboter007.moderntabs.tab.searchbar.Searchbar;
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
-import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
 import de.Roboter007.moderntabs.tab.titel.SpriteTabTitel;
-import de.Roboter007.moderntabs.color.ModernColor;
 import de.Roboter007.moderntabs.util.SectionUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -57,9 +57,9 @@ public final class ExampleTab {
     }
 
     public static void init() {
-        ModernColor example_color = new ModernColor("#36454F");
+        SimpleColor example_color = ColorPresets.CHARCOAL;
         SpriteTabTitel spriteTabTitel = new SpriteTabTitel()
-                .backgroundColor(example_color.copy().lighten(0.6f))
+                .backgroundColor(example_color.toComplex().lighten(0.6f))
                 .textOrientation(ElementOrientation.LEFT)
                 .spriteTitelLocation(ModernTabs.path("container/creative_inventory/titel"))
                 .width(64)
@@ -68,10 +68,10 @@ public final class ExampleTab {
         Searchbar searchbar = new Searchbar().orientation(ElementOrientation.RIGHT);
 
         /*AuraTabTitel auraTabTitel = (AuraTabTitel) new AuraTabTitel()
-                .color2(new ModernColor("#36454F").darken(0.4f))
-                .color(new ModernColor("#36454F"))
+                .color2(new ComplexColor("#36454F").darken(0.4f))
+                .color(new ComplexColor("#36454F"))
                 .textOrientation(ElementOrientation.RIGHT)
-                .backgroundColor(new ModernColor("#36454F").darken(0.75f)); */
+                .backgroundColor(new ComplexColor("#36454F").darken(0.75f)); */
 
         SectionUtil.addItemList(SECTION_BUILDING_BLOCKS, BUILDING_BLOCKS);
         SectionUtil.addItemList(SECTION_TOOLS_AND_WEAPONS, TOOLS_AND_WEAPONS);
