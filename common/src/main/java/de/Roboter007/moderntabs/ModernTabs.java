@@ -18,10 +18,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-// ToDo: merge TabTitle Stuff with Banner Text rendering stuff for the same text logic (targeted version: v1.8.0)
+// ToDo: merge TabTitle stuff, with banner text rendering stuff for the same text logic (targeted version: v1.8.0)
 //  add full Resource Pack, KubeJs and code compatibility, so no separate stuff has to be created, but should be cross-compatible (targeted version: v1.8.0)
-//  creative tab editor (targeted version: v2.0.0)
-//  update to newer versions than 1.21.1
+//  add support for fully customizing the content of the tabs (targeted version: v1.9.0)
+//  creative mode tab editor (targeted version: v2.0.0)
+//  update to newer versions than 1.21.1 (targeted version: after v2.0.0)
+//  expand the banner system to EMI/JEI (targeted version: after v2.0.0)
 public class ModernTabs {
 
     public static final String MOD_ID = "moderntabs";
