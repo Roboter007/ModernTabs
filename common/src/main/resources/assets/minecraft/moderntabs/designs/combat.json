@@ -1,0 +1,15 @@
+{
+  "sectionsEnabled": true,
+  "allowLessVisibleRows": true,
+  "background": {
+    "color": "090030"
+  },
+  "button": {},
+  "searchbar": {
+    "color": "0E002B"
+  },
+  "title": {
+    "textStyle": "custom",
+    "color": "3600E8"
+  }
+}

@@ -54,9 +54,12 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
                 x += 160 - textWidth;
             }
 
+            x = x + customTabTitel.getOffset().x();
+            y = y + customTabTitel.getOffset().y();
+
             if(customTabTitel.getBackgroundColor() != null) {
                 final int height = 10;
-                guiGraphics.fill(x, y - 2, x + textWidth + 2, y + height, customTabTitel.getBackgroundColor().color());
+                guiGraphics.fill(x, y - 2, x + textWidth + 2, y + height, customTabTitel.getBackgroundColor().argbColor());
                 x++;
                 if(customTabTitel instanceof SpriteTabTitel) {
                     y--;
@@ -80,9 +83,6 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
                 titelDropShadow = customTabTitel.isDroppingShadow();
             }
 
-            x = x + customTabTitel.getOffset().x();
-            y = y + customTabTitel.getOffset().y();
-
             if(customTabTitel instanceof AuraTabTitel auraTabTitel) {
                 ResourceLocation titelFont2Location = Minecraft.DEFAULT_FONT;
                 if(auraTabTitel.getFont2Location() != null) {
@@ -99,11 +99,11 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
                     titelDropShadow2 = auraTabTitel.isDroppingShadow2();
                 }
 
-                TextRenderer.drawAuraText(guiGraphics, text, titelFontLocation, titelFont2Location, titelColor.color(), titelColor2.color(), titelDropShadow, titelDropShadow2, x, y);
+                TextRenderer.drawAuraText(guiGraphics, text, titelFontLocation, titelFont2Location, titelColor.argbColor(), titelColor2.argbColor(), titelDropShadow, titelDropShadow2, x, y);
             } else if(customTabTitel instanceof SpriteTabTitel spriteTabTitel) {
                 guiGraphics.blitSprite(spriteTabTitel.getSpriteTitelLocation(), x, y, spriteTabTitel.getWidth(), spriteTabTitel.getHeight());
             } else {
-                guiGraphics.drawString(font, text.copy().withStyle(style -> style.withFont(titelFontLocation)), x, y, titelColor.color(), titelDropShadow);
+                guiGraphics.drawString(font, text.copy().withStyle(style -> style.withFont(titelFontLocation)), x, y, titelColor.argbColor(), titelDropShadow);
             }
         } else {
             guiGraphics.drawString(this.font, text, x, y, color, dropShadow);

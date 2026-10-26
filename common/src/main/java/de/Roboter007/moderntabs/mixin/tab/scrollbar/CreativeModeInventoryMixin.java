@@ -1,6 +1,7 @@
 package de.Roboter007.moderntabs.mixin.tab.scrollbar;
 
 import de.Roboter007.moderntabs.graphics.CustomGuiGraphics;
+import de.Roboter007.moderntabs.tab.background.TabBackground;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.color.SimpleColor;
 import net.minecraft.client.gui.GuiGraphics;
@@ -22,8 +23,8 @@ public class CreativeModeInventoryMixin {
     public void renderScroller(GuiGraphics guiGraphics, ResourceLocation sprite, int x, int y, int width, int height) {
         CreativeModeTabExtension tabExtension = (CreativeModeTabExtension) selectedTab;
         // set color
-        if(tabExtension.moderntabs$hasCustomBackgroundColor()) {
-            SimpleColor scrollerColor = tabExtension.moderntabs$getBackgroundColor();
+        if(tabExtension.moderntabs$hasCustomBackground() && tabExtension.moderntabs$getBackground().hasCustomColor()) {
+            SimpleColor scrollerColor = tabExtension.moderntabs$getBackground().getColor();
             guiGraphics.setColor(scrollerColor.normalizedRed(), scrollerColor.normalizedGreen(), scrollerColor.normalizedBlue(), scrollerColor.normalizedAlpha());
         }
 
@@ -36,7 +37,8 @@ public class CreativeModeInventoryMixin {
         }
 
         // reset color
-        if(tabExtension.moderntabs$hasCustomBackgroundColor()) {
+        if(tabExtension.moderntabs$hasCustomBackground() && tabExtension.moderntabs$getBackground().hasCustomColor()) {
+            guiGraphics.flush();
             guiGraphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         }
     }

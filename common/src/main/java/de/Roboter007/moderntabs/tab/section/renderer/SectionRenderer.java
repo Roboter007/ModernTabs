@@ -146,8 +146,8 @@ public class SectionRenderer {
             int totalRows = TOTAL_ROWS.getOrDefault(tab, 0);
             int firstEmptyRow = Math.max(totalRows - CURRENT_ROW, 0);
 
-            if (extension.moderntabs$hasCustomBackgroundColor()) {
-                SimpleColor color = extension.moderntabs$getBackgroundColor();
+            if (extension.moderntabs$hasCustomBackground() && extension.moderntabs$getBackground().hasCustomColor()) {
+                SimpleColor color = extension.moderntabs$getBackground().getColor();
                 graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
             }
 
@@ -155,7 +155,8 @@ public class SectionRenderer {
                 graphics.blitSprite(extension.moderntabs$getFiller(), 0, row * BANNER_HEIGHT, BANNER_WIDTH, BANNER_HEIGHT);
             }
 
-            if (extension.moderntabs$hasCustomBackgroundColor()) {
+            if (extension.moderntabs$hasCustomBackground() && extension.moderntabs$getBackground().hasCustomColor()) {
+                graphics.flush();
                 graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
             }
         }
@@ -176,16 +177,18 @@ public class SectionRenderer {
         if (decoration.color().isPresent()) {
             SimpleColor color = new SimpleColor(decoration.color().get());
             graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
-        } else if (extension.moderntabs$hasCustomBackgroundColor() && decoration instanceof Section.Overlay) {
-            SimpleColor color = extension.moderntabs$getBackgroundColor();
+        } else if (extension.moderntabs$hasCustomBackground() && extension.moderntabs$getBackground().hasCustomColor() && decoration instanceof Section.Overlay) {
+            SimpleColor color = extension.moderntabs$getBackground().getColor();
             graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
         }
 
         customGraphics.moderntabs$blitSprite(bannerSprite, Section.Banner.MISSING_BANNER, x, y, w, h);
 
         if (decoration.color().isPresent()) {
+            graphics.flush();
             graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-        } else if (extension.moderntabs$hasCustomBackgroundColor() && decoration instanceof Section.Overlay) {
+        } else if (extension.moderntabs$hasCustomBackground() && extension.moderntabs$getBackground().hasCustomColor() && decoration instanceof Section.Overlay) {
+            graphics.flush();
             graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         }
     }
@@ -211,14 +214,15 @@ public class SectionRenderer {
                 toggleButtonLocation = collapsed ? EXTEND_BUTTON : COLLAPSE_BUTTON;
             }
 
-            if (extension.moderntabs$hasCustomBackgroundColor()) {
-                SimpleColor color = extension.moderntabs$getBackgroundColor();
+            if (extension.moderntabs$hasCustomBackground() && extension.moderntabs$getBackground().hasCustomColor()) {
+                SimpleColor color = extension.moderntabs$getBackground().getColor();
                 graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
             }
 
             graphics.blitSprite(toggleButtonLocation, orientatedX, sectionY + (sectionH / 2) - (height / 2), width, height);
 
-            if (extension.moderntabs$hasCustomBackgroundColor()) {
+            if (extension.moderntabs$hasCustomBackground() && extension.moderntabs$getBackground().hasCustomColor()) {
+                graphics.flush();
                 graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
             }
         }

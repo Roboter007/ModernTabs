@@ -1,8 +1,12 @@
 package de.Roboter007.moderntabs.color;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.Roboter007.moderntabs.util.ColorUtil;
 
 public class SimpleColor {
+
+    public static final Codec<SimpleColor> CODEC = ColorUtil.ARGB_CODEC.xmap(SimpleColor::new, SimpleColor::argbColor);
 
     protected int argbColor;
 
@@ -14,8 +18,12 @@ public class SimpleColor {
         this.argbColor = argbColor;
     }
 
-    public int color() {
+    public int argbColor() {
         return this.argbColor;
+    }
+
+    public String color() {
+        return ColorUtil.toHexString(this.argbColor);
     }
 
     public int alpha() {

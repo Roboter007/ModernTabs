@@ -2,7 +2,6 @@ package de.Roboter007.moderntabs.tab.example;
 
 import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.color.ColorPresets;
-import de.Roboter007.moderntabs.color.ComplexColor;
 import de.Roboter007.moderntabs.color.SimpleColor;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
 import de.Roboter007.moderntabs.tab.searchbar.Searchbar;

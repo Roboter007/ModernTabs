@@ -1,7 +1,7 @@
 package de.Roboter007.moderntabs.tab.extensions;
 
-import de.Roboter007.moderntabs.color.SimpleColor;
-import de.Roboter007.moderntabs.tab.button.TabButtonStates;
+import de.Roboter007.moderntabs.tab.background.TabBackground;
+import de.Roboter007.moderntabs.tab.button.TabButton;
 import de.Roboter007.moderntabs.tab.searchbar.Searchbar;
 import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
 import net.minecraft.resources.ResourceLocation;
@@ -19,11 +19,19 @@ public interface CreativeModeTabExtension {
     void moderntabs$setAllowLessVisibleRows(boolean allowLessVisibleRows);
     boolean moderntabs$doesAllowLessVisibleRows();
 
-    // searchbar
+    // tab background color
+    TabBackground moderntabs$getBackground();
+    void moderntabs$setBackground(TabBackground background);
+    default boolean moderntabs$hasCustomBackground() {
+        return moderntabs$getBackground() != null;
+    }
 
-    Searchbar moderntabs$getCustomSearchbar();
-    void moderntabs$setCustomSearchbar(Searchbar searchbar);
-    boolean moderntabs$hasCustomSearchbar();
+    // tab button
+    void moderntabs$setCustomTabButton(TabButton tabButton);
+    TabButton moderntabs$getCustomTabButton();
+    default boolean moderntabs$hasCustomTabButton() {
+        return moderntabs$getCustomTabButton() != null;
+    }
 
     // tab titles
     void moderntabs$setCustomTabTitel(CustomTabTitel<?> customTabTitel);
@@ -32,12 +40,10 @@ public interface CreativeModeTabExtension {
         return moderntabs$getCustomTabTitel() != null;
     }
 
-    // tab button states
-    void moderntabs$setCustomTabButtonStates(TabButtonStates tabButtonStates);
-    TabButtonStates moderntabs$getCustomTabButtonStates();
-    default boolean moderntabs$hasCustomTabButtonStates() {
-        return moderntabs$getCustomTabButtonStates() != null;
-    }
+    // searchbar
+    Searchbar moderntabs$getCustomSearchbar();
+    void moderntabs$setCustomSearchbar(Searchbar searchbar);
+    boolean moderntabs$hasCustomSearchbar();
 
     // filler
     ResourceLocation moderntabs$getFiller();
@@ -46,25 +52,11 @@ public interface CreativeModeTabExtension {
         return moderntabs$getFiller() != null;
     }
 
-    // tab icon
-    ResourceLocation moderntabs$getCustomTabIcon();
-    void moderntabs$setCustomTabIcon(ResourceLocation tabIconLocation);
-    default boolean moderntabs$hasCustomTabIcon() {
-        return moderntabs$getCustomTabIcon() != null;
-    }
-
     // scrollbar
     ResourceLocation moderntabs$getCustomScroller();
     void moderntabs$setCustomScroller(ResourceLocation scrollerLocation);
     default boolean moderntabs$hasCustomScroller() {
         return moderntabs$getCustomScroller() != null;
-    }
-
-    // tab background color
-    SimpleColor moderntabs$getBackgroundColor();
-    void moderntabs$setBackgroundColor(SimpleColor backgroundColor);
-    default boolean moderntabs$hasCustomBackgroundColor() {
-        return moderntabs$getBackgroundColor() != null;
     }
 
 }

@@ -33,9 +33,9 @@ public class ModernTabsCommand {
         return context -> {
             String modId = StringArgumentType.getString(context, "modId");
             if(ModernTabsPlatform.get().getLoadedMods().contains(modId)) {
-                int basicColor = new ComplexColor("B5B5B5").color();
-                int modIdColor = new ComplexColor("F58727").color();
-                int tabColor = new ComplexColor("4DFFE7").color();
+                int basicColor = new ComplexColor("B5B5B5").argbColor();
+                int modIdColor = new ComplexColor("F58727").argbColor();
+                int tabColor = new ComplexColor("4DFFE7").argbColor();
 
                 MutableComponent tabs = Component.literal("\n");
                 List<String> tabList = getTabsBy(modId);

@@ -1,5 +1,6 @@
 package de.Roboter007.moderntabs.fabric;
 
+import de.Roboter007.moderntabs.fabric.tab.designs.TabDesignReloadListenerFabric;
 import de.Roboter007.moderntabs.fabric.tab.section.SectionReloadListenerFabric;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
@@ -10,5 +11,6 @@ public final class ModernTabsFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(SectionReloadListenerFabric.INSTANCE);
+        ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(TabDesignReloadListenerFabric.INSTANCE);
     }
 }

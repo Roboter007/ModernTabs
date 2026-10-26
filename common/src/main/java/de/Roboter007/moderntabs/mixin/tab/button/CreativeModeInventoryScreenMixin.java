@@ -3,9 +3,8 @@ package de.Roboter007.moderntabs.mixin.tab.button;
 import com.llamalad7.mixinextras.sugar.Local;
 import de.Roboter007.moderntabs.color.SimpleColor;
 import de.Roboter007.moderntabs.graphics.CustomGuiGraphics;
-import de.Roboter007.moderntabs.tab.button.ColoredTabButtonStates;
-import de.Roboter007.moderntabs.tab.button.TabButtonStates;
-import de.Roboter007.moderntabs.tab.button.TabButtonTexture;
+import de.Roboter007.moderntabs.tab.button.TabButton;
+import de.Roboter007.moderntabs.tab.button.TabButtonSprite;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.platform.CreativeModeInventoryScreenPlatform;
 import net.minecraft.client.gui.GuiGraphics;
@@ -19,6 +18,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
+
+import java.util.Optional;
 
 @Mixin(CreativeModeInventoryScreen.class)
 public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingInventoryScreen<CreativeModeInventoryScreen.ItemPickerMenu> {
@@ -35,28 +36,27 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
     protected void renderTabButton(GuiGraphics guiGraphics, ResourceLocation sprite, int x, int y, int width, int height, @Local(argsOnly = true) CreativeModeTab creativeModeTab) {
         CreativeModeTabExtension tabExtension = (CreativeModeTabExtension) creativeModeTab;
 
-        if(tabExtension.moderntabs$hasCustomTabButtonStates()) {
+        if(tabExtension.moderntabs$hasCustomTabButton()) {
             CreativeModeInventoryScreenPlatform platform = (CreativeModeInventoryScreenPlatform) this;
 
-            TabButtonStates tabIconBackground = tabExtension.moderntabs$getCustomTabButtonStates();
-            TabButtonTexture tabBackgroundImage = tabIconBackground.get(platform.moderntabs$row(creativeModeTab), platform.moderntabs$column(creativeModeTab), TabButtonTexture.Selection.fromBoolean(creativeModeTab == selectedTab));
+            TabButton tabButton = tabExtension.moderntabs$getCustomTabButton();
+            TabButtonSprite tabBackgroundImage = tabButton.get(platform.moderntabs$row(creativeModeTab), platform.moderntabs$column(creativeModeTab), TabButtonSprite.Selection.fromBoolean(creativeModeTab == selectedTab));
+            SimpleColor color = Optional.ofNullable(tabButton.getColor()).orElse(tabExtension.moderntabs$getBackground().getColor());
 
-            if(tabIconBackground instanceof ColoredTabButtonStates coloredTabIconBackground) {
+            if(color != null) {
                 // set color
-                SimpleColor color = coloredTabIconBackground.color();
                 guiGraphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
+            }
 
-                // render
-                CustomGuiGraphics customGuiGraphics = (CustomGuiGraphics) guiGraphics;
-                customGuiGraphics.moderntabs$blitSprite(tabBackgroundImage.toResourceLocation(), tabBackgroundImage.toDefaultLocation(), x, y, width, height);
+            // render
+            // uff, just added a completely new system for just a better fail save for this - why? -> I don't know
+            CustomGuiGraphics customGuiGraphics = (CustomGuiGraphics) guiGraphics;
+            customGuiGraphics.moderntabs$blitSprite(tabButton.hasCustomTabButtonSprite() ? tabBackgroundImage.toResourceLocation() : sprite, tabBackgroundImage.toDefaultLocation(), x, y, width, height);
 
+            if(color != null) {
                 // reset color
+                guiGraphics.flush();
                 guiGraphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-            } else {
-
-                // uff, just added a completely new system for just a better fail save for this - why? -> I don't know
-                CustomGuiGraphics customGuiGraphics = (CustomGuiGraphics) guiGraphics;
-                customGuiGraphics.moderntabs$blitSprite(tabBackgroundImage.toResourceLocation(), tabBackgroundImage.toDefaultLocation(), x, y, width, height);
             }
         } else {
             guiGraphics.blitSprite(sprite, x, y, width, height);

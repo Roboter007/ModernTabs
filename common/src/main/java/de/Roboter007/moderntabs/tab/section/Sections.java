@@ -14,7 +14,6 @@ public final class Sections {
 
     public static final SectionReloadListener RELOAD_LISTENER = new SectionReloadListener();
 
-    // ToDo: merging into TabDesign
     private static Map<ResourceLocation, Section> SECTION_BY_ID = Map.of();
     private static Map<Section, ResourceLocation> IDS_BY_SECTION = Map.of();
     private static List<Section> SORTED = new ArrayList<>();

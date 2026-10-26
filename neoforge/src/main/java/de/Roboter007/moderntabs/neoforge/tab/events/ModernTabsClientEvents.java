@@ -13,5 +13,6 @@ public final class ModernTabsClientEvents {
     @SubscribeEvent
     public static void onRegisterReloadListeners(final RegisterClientReloadListenersEvent event) {
         event.registerReloadListener(Sections.RELOAD_LISTENER);
+        event.registerReloadListener(ModernTabs.TAB_DESIGN_RELOAD_LISTENER);
     }
 }

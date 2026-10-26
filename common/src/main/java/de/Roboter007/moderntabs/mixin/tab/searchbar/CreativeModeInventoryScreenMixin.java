@@ -27,6 +27,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Mixin(CreativeModeInventoryScreen.class)
 public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingInventoryScreen<CreativeModeInventoryScreen.ItemPickerMenu> {
@@ -48,9 +50,9 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
 
         if (tabExtension.moderntabs$hasCustomSearchbar()) {
             ResourceLocation searchbarLocation = searchbar.getSearchbarLocation();
+            SimpleColor color = Optional.ofNullable(searchbar.getColor()).orElse(tabExtension.moderntabs$getBackground().getColor());
 
-            if (tabExtension.moderntabs$hasCustomBackgroundColor()) {
-                SimpleColor color = tabExtension.moderntabs$getBackgroundColor();
+            if (color != null) {
                 guiGraphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
             }
 
@@ -70,7 +72,8 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
 
             guiGraphics.blitSprite(searchbarLocation, x, y, searchbar.getWidth(), searchbar.getHeight());
 
-            if (tabExtension.moderntabs$hasCustomBackgroundColor()) {
+            if (color != null) {
+                guiGraphics.flush();
                 guiGraphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
             }
         }

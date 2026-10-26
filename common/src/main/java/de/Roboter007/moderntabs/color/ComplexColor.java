@@ -81,15 +81,12 @@ public class ComplexColor extends SimpleColor {
             g = linearToArgb(g / a);
             b = linearToArgb(b / a);
         } else {
-            r = g = b = 0f;
+            r = 0f;
+            g = 0f;
+            b = 0f;
         }
 
-        int alpha = toByte(a);
-        int red = toByte(r);
-        int green = toByte(g);
-        int blue = toByte(b);
-
-        return new ComplexColor((alpha << 24) | (red << 16) | (green << 8) | blue);
+        return new ComplexColor((toByte(a) << 24) | (toByte(r) << 16) | (toByte(g) << 8) | toByte(b));
     }
 
     private static float lerp(float start, float end, float amount) {

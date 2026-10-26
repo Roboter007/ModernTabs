@@ -3,6 +3,7 @@ package de.Roboter007.moderntabs.tab;
 import org.joml.Vector2i;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public abstract class TabElement<T extends TabElement<?>> {
 
@@ -19,6 +20,10 @@ public abstract class TabElement<T extends TabElement<?>> {
 
     public Vector2i getOffset() {
         return offset;
+    }
+
+    public Optional<Vector2i> optionalOffset() {
+        return Optional.ofNullable(offset);
     }
 
     @SuppressWarnings("unchecked")

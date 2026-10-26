@@ -1,11 +1,11 @@
 package de.Roboter007.moderntabs.platform;
 
-import de.Roboter007.moderntabs.tab.button.TabButtonTexture;
+import de.Roboter007.moderntabs.tab.button.TabButtonSprite;
 import net.minecraft.world.item.CreativeModeTab;
 
 public interface CreativeModeInventoryScreenPlatform {
 
-    TabButtonTexture.Column moderntabs$column(CreativeModeTab creativeModeTab);
+    TabButtonSprite.Column moderntabs$column(CreativeModeTab creativeModeTab);
     CreativeModeTab.Row moderntabs$row(CreativeModeTab creativeModeTab);
 
 }

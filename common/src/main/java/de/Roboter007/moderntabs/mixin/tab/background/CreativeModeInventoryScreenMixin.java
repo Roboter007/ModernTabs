@@ -1,5 +1,6 @@
 package de.Roboter007.moderntabs.mixin.tab.background;
 
+import de.Roboter007.moderntabs.tab.background.TabBackground;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.color.SimpleColor;
 import net.minecraft.client.gui.GuiGraphics;
@@ -14,6 +15,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import java.util.Objects;
+
 @Mixin(CreativeModeInventoryScreen.class)
 public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingInventoryScreen<CreativeModeInventoryScreen.ItemPickerMenu> {
 
@@ -27,16 +30,25 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
     @Redirect(method = "renderBg", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blit(Lnet/minecraft/resources/ResourceLocation;IIIIII)V"))
     protected void renderBg(GuiGraphics guiGraphics, ResourceLocation atlasLocation, int x, int y, int uOffset, int vOffset, int uWidth, int vHeight) {
         CreativeModeTabExtension extension = (CreativeModeTabExtension) selectedTab;
-        if(extension.moderntabs$hasCustomBackgroundColor()) {
-            // set color
-            SimpleColor backgroundColor = extension.moderntabs$getBackgroundColor();
-            guiGraphics.setColor(backgroundColor.normalizedRed(), backgroundColor.normalizedGreen(), backgroundColor.normalizedBlue(), backgroundColor.normalizedAlpha());
+        if(extension.moderntabs$hasCustomBackground()) {
+            TabBackground tabBackground = extension.moderntabs$getBackground();
+
+            ResourceLocation backgroundLocation = tabBackground.getBackgroundLocation();
+            SimpleColor backgroundColor = tabBackground.getColor();
+
+            if(tabBackground.hasCustomColor()) {
+                // set color
+                guiGraphics.setColor(backgroundColor.normalizedRed(), backgroundColor.normalizedGreen(), backgroundColor.normalizedBlue(), backgroundColor.normalizedAlpha());
+            }
 
             // render
-            guiGraphics.blit(atlasLocation, x, y, uOffset, vOffset, uWidth, vHeight);
+            guiGraphics.blit(Objects.requireNonNullElse(backgroundLocation, atlasLocation), x, y, uOffset, vOffset, uWidth, vHeight);
 
-            // reset color
-            guiGraphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+            if(tabBackground.hasCustomColor()) {
+                // reset color
+                guiGraphics.flush();
+                guiGraphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+            }
         } else {
             guiGraphics.blit(atlasLocation, x, y, uOffset, vOffset, uWidth, vHeight);
         }
