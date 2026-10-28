@@ -14,17 +14,19 @@ import org.joml.Vector2i;
 
 import java.util.Optional;
 
+import static de.Roboter007.moderntabs.util.CodecUtil.nullable;
+
 // uses the vanilla Minecraft text style that can be configured
 public class CustomTabTitel<T extends CustomTabTitel<?>> extends TabElement<T> {
 
     private static final MapCodec<CustomTabTitel<?>> BASE_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            CodecUtil.CODEC.optionalFieldOf("offset").forGetter(TabElement::optionalOffset),
-            StringRepresentable.fromEnum(ElementOrientation::values).optionalFieldOf("orientation").forGetter(CustomTabTitel::optionalTextOrientation),
-            SimpleColor.CODEC.optionalFieldOf("backgroundColor").forGetter(CustomTabTitel::optionalColor),
-            ResourceLocation.CODEC.optionalFieldOf("fontLocation").forGetter(CustomTabTitel::optionalFontLocation),
-            SimpleColor.CODEC.optionalFieldOf("color").forGetter(CustomTabTitel::optionalColor),
-            Codec.BOOL.optionalFieldOf("dropShadow").forGetter(CustomTabTitel::optionalDropShadow)
-    ).apply(instance, CustomTabTitel::new));
+            CodecUtil.CODEC.optionalFieldOf("offset", new Vector2i()).forGetter(TabElement::getOffset),
+            StringRepresentable.fromEnum(ElementOrientation::values).optionalFieldOf("orientation", ElementOrientation.LEFT).forGetter(CustomTabTitel::getTextOrientation),
+            SimpleColor.CODEC.optionalFieldOf("backgroundColor").forGetter(nullable(CustomTabTitel::getColor)),
+            ResourceLocation.CODEC.optionalFieldOf("fontLocation").forGetter(nullable(CustomTabTitel::getFontLocation)),
+            SimpleColor.CODEC.optionalFieldOf("color").forGetter(nullable(CustomTabTitel::getColor)),
+            Codec.BOOL.optionalFieldOf("dropShadow", false).forGetter(CustomTabTitel::isDroppingShadow)
+    ).apply(instance, CustomTabTitel::codec));
 
     public static final Codec<CustomTabTitel<?>> CODEC = Codec.STRING.dispatch("textStyle", CustomTabTitel::getTextStyle,
             type -> switch (type) {
@@ -51,8 +53,8 @@ public class CustomTabTitel<T extends CustomTabTitel<?>> extends TabElement<T> {
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public CustomTabTitel(Optional<Vector2i> offset, Optional<ElementOrientation> tabTextOrientation, Optional<SimpleColor> backgroundColor, Optional<ResourceLocation> fontLocation, Optional<SimpleColor> color, Optional<Boolean> dropShadow) {
-        this(offset.orElseGet(Vector2i::new), tabTextOrientation.orElse(ElementOrientation.LEFT), backgroundColor.orElse(null), fontLocation.orElse(null), color.orElse(null), dropShadow.orElse(false));
+    private static CustomTabTitel<?> codec(Vector2i offset, ElementOrientation tabTextOrientation, Optional<SimpleColor> backgroundColor, Optional<ResourceLocation> fontLocation, Optional<SimpleColor> color, boolean dropShadow) {
+        return new CustomTabTitel<>(offset, tabTextOrientation, backgroundColor.orElse(null), fontLocation.orElse(null), color.orElse(null), dropShadow);
     }
 
     public CustomTabTitel() {
@@ -111,31 +113,6 @@ public class CustomTabTitel<T extends CustomTabTitel<?>> extends TabElement<T> {
 
     public String getTextStyle() {
         return "custom";
-    }
-
-
-    public Optional<ElementOrientation> optionalTextOrientation() {
-        return Optional.ofNullable(tabTextOrientation);
-    }
-
-    public Optional<Vector2i> optionalOffset() {
-        return Optional.ofNullable(getOffset());
-    }
-
-    public Optional<SimpleColor> optionalBackgroundColor() {
-        return Optional.ofNullable(backgroundColor);
-    }
-
-    public Optional<ResourceLocation> optionalFontLocation() {
-        return Optional.ofNullable(fontLocation);
-    }
-
-    public Optional<SimpleColor> optionalColor() {
-        return Optional.ofNullable(color);
-    }
-
-    public Optional<Boolean> optionalDropShadow() {
-        return Optional.ofNullable(dropShadow);
     }
 
 

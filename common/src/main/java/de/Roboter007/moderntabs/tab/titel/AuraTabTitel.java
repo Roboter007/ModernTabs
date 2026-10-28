@@ -13,20 +13,22 @@ import org.joml.Vector2i;
 
 import java.util.Optional;
 
+import static de.Roboter007.moderntabs.util.CodecUtil.nullable;
+
 // uses the same text style of the tab banners
 public class AuraTabTitel extends CustomTabTitel<AuraTabTitel> {
 
     public static final MapCodec<AuraTabTitel> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            CodecUtil.CODEC.optionalFieldOf("offset").forGetter(AuraTabTitel::optionalOffset),
-            StringRepresentable.fromEnum(ElementOrientation::values).optionalFieldOf("orientation").forGetter(AuraTabTitel::optionalTextOrientation),
-            SimpleColor.CODEC.optionalFieldOf("backgroundColor").forGetter(AuraTabTitel::optionalColor),
-            ResourceLocation.CODEC.optionalFieldOf("font1Location").forGetter(AuraTabTitel::optionalFontLocation),
-            ResourceLocation.CODEC.optionalFieldOf("font2Location").forGetter(AuraTabTitel::optionalFont2Location),
-            SimpleColor.CODEC.optionalFieldOf("color1").forGetter(AuraTabTitel::optionalColor),
-            SimpleColor.CODEC.optionalFieldOf("color2").forGetter(AuraTabTitel::optionalColor2),
-            Codec.BOOL.optionalFieldOf("dropShadow1").forGetter(AuraTabTitel::optionalDropShadow),
-            Codec.BOOL.optionalFieldOf("dropShadow2").forGetter(AuraTabTitel::optionalDropShadow2)
-    ).apply(instance, AuraTabTitel::new));
+            CodecUtil.CODEC.lenientOptionalFieldOf("offset", new Vector2i()).forGetter(AuraTabTitel::getOffset),
+            StringRepresentable.fromEnum(ElementOrientation::values).lenientOptionalFieldOf("orientation", ElementOrientation.LEFT).forGetter(AuraTabTitel::getTextOrientation),
+            SimpleColor.CODEC.lenientOptionalFieldOf("backgroundColor").forGetter(nullable(AuraTabTitel::getBackgroundColor)),
+            ResourceLocation.CODEC.lenientOptionalFieldOf("font1Location").forGetter(nullable(AuraTabTitel::getFontLocation)),
+            ResourceLocation.CODEC.lenientOptionalFieldOf("font2Location").forGetter(nullable(AuraTabTitel::getFont2Location)),
+            SimpleColor.CODEC.lenientOptionalFieldOf("color1").forGetter(nullable(AuraTabTitel::getColor)),
+            SimpleColor.CODEC.lenientOptionalFieldOf("color2").forGetter(nullable(AuraTabTitel::getColor2)),
+            Codec.BOOL.lenientOptionalFieldOf("dropShadow1", false).forGetter(AuraTabTitel::isDroppingShadow),
+            Codec.BOOL.lenientOptionalFieldOf("dropShadow2", false).forGetter(AuraTabTitel::isDroppingShadow2)
+    ).apply(instance, AuraTabTitel::codec));
 
     private ResourceLocation font2Location;
     private SimpleColor color2;
@@ -40,8 +42,8 @@ public class AuraTabTitel extends CustomTabTitel<AuraTabTitel> {
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public AuraTabTitel(Optional<Vector2i> offset, Optional<ElementOrientation> textOrientation, Optional<SimpleColor> backgroundColor, Optional<ResourceLocation> font1Location, Optional<ResourceLocation> font2Location, Optional<SimpleColor> color1, Optional<SimpleColor> color2, Optional<Boolean> dropShadow1, Optional<Boolean> dropShadow2) {
-        this(offset.orElse(new Vector2i()), textOrientation.orElse(ElementOrientation.LEFT), backgroundColor.orElse(null), font1Location.orElse(null), font2Location.orElse(null), color1.orElse(null), color2.orElse(null), dropShadow1.orElse(false), dropShadow2.orElse(false));
+    private static AuraTabTitel codec(Vector2i offset, ElementOrientation textOrientation, Optional<SimpleColor> backgroundColor, Optional<ResourceLocation> font1Location, Optional<ResourceLocation> font2Location, Optional<SimpleColor> color1, Optional<SimpleColor> color2, boolean dropShadow1, boolean dropShadow2) {
+        return new AuraTabTitel(offset, textOrientation, backgroundColor.orElse(null), font1Location.orElse(null), font2Location.orElse(null), color1.orElse(null), color2.orElse(null), dropShadow1, dropShadow2);
     }
 
     public AuraTabTitel () {
@@ -81,19 +83,6 @@ public class AuraTabTitel extends CustomTabTitel<AuraTabTitel> {
     public Boolean isDroppingShadow2() {
         return dropShadow2;
     }
-
-    public Optional<ResourceLocation> optionalFont2Location() {
-        return Optional.ofNullable(font2Location);
-    }
-
-    public Optional<SimpleColor> optionalColor2() {
-        return Optional.ofNullable(color2);
-    }
-
-    public Optional<Boolean> optionalDropShadow2() {
-        return Optional.ofNullable(dropShadow2);
-    }
-
 
     @Override
     public String getTextStyle() {

@@ -55,7 +55,6 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
 
             if(color != null) {
                 // reset color
-                guiGraphics.flush();
                 guiGraphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
             }
         } else {

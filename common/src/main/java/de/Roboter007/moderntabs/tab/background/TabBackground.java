@@ -7,12 +7,14 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.Optional;
 
+import static de.Roboter007.moderntabs.util.CodecUtil.nullable;
+
 public class TabBackground {
 
     public static final Codec<TabBackground> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            SimpleColor.CODEC.optionalFieldOf("color").forGetter(TabBackground::optionalColor),
-            ResourceLocation.CODEC.optionalFieldOf("backgroundLocation").forGetter(TabBackground::optionalBackgroundLocation)
-    ).apply(instance, TabBackground::new));
+            SimpleColor.CODEC.optionalFieldOf("color").forGetter(nullable(TabBackground::getColor)),
+            ResourceLocation.CODEC.optionalFieldOf("backgroundLocation").forGetter(nullable(TabBackground::getBackgroundLocation))
+    ).apply(instance, TabBackground::codec));
 
     private SimpleColor color = null;
     private ResourceLocation backgroundLocation = null;
@@ -23,8 +25,8 @@ public class TabBackground {
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public TabBackground(Optional<SimpleColor> color, Optional<ResourceLocation> backgroundLocation) {
-        this(color.orElse(null), backgroundLocation.orElse(null));
+    private static TabBackground codec(Optional<SimpleColor> color, Optional<ResourceLocation> backgroundLocation) {
+        return new TabBackground(color.orElse(null), backgroundLocation.orElse(null));
     }
 
     public TabBackground() {}
@@ -53,14 +55,5 @@ public class TabBackground {
 
     public ResourceLocation getBackgroundLocation() {
         return backgroundLocation;
-    }
-
-
-    public Optional<SimpleColor> optionalColor() {
-        return Optional.ofNullable(color);
-    }
-
-    public Optional<ResourceLocation> optionalBackgroundLocation() {
-        return Optional.ofNullable(backgroundLocation);
     }
 }

@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.Roboter007.moderntabs.color.SimpleColor;
 import de.Roboter007.moderntabs.tab.background.TabBackground;
 import de.Roboter007.moderntabs.tab.button.TabButton;
+import de.Roboter007.moderntabs.tab.content.TabContent;
 import de.Roboter007.moderntabs.tab.designs.TabDesignReloadListener;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
@@ -20,6 +21,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.text.html.Option;
 import java.util.*;
+
+import static de.Roboter007.moderntabs.util.CodecUtil.nullable;
 
 // ToDo: merge TabTitle stuff, with banner text rendering stuff for the same text logic (targeted version: v1.8.0)
 //  add full Resource Pack, KubeJs and code compatibility, so no separate stuff has to be created, but should be cross-compatible (targeted version: v1.8.0)
@@ -93,26 +96,28 @@ public class ModernTabs {
         private static final ResourceLocation DEFAULT_SPACE_FILLER = ModernTabs.path("filler/default_space_filler");
 
         public static final Codec<TabDesign> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                Codec.BOOL.optionalFieldOf("sectionsEnabled").forGetter(TabDesign::areSectionsEnabled),
-                Codec.BOOL.optionalFieldOf("allowLessVisibleRows").forGetter(TabDesign::doesAllowLessVisibleRows),
-                TabBackground.CODEC.optionalFieldOf("background").forGetter(TabDesign::getBackground),
-                TabButton.CODEC.optionalFieldOf("button").forGetter(TabDesign::getTabButton),
-                Searchbar.CODEC.optionalFieldOf("searchbar").forGetter(TabDesign::getSearchbar),
-                CustomTabTitel.CODEC.optionalFieldOf("title").forGetter(TabDesign::getCustomTabTitel),
-                ResourceLocation.CODEC.optionalFieldOf("fillerLocation").forGetter(TabDesign::getFillerLocation),
-                ResourceLocation.CODEC.optionalFieldOf("scrollerLocation").forGetter(TabDesign::getScrollerLocation)
+                Codec.BOOL.optionalFieldOf("sectionsEnabled", false).forGetter(TabDesign::areSectionsEnabled),
+                Codec.BOOL.optionalFieldOf("allowLessVisibleRows", true).forGetter(TabDesign::doesAllowLessVisibleRows),
+                TabBackground.CODEC.optionalFieldOf("background").forGetter(nullable(TabDesign::getBackground)),
+                TabButton.CODEC.optionalFieldOf("button").forGetter(nullable(TabDesign::getTabButton)),
+                Searchbar.CODEC.optionalFieldOf("searchbar").forGetter(nullable(TabDesign::getSearchbar)),
+                CustomTabTitel.CODEC.optionalFieldOf("title").forGetter(nullable(TabDesign::getCustomTabTitel)),
+                ResourceLocation.CODEC.optionalFieldOf("fillerLocation").forGetter(nullable(TabDesign::getFillerLocation)),
+                ResourceLocation.CODEC.optionalFieldOf("scrollerLocation").forGetter(nullable(TabDesign::getScrollerLocation)),
+                TabContent.CODEC.optionalFieldOf("content").forGetter(nullable(TabDesign::getTabContent))
         ).apply(instance, TabDesign::new));
 
-        private boolean sectionsEnabled;
-        private boolean allowLessVisibleRows;
-        private TabBackground background;
-        private TabButton tabButton;
-        private Searchbar searchbar;
-        private CustomTabTitel<?> customTabTitel;
-        private ResourceLocation fillerLocation;
-        private ResourceLocation scrollerLocation;
+        private boolean sectionsEnabled = false;
+        private boolean allowLessVisibleRows = true;
+        private TabBackground background = null;
+        private TabButton tabButton = null;
+        private Searchbar searchbar = null;
+        private CustomTabTitel<?> customTabTitel = null;
+        private ResourceLocation fillerLocation = DEFAULT_SPACE_FILLER;
+        private ResourceLocation scrollerLocation = null;
+        private TabContent tabContent = null;
 
-        public TabDesign(boolean sectionsEnabled, boolean allowLessVisibleRows, @Nullable TabBackground background, @Nullable TabButton tabButton, @Nullable Searchbar searchbar, @Nullable CustomTabTitel<?> customTabTitel , @Nullable ResourceLocation fillerLocation, @Nullable ResourceLocation tabScrollerLocation) {
+        public TabDesign(boolean sectionsEnabled, boolean allowLessVisibleRows, @Nullable TabBackground background, @Nullable TabButton tabButton, @Nullable Searchbar searchbar, @Nullable CustomTabTitel<?> customTabTitel , @Nullable ResourceLocation fillerLocation, @Nullable ResourceLocation tabScrollerLocation, @Nullable TabContent tabContent) {
             this.sectionsEnabled = sectionsEnabled;
             this.allowLessVisibleRows = allowLessVisibleRows;
             this.background = background;
@@ -121,16 +126,15 @@ public class ModernTabs {
             this.customTabTitel = customTabTitel;
             this.fillerLocation = fillerLocation;
             this.scrollerLocation = tabScrollerLocation;
+            this.tabContent = tabContent;
         }
 
         @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-        public TabDesign(Optional<Boolean> sectionsEnabled, Optional<Boolean> allowLessVisibleRows, Optional<TabBackground> background, Optional<TabButton> tabButton, Optional<Searchbar> searchbar, Optional<CustomTabTitel<?>> customTabTitel , Optional<ResourceLocation> fillerLocation, Optional<ResourceLocation> tabScrollerLocation) {
-            this(sectionsEnabled.orElse(false), allowLessVisibleRows.orElse(true), background.orElse(null), tabButton.orElse(null), searchbar.orElse(null), customTabTitel.orElse(null), fillerLocation.orElse(null), tabScrollerLocation.orElse(null));
+        public TabDesign(boolean sectionsEnabled, boolean allowLessVisibleRows, Optional<TabBackground> background, Optional<TabButton> tabButton, Optional<Searchbar> searchbar, Optional<CustomTabTitel<?>> customTabTitel , Optional<ResourceLocation> fillerLocation, Optional<ResourceLocation> tabScrollerLocation, Optional<TabContent> tabContent) {
+            this(sectionsEnabled, allowLessVisibleRows, background.orElse(null), tabButton.orElse(null), searchbar.orElse(null), customTabTitel.orElse(null), fillerLocation.orElse(null), tabScrollerLocation.orElse(null), tabContent.orElse(null));
         }
 
-        public TabDesign() {
-            this(false, true, null, null, null, null, DEFAULT_SPACE_FILLER, null);
-        }
+        public TabDesign() {}
 
         public TabDesign withSections() {
             this.sectionsEnabled = true;
@@ -207,6 +211,11 @@ public class ModernTabs {
             return this;
         }
 
+        public TabDesign tabContent(TabContent tabContent) {
+            this.tabContent = tabContent;
+            return this;
+        }
+
         public void apply(CreativeModeTab tab) {
             if(tab == null) {
                 throw new NullPointerException(ModernTabs.MOD_NAME +  "ModernTabs - couldn't find tab in the registry!");
@@ -223,38 +232,43 @@ public class ModernTabs {
             tabExtension.moderntabs$setCustomTabTitel(this.customTabTitel);
             tabExtension.moderntabs$setFiller(this.fillerLocation);
             tabExtension.moderntabs$setCustomScroller(this.scrollerLocation);
+            tabExtension.moderntabs$setCustomTabContent(this.tabContent);
         }
 
-        public Optional<Boolean> areSectionsEnabled() {
-            return Optional.of(this.sectionsEnabled);
+        public boolean areSectionsEnabled() {
+            return sectionsEnabled;
         }
 
-        public Optional<Boolean> doesAllowLessVisibleRows() {
-            return Optional.of(this.allowLessVisibleRows);
+        public boolean doesAllowLessVisibleRows() {
+            return allowLessVisibleRows;
         }
 
-        public Optional<TabBackground> getBackground() {
-            return Optional.ofNullable(this.background);
+        public TabBackground getBackground() {
+            return background;
         }
 
-        public Optional<TabButton> getTabButton() {
-            return Optional.ofNullable(this.tabButton);
+        public TabButton getTabButton() {
+            return tabButton;
         }
 
-        public Optional<CustomTabTitel<?>> getCustomTabTitel() {
-            return Optional.ofNullable(this.customTabTitel);
+        public Searchbar getSearchbar() {
+            return searchbar;
         }
 
-        public Optional<Searchbar> getSearchbar() {
-            return Optional.ofNullable(this.searchbar);
+        public CustomTabTitel<?> getCustomTabTitel() {
+            return customTabTitel;
         }
 
-        public Optional<ResourceLocation> getFillerLocation() {
-            return Optional.ofNullable(this.fillerLocation);
+        public ResourceLocation getFillerLocation() {
+            return fillerLocation;
         }
 
-        public Optional<ResourceLocation> getScrollerLocation() {
-            return Optional.ofNullable(this.scrollerLocation);
+        public ResourceLocation getScrollerLocation() {
+            return scrollerLocation;
+        }
+
+        public TabContent getTabContent() {
+            return tabContent;
         }
 
     }

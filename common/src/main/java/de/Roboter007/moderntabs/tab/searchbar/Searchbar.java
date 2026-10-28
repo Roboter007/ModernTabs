@@ -5,31 +5,31 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.color.SimpleColor;
 import de.Roboter007.moderntabs.tab.TabElement;
-import de.Roboter007.moderntabs.tab.section.Section;
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
 import de.Roboter007.moderntabs.util.CodecUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector2i;
 
 import java.util.Objects;
 import java.util.Optional;
 
+import static de.Roboter007.moderntabs.util.CodecUtil.nullable;
+
 public class Searchbar extends TabElement<Searchbar> {
     public static final ResourceLocation DEFAULT_SEARCHBAR_LOCATION = ModernTabs.path("searchbar/default_searchbar");
 
     public static final Codec<Searchbar> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            CodecUtil.CODEC.optionalFieldOf("offset").forGetter(Searchbar::optionalOffset),
-            ResourceLocation.CODEC.optionalFieldOf("searchbarLocation").forGetter(Searchbar::optionalSearchbarLocation),
-            SimpleColor.CODEC.optionalFieldOf("color").forGetter(Searchbar::optionalColor),
-            ResourceLocation.CODEC.optionalFieldOf("fontLocation").forGetter(Searchbar::optionalFontLocation),
-            StringRepresentable.fromEnum(ElementOrientation::values).optionalFieldOf("orientation").forGetter(Searchbar::optionalOrientation),
-            Codec.INT.optionalFieldOf("width").forGetter(Searchbar::optionalWidth),
-            Codec.INT.optionalFieldOf("height").forGetter(Searchbar::optionalHeight),
-            Codec.INT.optionalFieldOf("editBoxWidth").forGetter(Searchbar::optionalEditBoxWidth),
-            Codec.INT.optionalFieldOf("editBoxHeight").forGetter(Searchbar::optionalEditBoxHeight)
+            CodecUtil.CODEC.optionalFieldOf("offset", new Vector2i()).forGetter(Searchbar::getOffset),
+            ResourceLocation.CODEC.optionalFieldOf("searchbarLocation").forGetter(nullable(Searchbar::getSearchbarLocation)),
+            SimpleColor.CODEC.optionalFieldOf("color").forGetter(nullable(Searchbar::getColor)),
+            ResourceLocation.CODEC.optionalFieldOf("fontLocation").forGetter(nullable(Searchbar::getFontLocation)),
+            StringRepresentable.fromEnum(ElementOrientation::values).optionalFieldOf("orientation", ElementOrientation.RIGHT).forGetter(Searchbar::getOrientation),
+            Codec.INT.optionalFieldOf("width", 90).forGetter(Searchbar::getWidth),
+            Codec.INT.optionalFieldOf("height", 12).forGetter(Searchbar::getHeight),
+            Codec.INT.optionalFieldOf("editBoxWidth", 89).forGetter(Searchbar::getEditBoxWidth),
+            Codec.INT.optionalFieldOf("editBoxHeight", 9).forGetter(Searchbar::getEditBoxWidth)
     ).apply(instance, Searchbar::new));
 
     @Nullable
@@ -57,8 +57,8 @@ public class Searchbar extends TabElement<Searchbar> {
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public Searchbar(Optional<Vector2i> offset, Optional<ResourceLocation> searchbarLocation, Optional<SimpleColor> color, Optional<ResourceLocation> fontLocation, Optional<ElementOrientation> orientation, Optional<Integer> width, Optional<Integer> height, Optional<Integer> editBoxWidth, Optional<Integer> editBoxHeight) {
-        this(offset.orElse(new Vector2i()), searchbarLocation.orElse(DEFAULT_SEARCHBAR_LOCATION), color.orElse(null), fontLocation.orElse(null), orientation.orElse(ElementOrientation.RIGHT), width.orElse(90), height.orElse(12), editBoxWidth.orElse(89), editBoxHeight.orElse(9));
+    public Searchbar(Vector2i offset, Optional<ResourceLocation> searchbarLocation, Optional<SimpleColor> color, Optional<ResourceLocation> fontLocation, ElementOrientation orientation, Integer width, Integer height, Integer editBoxWidth, Integer editBoxHeight) {
+        this(offset, searchbarLocation.orElse(DEFAULT_SEARCHBAR_LOCATION), color.orElse(null), fontLocation.orElse(null), orientation, width, height, editBoxWidth, editBoxHeight);
     }
 
     public Searchbar() {
@@ -136,38 +136,5 @@ public class Searchbar extends TabElement<Searchbar> {
 
     public int getEditBoxHeight() {
         return editBoxHeight;
-    }
-
-
-    public Optional<ResourceLocation> optionalSearchbarLocation() {
-        return Optional.ofNullable(this.searchbarLocation);
-    }
-
-    public Optional<SimpleColor> optionalColor() {
-        return Optional.ofNullable(color);
-    }
-
-    public Optional<ElementOrientation> optionalOrientation() {
-        return Optional.ofNullable(orientation);
-    }
-
-    public Optional<ResourceLocation> optionalFontLocation() {
-        return Optional.ofNullable(fontLocation);
-    }
-
-    public Optional<Integer> optionalWidth() {
-        return Optional.of(width);
-    }
-
-    public Optional<Integer> optionalHeight() {
-        return Optional.of(height);
-    }
-
-    public Optional<Integer> optionalEditBoxWidth() {
-        return Optional.of(editBoxWidth);
-    }
-
-    public Optional<Integer> optionalEditBoxHeight() {
-        return Optional.of(editBoxHeight);
     }
 }
