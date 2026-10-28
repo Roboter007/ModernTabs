@@ -38,7 +38,6 @@ public class CreativeModeInventoryMixin {
 
         // reset color
         if(tabExtension.moderntabs$hasCustomBackground() && tabExtension.moderntabs$getBackground().hasCustomColor()) {
-            guiGraphics.flush();
             guiGraphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         }
     }

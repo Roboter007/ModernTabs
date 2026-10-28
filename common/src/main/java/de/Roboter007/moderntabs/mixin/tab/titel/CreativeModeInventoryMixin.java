@@ -100,7 +100,7 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
                 }
 
                 TextRenderer.drawAuraText(guiGraphics, text, titelFontLocation, titelFont2Location, titelColor.argbColor(), titelColor2.argbColor(), titelDropShadow, titelDropShadow2, x, y);
-            } else if(customTabTitel instanceof SpriteTabTitel spriteTabTitel) {
+            } else if(customTabTitel instanceof SpriteTabTitel spriteTabTitel && spriteTabTitel.getSpriteTitelLocation() != null) {
                 guiGraphics.blitSprite(spriteTabTitel.getSpriteTitelLocation(), x, y, spriteTabTitel.getWidth(), spriteTabTitel.getHeight());
             } else {
                 guiGraphics.drawString(font, text.copy().withStyle(style -> style.withFont(titelFontLocation)), x, y, titelColor.argbColor(), titelDropShadow);

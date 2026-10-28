@@ -73,7 +73,6 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
             guiGraphics.blitSprite(searchbarLocation, x, y, searchbar.getWidth(), searchbar.getHeight());
 
             if (color != null) {
-                guiGraphics.flush();
                 guiGraphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
             }
         }

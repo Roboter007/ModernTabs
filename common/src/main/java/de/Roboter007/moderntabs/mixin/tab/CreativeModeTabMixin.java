@@ -2,6 +2,7 @@ package de.Roboter007.moderntabs.mixin.tab;
 
 import de.Roboter007.moderntabs.tab.background.TabBackground;
 import de.Roboter007.moderntabs.tab.button.TabButton;
+import de.Roboter007.moderntabs.tab.content.TabContent;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.platform.SearchbarPlatform;
 import de.Roboter007.moderntabs.tab.searchbar.Searchbar;
@@ -42,6 +43,8 @@ public class CreativeModeTabMixin implements CreativeModeTabExtension {
     public ResourceLocation moderntabs$filler = null;
     @Unique
     public ResourceLocation moderntabs$scroller = null;
+    @Unique
+    public TabContent moderntabs$tabContent = null;
 
 
     @Override
@@ -152,6 +155,16 @@ public class CreativeModeTabMixin implements CreativeModeTabExtension {
     @Override
     public void moderntabs$setCustomScroller(ResourceLocation scrollerLocation) {
         this.moderntabs$scroller = scrollerLocation;
+    }
+
+    @Override
+    public TabContent moderntabs$getCustomTabContent() {
+        return this.moderntabs$tabContent;
+    }
+
+    @Override
+    public void moderntabs$setCustomTabContent(TabContent tabContent) {
+        this.moderntabs$tabContent = tabContent;
     }
 
 }

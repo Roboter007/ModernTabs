@@ -2,6 +2,7 @@ package de.Roboter007.moderntabs.tab.extensions;
 
 import de.Roboter007.moderntabs.tab.background.TabBackground;
 import de.Roboter007.moderntabs.tab.button.TabButton;
+import de.Roboter007.moderntabs.tab.content.TabContent;
 import de.Roboter007.moderntabs.tab.searchbar.Searchbar;
 import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
 import net.minecraft.resources.ResourceLocation;
@@ -47,7 +48,7 @@ public interface CreativeModeTabExtension {
 
     // filler
     ResourceLocation moderntabs$getFiller();
-    void moderntabs$setFiller(ResourceLocation tabIconLocation);
+    void moderntabs$setFiller(ResourceLocation fillerLocation);
     default boolean moderntabs$hasFiller() {
         return moderntabs$getFiller() != null;
     }
@@ -57,6 +58,13 @@ public interface CreativeModeTabExtension {
     void moderntabs$setCustomScroller(ResourceLocation scrollerLocation);
     default boolean moderntabs$hasCustomScroller() {
         return moderntabs$getCustomScroller() != null;
+    }
+
+    // tab content
+    TabContent moderntabs$getCustomTabContent();
+    void moderntabs$setCustomTabContent(TabContent tabContent);
+    default boolean moderntabs$hasCustomTabContent() {
+        return moderntabs$getCustomTabContent() != null;
     }
 
 }

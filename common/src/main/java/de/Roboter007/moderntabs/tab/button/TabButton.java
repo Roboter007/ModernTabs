@@ -11,12 +11,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
+import static de.Roboter007.moderntabs.util.CodecUtil.nullable;
+
 public class TabButton {
 
     public static final Codec<TabButton> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ResourceLocation.CODEC.optionalFieldOf("spritesLocation").forGetter(TabButton::optionalSpritesLocation),
-            SimpleColor.CODEC.optionalFieldOf("color").forGetter(TabButton::optionalColor),
-            TabIcon.CODEC.optionalFieldOf("icon").forGetter(TabButton::optionalIcon)
+            ResourceLocation.CODEC.optionalFieldOf("spritesLocation").forGetter(nullable(TabButton::getSpritesLocation)),
+            SimpleColor.CODEC.optionalFieldOf("color").forGetter(nullable(TabButton::getColor)),
+            TabIcon.CODEC.optionalFieldOf("icon").forGetter(nullable(TabButton::getIcon))
     ).apply(instance, TabButton::new));
 
     private ResourceLocation spritesLocation = null;
@@ -77,18 +79,6 @@ public class TabButton {
         return this.spritesLocation != null;
     }
 
-
-    public Optional<ResourceLocation> optionalSpritesLocation() {
-        return Optional.ofNullable(spritesLocation);
-    }
-
-    public Optional<SimpleColor> optionalColor() {
-        return Optional.ofNullable(color);
-    }
-
-    public Optional<TabIcon> optionalIcon() {
-        return Optional.ofNullable(icon);
-    }
 
     public void updateTabButtonStates() {
         this.tabButtonSprites = new TabButtonSprite[]{

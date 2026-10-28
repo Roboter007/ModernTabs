@@ -11,5 +11,8 @@
   "title": {
     "textStyle": "custom",
     "color": "3600E8"
+  },
+  "content": {
+    "overwriteDefaultContent": false
   }
 }

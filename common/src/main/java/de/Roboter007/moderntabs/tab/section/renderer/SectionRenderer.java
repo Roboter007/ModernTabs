@@ -156,7 +156,6 @@ public class SectionRenderer {
             }
 
             if (extension.moderntabs$hasCustomBackground() && extension.moderntabs$getBackground().hasCustomColor()) {
-                graphics.flush();
                 graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
             }
         }
@@ -185,10 +184,8 @@ public class SectionRenderer {
         customGraphics.moderntabs$blitSprite(bannerSprite, Section.Banner.MISSING_BANNER, x, y, w, h);
 
         if (decoration.color().isPresent()) {
-            graphics.flush();
             graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         } else if (extension.moderntabs$hasCustomBackground() && extension.moderntabs$getBackground().hasCustomColor() && decoration instanceof Section.Overlay) {
-            graphics.flush();
             graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         }
     }

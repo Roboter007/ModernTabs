@@ -33,7 +33,7 @@ public class TabDesignReloadListener extends SimpleJsonResourceReloadListener {
             if (result.isSuccess()) {
                 parsed.put(entry.getKey(), result.getOrThrow());
             } else {
-                LOGGER.error("ModernTabs: couldn't parse section '{}': {}", entry.getKey(), result);
+                LOGGER.error("ModernTabs: couldn't parse tab design '{}': {}", entry.getKey(), result);
             }
         }
         ModernTabs.reload(parsed);

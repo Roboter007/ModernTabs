@@ -10,14 +10,16 @@ import org.joml.Vector2i;
 
 import java.util.Optional;
 
+import static de.Roboter007.moderntabs.util.CodecUtil.nullable;
+
 public class TabIcon extends TabElement<TabIcon> {
 
     public static final Codec<TabIcon> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            CodecUtil.CODEC.optionalFieldOf("offset").forGetter(TabIcon::optionalOffset),
-            ResourceLocation.CODEC.optionalFieldOf("location").forGetter(TabIcon::optionalLocation),
-            ItemStack.CODEC.optionalFieldOf("itemStack").forGetter(TabIcon::optionalItemStack),
-            Codec.INT.optionalFieldOf("width").forGetter(TabIcon::optionalWidth),
-            Codec.INT.optionalFieldOf("height").forGetter(TabIcon::optionalHeight)
+            CodecUtil.CODEC.optionalFieldOf("offset", new Vector2i()).forGetter(TabIcon::getOffset),
+            ResourceLocation.CODEC.optionalFieldOf("location").forGetter(nullable(TabIcon::getLocation)),
+            ItemStack.CODEC.optionalFieldOf("itemStack").forGetter(nullable(TabIcon::getItemStack)),
+            Codec.INT.optionalFieldOf("width", 16).forGetter(TabIcon::getWidth),
+            Codec.INT.optionalFieldOf("height", 16).forGetter(TabIcon::getHeight)
     ).apply(instance, TabIcon::new));
 
     private ResourceLocation location = null;
@@ -34,8 +36,8 @@ public class TabIcon extends TabElement<TabIcon> {
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public TabIcon(Optional<Vector2i> offset, Optional<ResourceLocation> location, Optional<ItemStack> itemStack, Optional<Integer> width, Optional<Integer> height) {
-        this(offset.orElse(new Vector2i()), location.orElse(null), itemStack.orElse(null), width.orElse(16), height.orElse(16));
+    public TabIcon(Vector2i offset, Optional<ResourceLocation> location, Optional<ItemStack> itemStack, Integer width, Integer height) {
+        this(offset, location.orElse(null), itemStack.orElse(null), width, height);
     }
 
     public TabIcon() {
@@ -77,22 +79,5 @@ public class TabIcon extends TabElement<TabIcon> {
 
     public int getHeight() {
         return height;
-    }
-
-
-    public Optional<ResourceLocation> optionalLocation() {
-        return Optional.ofNullable(location);
-    }
-
-    public Optional<ItemStack> optionalItemStack() {
-        return Optional.ofNullable(itemStack);
-    }
-
-    public Optional<Integer> optionalWidth() {
-        return Optional.of(width);
-    }
-
-    public Optional<Integer> optionalHeight() {
-        return Optional.of(height);
     }
 }

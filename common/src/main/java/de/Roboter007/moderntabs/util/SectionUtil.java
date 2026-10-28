@@ -16,6 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 //ToDo: fix Bug: sections get suddenly to other tabs applied that shouldn't have these sections
+// remove SectionUtil in favor of a new system
 public final class SectionUtil {
     public static final Map<ResourceLocation, ResourceLocation> ITEM_TAG_TO_SECTION = new ConcurrentHashMap<>();
     private static final Map<ResourceLocation, ResourceLocation> ITEM_TO_SECTION = new ConcurrentHashMap<>();
@@ -106,4 +107,7 @@ public final class SectionUtil {
             return this == ITEM_VISIBILITY.get(BuiltInRegistries.ITEM.getKey(item));
         }
     }
+
+
+
 }

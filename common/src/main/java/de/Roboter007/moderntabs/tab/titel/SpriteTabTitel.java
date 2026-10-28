@@ -15,23 +15,25 @@ import org.joml.Vector2i;
 
 import java.util.Optional;
 
+import static de.Roboter007.moderntabs.util.CodecUtil.nullable;
+
 // uses a sprite as a tab titel
 public class SpriteTabTitel extends CustomTabTitel<SpriteTabTitel> {
 
     public static final MapCodec<SpriteTabTitel> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            CodecUtil.CODEC.optionalFieldOf("offset").forGetter(SpriteTabTitel::optionalOffset),
-            StringRepresentable.fromEnum(ElementOrientation::values).optionalFieldOf("orientation").forGetter(SpriteTabTitel::optionalTextOrientation),
-            SimpleColor.CODEC.optionalFieldOf("backgroundColor").forGetter(SpriteTabTitel::optionalBackgroundColor),
-            ResourceLocation.CODEC.optionalFieldOf("spriteLocation").forGetter(SpriteTabTitel::optionalSpriteTitelLocation),
-            Codec.INT.optionalFieldOf("width").forGetter(SpriteTabTitel::optionalWidth),
-            Codec.INT.optionalFieldOf("height").forGetter(SpriteTabTitel::optionalHeight)
-    ).apply(instance, SpriteTabTitel::new));
+            CodecUtil.CODEC.lenientOptionalFieldOf("offset", new Vector2i()).forGetter(SpriteTabTitel::getOffset),
+            StringRepresentable.fromEnum(ElementOrientation::values).lenientOptionalFieldOf("orientation", ElementOrientation.LEFT).forGetter(SpriteTabTitel::getTextOrientation),
+            SimpleColor.CODEC.lenientOptionalFieldOf("backgroundColor").forGetter(nullable(SpriteTabTitel::getBackgroundColor)),
+            ResourceLocation.CODEC.lenientOptionalFieldOf("spriteLocation").forGetter(nullable(SpriteTabTitel::getSpriteTitelLocation)),
+            Codec.INT.lenientOptionalFieldOf("width", 0).forGetter(SpriteTabTitel::getWidth),
+            Codec.INT.lenientOptionalFieldOf("height", 0).forGetter(SpriteTabTitel::getHeight)
+    ).apply(instance, SpriteTabTitel::codec));
 
     private ResourceLocation spriteTitelLocation;
     private int width;
     private int height;
 
-    public SpriteTabTitel(@Nullable Vector2i offset, @Nullable ElementOrientation textOrientation, @Nullable SimpleColor backgroundColor, @NotNull ResourceLocation spriteTitelLocation, int width, int height) {
+    public SpriteTabTitel(@Nullable Vector2i offset, @Nullable ElementOrientation textOrientation, @Nullable SimpleColor backgroundColor, @Nullable ResourceLocation spriteTitelLocation, int width, int height) {
         super(offset, textOrientation, backgroundColor, null, null, null);
         this.spriteTitelLocation = spriteTitelLocation;
         this.width = width;
@@ -39,8 +41,8 @@ public class SpriteTabTitel extends CustomTabTitel<SpriteTabTitel> {
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public SpriteTabTitel(Optional<Vector2i> offset, Optional<ElementOrientation> textOrientation, Optional<SimpleColor> backgroundColor, Optional<ResourceLocation> spriteTitelLocation, Optional<Integer> width, Optional<Integer> height) {
-        this(offset.orElse(new Vector2i()), textOrientation.orElse(ElementOrientation.LEFT), backgroundColor.orElse(null), spriteTitelLocation.orElse(null), width.orElse(0), height.orElse(0));
+    private static SpriteTabTitel codec(Vector2i offset, ElementOrientation textOrientation, Optional<SimpleColor> backgroundColor, Optional<ResourceLocation> spriteTitelLocation, int width, int height) {
+        return new SpriteTabTitel(offset, textOrientation, backgroundColor.orElse(null), spriteTitelLocation.orElse(null), width, height);
     }
 
     public SpriteTabTitel() {
@@ -82,18 +84,6 @@ public class SpriteTabTitel extends CustomTabTitel<SpriteTabTitel> {
         return height;
     }
 
-
-    public Optional<ResourceLocation> optionalSpriteTitelLocation() {
-        return Optional.ofNullable(spriteTitelLocation);
-    }
-
-    public Optional<Integer> optionalWidth() {
-        return Optional.of(width);
-    }
-
-    public Optional<Integer> optionalHeight() {
-        return Optional.of(height);
-    }
 
     @Override
     public String getTextStyle() {
