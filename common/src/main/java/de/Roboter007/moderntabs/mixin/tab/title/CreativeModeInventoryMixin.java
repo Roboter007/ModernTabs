@@ -1,12 +1,12 @@
-package de.Roboter007.moderntabs.mixin.tab.title;
+package de.Roboter007.moderntabs.mixin.tab.titel;
 
 import de.Roboter007.moderntabs.color.SimpleColor;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.tab.section.renderer.TextRenderer;
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
-import de.Roboter007.moderntabs.tab.title.AuraTabTitle;
-import de.Roboter007.moderntabs.tab.title.CustomTabTitle;
-import de.Roboter007.moderntabs.tab.title.SpriteTabTitle;
+import de.Roboter007.moderntabs.tab.titel.AuraTabTitel;
+import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
+import de.Roboter007.moderntabs.tab.titel.SpriteTabTitel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -39,11 +39,10 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
     protected int renderLabels(GuiGraphics guiGraphics, Font font, Component text, int x, int y, int color, boolean dropShadow) {
         CreativeModeTabExtension creativeModeTabExtension = (CreativeModeTabExtension) selectedTab;
         if(creativeModeTabExtension.moderntabs$hasCustomTabTitelRendering()) {
-            CustomTabTitle<?> customTabTitel = creativeModeTabExtension.moderntabs$getCustomTabTitel();
-            customTabTitel.draw(guiGraphics, font, text, x, y,160, 10, 2, 0, -2, color, dropShadow);
+            CustomTabTitel<?> customTabTitel = creativeModeTabExtension.moderntabs$getCustomTabTitel();
 
             final int textWidth;
-            if(customTabTitel instanceof SpriteTabTitle spriteTabTitel) {
+            if(customTabTitel instanceof SpriteTabTitel spriteTabTitel) {
                 textWidth = spriteTabTitel.getWidth();
             } else {
                 textWidth = font.width(text);
@@ -62,7 +61,7 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
                 final int height = 10;
                 guiGraphics.fill(x, y - 2, x + textWidth + 2, y + height, customTabTitel.getBackgroundColor().argbColor());
                 x++;
-                if(customTabTitel instanceof SpriteTabTitle) {
+                if(customTabTitel instanceof SpriteTabTitel) {
                     y--;
                 }
             }
@@ -84,7 +83,7 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
                 titelDropShadow = customTabTitel.isDroppingShadow();
             }
 
-            if(customTabTitel instanceof AuraTabTitle auraTabTitel) {
+            if(customTabTitel instanceof AuraTabTitel auraTabTitel) {
                 ResourceLocation titelFont2Location = Minecraft.DEFAULT_FONT;
                 if(auraTabTitel.getFont2Location() != null) {
                     titelFont2Location = auraTabTitel.getFont2Location();
@@ -101,7 +100,7 @@ public class CreativeModeInventoryMixin extends EffectRenderingInventoryScreen<C
                 }
 
                 TextRenderer.drawAuraText(guiGraphics, text, titelFontLocation, titelFont2Location, titelColor.argbColor(), titelColor2.argbColor(), titelDropShadow, titelDropShadow2, x, y);
-            } else if(customTabTitel instanceof SpriteTabTitle spriteTabTitel && spriteTabTitel.getSpriteTitelLocation() != null) {
+            } else if(customTabTitel instanceof SpriteTabTitel spriteTabTitel) {
                 guiGraphics.blitSprite(spriteTabTitel.getSpriteTitelLocation(), x, y, spriteTabTitel.getWidth(), spriteTabTitel.getHeight());
             } else {
                 guiGraphics.drawString(font, text.copy().withStyle(style -> style.withFont(titelFontLocation)), x, y, titelColor.argbColor(), titelDropShadow);
