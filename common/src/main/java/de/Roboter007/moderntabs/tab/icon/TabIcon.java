@@ -20,12 +20,17 @@ public class TabIcon extends TabElement<TabIcon> {
             ItemStack.CODEC.optionalFieldOf("itemStack").forGetter(nullable(TabIcon::getItemStack)),
             Codec.INT.optionalFieldOf("width", 16).forGetter(TabIcon::getWidth),
             Codec.INT.optionalFieldOf("height", 16).forGetter(TabIcon::getHeight)
-    ).apply(instance, TabIcon::new));
+    ).apply(instance, TabIcon::codec));
 
     private ResourceLocation location = null;
     private ItemStack itemStack = null;
     private int width = 16;
     private int height = 16;
+
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    private static TabIcon codec(Vector2i offset, Optional<ResourceLocation> location, Optional<ItemStack> itemStack, Integer width, Integer height) {
+        return new TabIcon(offset, location.orElse(null), itemStack.orElse(null), width, height);
+    }
 
     public TabIcon(Vector2i offset, ResourceLocation location, ItemStack itemStack, int width, int height) {
         super(offset);
@@ -33,11 +38,6 @@ public class TabIcon extends TabElement<TabIcon> {
         this.itemStack = itemStack;
         this.width = width;
         this.height = height;
-    }
-
-    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public TabIcon(Vector2i offset, Optional<ResourceLocation> location, Optional<ItemStack> itemStack, Integer width, Integer height) {
-        this(offset, location.orElse(null), itemStack.orElse(null), width, height);
     }
 
     public TabIcon() {

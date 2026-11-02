@@ -1,11 +1,11 @@
 package de.Roboter007.moderntabs.mixin.tab.banner;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.tab.section.Section;
 import de.Roboter007.moderntabs.tab.section.renderer.SectionRenderer;
 import de.Roboter007.moderntabs.tab.section.Sections;
-import de.Roboter007.moderntabs.util.SectionUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -49,7 +49,7 @@ public abstract class CreativeModeInventoryScreenMixin {
     }
 
     @Inject(method = "render", at = @At("TAIL"))
-    private void moderntabs$render(final GuiGraphics guiGraphics, final int mouseX, final int mouseY, final float partialTick, final CallbackInfo ci) {
+    private void moderntabs$render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
         CreativeModeTabExtension tabExtension = (CreativeModeTabExtension) selectedTab;
         if (tabExtension.moderntabs$hasCustomSections()) {
             SectionRenderer.renderBanners(selectedTab, (CreativeModeInventoryScreen) (Object) this, guiGraphics, mouseX, mouseY);
@@ -57,12 +57,18 @@ public abstract class CreativeModeInventoryScreenMixin {
     }
 
     @Inject(method = "getTooltipFromContainerItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/CreativeModeTabs;tabs()Ljava/util/List;"))
-    private void moderntabs$getTooltipFromContainerItem(final ItemStack stack, final CallbackInfoReturnable<List<Component>> cir, @Local(ordinal = 1) final List<Component> list1, @Local final int i) {
-        final ResourceLocation sectionId = SectionUtil.sectionOf(stack.getItem());
-        if (sectionId != null) {
-            final Section section = Sections.get(sectionId);
-            if (section != null) {
-                list1.add(i, section.title().text().copy().withStyle(ChatFormatting.BLUE));
+    private void moderntabs$getTooltipFromContainerItem(ItemStack stack, CallbackInfoReturnable<List<Component>> cir, @Local(ordinal = 1) List<Component> list1, @Local int i) {
+        CreativeModeTabExtension tabExtension = (CreativeModeTabExtension) selectedTab;
+        if(tabExtension.moderntabs$hasCustomTabContent()) {
+            for(ResourceLocation sectionLocation : tabExtension.moderntabs$getCustomTabContent().getSections()) {
+                Section section = Sections.get(sectionLocation);
+                if(section != null) {
+                    if (section.getContent().contains(stack) && section.getTitle().getText() != null) {
+                        list1.add(i, section.getTitle().getText().copy().withStyle(ChatFormatting.BLUE));
+                    }
+                } else {
+                    ModernTabs.logWarning("Section: " + sectionLocation + " - does not exist!");
+                }
             }
         }
     }

@@ -1,13 +1,18 @@
 {
-  "priority": 2,
+  "content": [
+    {
+      "id": "minecraft:netherite_block"
+    }
+  ],
   "sectionToggle": {
     "defaultState": "collapsed",
     "orientation": "centered"
   },
   "title": {
+    "textStyle": "aura",
     "text": { "translate": "moderntabs.creativeTab.section.food" },
     "color": "#FFE9B0",
-    "secondaryColor": "#FFC1B0",
+    "color2": "#FFC1B0",
     "orientation": "right"
   },
   "banner": {

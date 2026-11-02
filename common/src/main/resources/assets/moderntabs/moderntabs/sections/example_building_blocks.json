@@ -1,13 +1,21 @@
 {
-  "priority": 0,
+  "content": [
+    {
+      "id": "minecraft:iron_ingot"
+    },
+    {
+      "id": "minecraft:dirt"
+    }
+  ],
   "sectionToggle": {
     "defaultState": "expanded",
     "orientation": "right"
   },
   "title": {
+    "textStyle": "aura",
     "text": { "translate": "moderntabs.creativeTab.section.building_blocks" },
     "color": "#D1FFD3",
-    "secondaryColor": "#E6FFD1"
+    "color2": "#E6FFD1"
   },
   "banner": {
     "animation_mode": "not_animated",

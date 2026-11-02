@@ -2,42 +2,108 @@ package de.Roboter007.moderntabs.tab.section;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import de.Roboter007.moderntabs.ModernTabs;
-import de.Roboter007.moderntabs.tab.section.states.AnimationMode;
-import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
-import de.Roboter007.moderntabs.tab.section.states.ToggleState;
-import de.Roboter007.moderntabs.util.ColorUtil;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentSerialization;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.util.StringRepresentable;
-import org.jetbrains.annotations.NotNull;
+import de.Roboter007.moderntabs.tab.section.decoration.Banner;
+import de.Roboter007.moderntabs.tab.section.decoration.Overlay;
+import de.Roboter007.moderntabs.tab.section.toggle.SectionToggle;
+import de.Roboter007.moderntabs.tab.title.CustomTabTitle;
+import net.minecraft.world.item.ItemStack;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-public record Section(int priority, Title title, Banner banner, Optional<Overlay> overlay, Optional<SectionToggle> sectionToggle) implements Comparable<Section> {
+import static de.Roboter007.moderntabs.util.CodecUtil.nullable;
+
+public class Section {
 
     public static final Codec<Section> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ExtraCodecs.POSITIVE_INT.fieldOf("priority").orElse(0).forGetter(Section::priority),
-            Title.CODEC.fieldOf("title").forGetter(Section::title),
-            Banner.CODEC.fieldOf("banner").forGetter(Section::banner),
-            Overlay.CODEC.optionalFieldOf("overlay").forGetter(Section::overlay),
-            SectionToggle.CODEC.optionalFieldOf("sectionToggle").forGetter(Section::sectionToggle)
-    ).apply(instance, Section::new));
+            ItemStack.CODEC.listOf().optionalFieldOf("content", new ArrayList<>()).forGetter(Section::getContent),
+            CustomTabTitle.CODEC.fieldOf("title").forGetter(Section::getTitle),
+            Banner.CODEC.fieldOf("banner").forGetter(Section::getBanner),
+            Overlay.CODEC.optionalFieldOf("overlay").forGetter(nullable(Section::getOverlay)),
+            SectionToggle.CODEC.optionalFieldOf("sectionToggle").forGetter(nullable(Section::getSectionToggle))
+    ).apply(instance, Section::codec));
 
-    @Override
-    public int compareTo(@NotNull final Section other) {
-        return Integer.compare(this.priority, other.priority);
+    private List<ItemStack> content = new ArrayList<>();
+    private CustomTabTitle<?> title = null;
+    private Banner banner = null;
+    private Overlay overlay = null;
+    private SectionToggle sectionToggle = null;
+
+    public Section(List<ItemStack> content, CustomTabTitle<?> title, Banner banner, Overlay overlay, SectionToggle sectionToggle) {
+        this.content = content;
+        this.title = title;
+        this.banner = banner;
+        this.overlay = overlay;
+        this.sectionToggle = sectionToggle;
     }
 
-    public record SectionToggle(ToggleState defaultState, ElementOrientation orientation) {
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    public static Section codec(List<ItemStack> content, CustomTabTitle<?> title, Banner banner, Optional<Overlay> overlay, Optional<SectionToggle> sectionToggle) {
+        return new Section(content, title, banner, overlay.orElse(null), sectionToggle.orElse(null));
+    }
+
+    public Section() {}
+
+    public Section content(List<ItemStack> content) {
+        this.content = content;
+        return this;
+    }
+
+    public Section addContent(ItemStack itemStack) {
+        this.content.add(itemStack);
+        return this;
+    }
+
+    public Section title(CustomTabTitle<?> title) {
+        this.title = title;
+        return this;
+    }
+
+    public Section banner(Banner banner) {
+        this.banner = banner;
+        return this;
+    }
+
+    public Section overlay(Overlay overlay) {
+        this.overlay = overlay;
+        return this;
+    }
+
+    public Section sectionToggle(SectionToggle sectionToggle) {
+        this.sectionToggle = sectionToggle;
+        return this;
+    }
+
+
+    public List<ItemStack> getContent() {
+        return content;
+    }
+
+    public CustomTabTitle<?> getTitle() {
+        return title;
+    }
+
+    public Banner getBanner() {
+        return banner;
+    }
+
+    public Overlay getOverlay() {
+        return overlay;
+    }
+
+    public SectionToggle getSectionToggle() {
+        return sectionToggle;
+    }
+
+    /*public record SectionToggle(ToggleState defaultState, ElementOrientation orientation) {
         public static final Codec<SectionToggle> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 StringRepresentable.fromEnum(ToggleState::values).fieldOf("defaultState").orElse(ToggleState.EXPANDED).forGetter(SectionToggle::defaultState),
                 StringRepresentable.fromEnum(ElementOrientation::values).fieldOf("orientation").orElse(ElementOrientation.RIGHT).forGetter(SectionToggle::orientation)
         ).apply(instance, SectionToggle::new));
     }
 
+    //ToDo: replace with the the better title code
     public record Title(Component text, ElementOrientation orientation, int color, Optional<Integer> secondaryColor, int background) {
         public static final Codec<Title> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 ComponentSerialization.CODEC.fieldOf("text").forGetter(Title::text),
@@ -86,5 +152,5 @@ public record Section(int priority, Title title, Banner banner, Optional<Overlay
         ResourceLocation sprite();
         AnimationMode animationMode();
         Optional<Integer> color();
-    }
+    } */
 }

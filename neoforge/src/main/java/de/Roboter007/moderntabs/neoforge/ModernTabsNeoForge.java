@@ -20,8 +20,6 @@ import org.slf4j.LoggerFactory;
 public final class ModernTabsNeoForge {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(ModernTabs.MOD_ID);
-    private static final DeferredRegister<CreativeModeTab> EXAMPLE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ModernTabs.MOD_ID);
-    private static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = EXAMPLE_TABS.register("example_tab", () -> ExampleTab.TAB);
 
     public ModernTabsNeoForge(final IEventBus modEventBus, final ModContainer modContainer) {
         ModernTabsPlatform.init(new NeoForgePlatform());
@@ -30,9 +28,10 @@ public final class ModernTabsNeoForge {
         });
         if(ModernTabs.isExampleTabEnabled()) {
             DeferredRegister<CreativeModeTab> EXAMPLE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ModernTabs.MOD_ID);
-            EXAMPLE_TABS.register("example_tab", () -> ExampleTab.TAB);
 
+            EXAMPLE_TABS.register(ExampleTab.TAB_ID.getPath(), () -> ExampleTab.TAB);
             EXAMPLE_TABS.register(modEventBus);
+
             ExampleTab.init();
         }
     }

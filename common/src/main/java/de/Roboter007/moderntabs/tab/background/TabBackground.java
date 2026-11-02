@@ -19,14 +19,14 @@ public class TabBackground {
     private SimpleColor color = null;
     private ResourceLocation backgroundLocation = null;
 
-    public TabBackground(SimpleColor color, ResourceLocation backgroundLocation) {
-        this.color = color;
-        this.backgroundLocation = backgroundLocation;
-    }
-
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     private static TabBackground codec(Optional<SimpleColor> color, Optional<ResourceLocation> backgroundLocation) {
         return new TabBackground(color.orElse(null), backgroundLocation.orElse(null));
+    }
+
+    public TabBackground(SimpleColor color, ResourceLocation backgroundLocation) {
+        this.color = color;
+        this.backgroundLocation = backgroundLocation;
     }
 
     public TabBackground() {}

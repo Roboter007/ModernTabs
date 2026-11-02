@@ -19,7 +19,7 @@ public class TabButton {
             ResourceLocation.CODEC.optionalFieldOf("spritesLocation").forGetter(nullable(TabButton::getSpritesLocation)),
             SimpleColor.CODEC.optionalFieldOf("color").forGetter(nullable(TabButton::getColor)),
             TabIcon.CODEC.optionalFieldOf("icon").forGetter(nullable(TabButton::getIcon))
-    ).apply(instance, TabButton::new));
+    ).apply(instance, TabButton::codec));
 
     private ResourceLocation spritesLocation = null;
     private SimpleColor color = null;
@@ -27,16 +27,16 @@ public class TabButton {
 
     private TabButtonSprite[] tabButtonSprites = null;
 
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    private static TabButton codec(Optional<ResourceLocation> spritesLocation, Optional<SimpleColor> color, Optional<TabIcon> icon) {
+        return new TabButton(spritesLocation.orElse(null), color.orElse(null), icon.orElse(null));
+    }
+
     public TabButton(ResourceLocation spritesLocation, SimpleColor color, TabIcon icon) {
         this.spritesLocation = spritesLocation;
         this.color = color;
         this.icon = icon;
         updateTabButtonStates();
-    }
-
-    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public TabButton(Optional<ResourceLocation> spritesLocation, Optional<SimpleColor> color, Optional<TabIcon> icon) {
-        this(spritesLocation.orElse(null), color.orElse(null), icon.orElse(null));
     }
 
     public TabButton() {

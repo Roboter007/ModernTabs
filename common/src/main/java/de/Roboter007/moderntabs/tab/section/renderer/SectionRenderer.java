@@ -4,8 +4,12 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.color.SimpleColor;
+import de.Roboter007.moderntabs.tab.content.TabContent;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.graphics.CustomGuiGraphics;
+import de.Roboter007.moderntabs.tab.section.decoration.Banner;
+import de.Roboter007.moderntabs.tab.section.decoration.Decoration;
+import de.Roboter007.moderntabs.tab.section.decoration.Overlay;
 import de.Roboter007.moderntabs.tab.section.states.AnimationMode;
 import de.Roboter007.moderntabs.mixin.tab.banner.AbstractContainerScreenAccessor;
 import de.Roboter007.moderntabs.tab.section.Section;
@@ -13,12 +17,12 @@ import de.Roboter007.moderntabs.tab.extensions.SpriteContentsExtension;
 import de.Roboter007.moderntabs.tab.extensions.TickerExtension;
 import de.Roboter007.moderntabs.tab.section.Sections;
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
-import de.Roboter007.moderntabs.util.ColorUtil;
+import de.Roboter007.moderntabs.tab.title.AuraTabTitle;
+import de.Roboter007.moderntabs.tab.title.CustomTabTitle;
 import de.Roboter007.moderntabs.util.SectionUtil;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.renderer.texture.SpriteContents;
@@ -66,7 +70,7 @@ public class SectionRenderer {
             int top = ((AbstractContainerScreenAccessor) screen).getTopPos() + 17;
             ps.translate(left, top, 0);
 
-            for (Section section : Sections.sortedEntries()) {
+            for (Section section : Sections.getSectionsFromTab(tab)) {
                 renderSection(tab, section, graphics, yValues, left, top, mouseX, mouseY);
             }
             renderEmptyRows(tab, graphics);
@@ -83,54 +87,57 @@ public class SectionRenderer {
             int yValue = yValues.getInt(id);
             int sectionRow = yValue - CURRENT_ROW;
             if (sectionRow >= 0 && sectionRow <= 4) {
-                int x = 0;
-                int y = sectionRow * 18;
+                final int x = 0;
+                final int y = sectionRow * 18;
 
                 boolean isHovering = mouseX >= left + x && mouseX <= left + x + BANNER_WIDTH && mouseY >= top + y && mouseY <= top + y + BANNER_HEIGHT;
 
                 // render main banner sprite
-                renderSectionDecoration(extension, graphics, isHovering, section.banner(), x, y, BANNER_WIDTH, BANNER_HEIGHT);
+                renderSectionDecoration(extension, graphics, isHovering, section.getBanner(), x, y, BANNER_WIDTH, BANNER_HEIGHT);
 
                 // render banner overlay sprite
-                if(section.overlay().isPresent()) {
-                    renderSectionDecoration(extension, graphics, isHovering, section.overlay().get(), x, y, BANNER_WIDTH, BANNER_HEIGHT);
+                if(section.getOverlay() != null) {
+                    renderSectionDecoration(extension, graphics, isHovering, section.getOverlay(), x, y, BANNER_WIDTH, BANNER_HEIGHT);
                 }
+
 
                 // render text
-                Component text = section.title().text();
-                Font font = Minecraft.getInstance().font;
-                int textWidth = font.width(text);
+                CustomTabTitle<?> customTabTitle = section.getTitle();
 
-                int orientatedX;
-                int backgroundMinX;
-                int backgroundMaxX;
-                int textX;
-
-                if(section.title().orientation() == ElementOrientation.CENTERED) {
-                    orientatedX = (BANNER_WIDTH - textWidth) / 2;
-                    backgroundMinX = orientatedX - 2;
-                    backgroundMaxX = orientatedX + textWidth + 2;
-                    textX = orientatedX;
-                } else if (section.title().orientation() == ElementOrientation.RIGHT) {
-                    orientatedX = BANNER_WIDTH - textWidth;
-                    backgroundMinX = orientatedX - 8;
-                    backgroundMaxX = orientatedX + textWidth - 2;
-                    textX = orientatedX - 5;
-                } else {
-                    orientatedX = x;
-                    backgroundMinX = orientatedX + 2;
-                    backgroundMaxX = orientatedX + textWidth + 8;
-                    textX = orientatedX + 5;
+                // load default values for section titles
+                if(customTabTitle.getBackgroundColor() == null) {
+                    customTabTitle.backgroundColor(new SimpleColor(0xAA000000));
                 }
 
-                int background = section.title().background();
-                graphics.fill(backgroundMinX, y + 2, backgroundMaxX, y + BANNER_HEIGHT - 2, background);
+                if(customTabTitle.isDroppingShadow() == null) {
+                    customTabTitle.dropShadow(true);
+                }
 
-                int light = section.title().color();
-                int dark = section.title().secondaryColor().orElseGet(() -> ColorUtil.darken(light, 0.2f));
+                if(customTabTitle instanceof AuraTabTitle auraTabTitle && auraTabTitle.isDroppingShadow2() == null) {
+                    auraTabTitle.dropShadow2(true);
+                }
 
-                TextRenderer.drawAuraText(graphics, text, dark, light, textX, y + 5);
+                int textX = x;
+                int bgX;
+                int bgWidth;
 
+                ElementOrientation orientation = customTabTitle.getTextOrientation();
+                if(orientation == ElementOrientation.RIGHT) {
+                    textX -= 7;
+                    bgX = -3;
+                    bgWidth = 6;
+                } else if(orientation == ElementOrientation.LEFT) {
+                    textX += 5;
+                    bgX = -3;
+                    bgWidth = 6;
+                } else {
+                    bgX = -2;
+                    bgWidth = 4;
+                }
+
+                customTabTitle.draw(graphics, Minecraft.getInstance().font, Component.literal("Placeholder"), textX, y + 5, bgX, -3, BANNER_WIDTH + 2, bgWidth, BANNER_HEIGHT - 4, new SimpleColor("FFFFFF").argbColor(), true);
+
+                // render section toggle
                 boolean searching = isSearching(tab);
                 if(searching ? Sections.isCollapsible(section) : canToggle(tab, section)) {
                     renderSectionToggle(extension, graphics, section, isCollapsed(tab, section), x, y, BANNER_WIDTH, BANNER_HEIGHT, isHovering && !searching);
@@ -161,31 +168,31 @@ public class SectionRenderer {
         }
     }
 
-    public static void renderSectionDecoration(CreativeModeTabExtension extension, GuiGraphics graphics, boolean isHovering, Section.Decoration decoration, int x, int y, int w, int h) {
-        ResourceLocation bannerSprite = decoration.sprite();
+    public static void renderSectionDecoration(CreativeModeTabExtension extension, GuiGraphics graphics, boolean isHovering, Decoration decoration, int x, int y, int w, int h) {
+        ResourceLocation bannerSprite = decoration.getSprite();
         CustomGuiGraphics customGraphics = (CustomGuiGraphics) graphics;
 
-        if (decoration.animationMode() == AnimationMode.PLAY_ON_HOVER) {
+        if (decoration.getAnimationMode() == AnimationMode.PLAY_ON_HOVER) {
             setPlaying(bannerSprite, isHovering);
-        } else if (decoration.animationMode() == AnimationMode.PLAY_CONTINUOUSLY) {
+        } else if (decoration.getAnimationMode() == AnimationMode.PLAY_CONTINUOUSLY) {
             setPlaying(bannerSprite, true);
-        } else if (decoration.animationMode() == AnimationMode.NOT_ANIMATED) {
+        } else if (decoration.getAnimationMode() == AnimationMode.NOT_ANIMATED) {
             setPlaying(bannerSprite, false);
         }
 
-        if (decoration.color().isPresent()) {
-            SimpleColor color = new SimpleColor(decoration.color().get());
+        if (decoration.getColor() != null) {
+            SimpleColor color = decoration.getColor();
             graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
-        } else if (extension.moderntabs$hasCustomBackground() && extension.moderntabs$getBackground().hasCustomColor() && decoration instanceof Section.Overlay) {
+        } else if (extension.moderntabs$hasCustomBackground() && extension.moderntabs$getBackground().hasCustomColor() && decoration instanceof Overlay) {
             SimpleColor color = extension.moderntabs$getBackground().getColor();
             graphics.setColor(color.normalizedRed(), color.normalizedGreen(), color.normalizedBlue(), color.normalizedAlpha());
         }
 
-        customGraphics.moderntabs$blitSprite(bannerSprite, Section.Banner.MISSING_BANNER, x, y, w, h);
+        customGraphics.moderntabs$blitSprite(bannerSprite, Banner.MISSING_BANNER, x, y, w, h);
 
-        if (decoration.color().isPresent()) {
+        if (decoration.getColor() != null) {
             graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-        } else if (extension.moderntabs$hasCustomBackground() && extension.moderntabs$getBackground().hasCustomColor() && decoration instanceof Section.Overlay) {
+        } else if (extension.moderntabs$hasCustomBackground() && extension.moderntabs$getBackground().hasCustomColor() && decoration instanceof Overlay) {
             graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         }
     }
@@ -196,9 +203,11 @@ public class SectionRenderer {
 
         if(Sections.isCollapsible(section)) {
             int orientatedX;
-            if(section.sectionToggle().get().orientation() == ElementOrientation.CENTERED) {
+
+            ElementOrientation orientation = section.getSectionToggle().getOrientation();
+            if(orientation == ElementOrientation.CENTERED) {
                 orientatedX = sectionX + ((sectionW - width) / 2);
-            } else if (section.sectionToggle().get().orientation() == ElementOrientation.RIGHT) {
+            } else if (orientation == ElementOrientation.RIGHT) {
                 orientatedX = sectionX + sectionW - width - 2;
             } else {
                 orientatedX = sectionX + 2;
@@ -219,7 +228,6 @@ public class SectionRenderer {
             graphics.blitSprite(toggleButtonLocation, orientatedX, sectionY + (sectionH / 2) - (height / 2), width, height);
 
             if (extension.moderntabs$hasCustomBackground() && extension.moderntabs$getBackground().hasCustomColor()) {
-                graphics.flush();
                 graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
             }
         }
@@ -265,61 +273,73 @@ public class SectionRenderer {
     }
 
     public static void processItems(CreativeModeTab tab, Collection<ItemStack> originalDisplayItems, Consumer<ItemStack> layoutItems, Consumer<ItemStack> contentItems, Consumer<ItemStack> searchItems) {
+        CreativeModeTabExtension tabExtension = (CreativeModeTabExtension) tab;
+
         Object2IntOpenHashMap<ResourceLocation> yValues = new Object2IntOpenHashMap<>();
         SECTIONS.put(tab, yValues);
         SEARCH_COLLAPSED.remove(tab);
 
-        Map<Section, List<ItemStack>> sectionMap = new LinkedHashMap<>();
-        List<ItemStack> unassigned = new ArrayList<>();
+        if(tabExtension.moderntabs$hasCustomTabContent()) {
+            TabContent content = tabExtension.moderntabs$getCustomTabContent();
 
-        for (ItemStack stack : originalDisplayItems) {
-            ResourceLocation sectionId = SectionUtil.sectionOf(stack.getItem());
-            Section section = sectionId == null ? null : Sections.get(sectionId);
-
-            if (section == null) {
-                unassigned.add(stack);
-            } else {
-                sectionMap.computeIfAbsent(section, s -> new LinkedList<>()).add(stack);
+            List<ItemStack> unassigned = content.getTabContent();
+            if(!content.isOverwritingDefaultContent()) {
+                List<ItemStack> originalItems = originalDisplayItems.stream().toList();
+                if(unassigned == null) {
+                    unassigned = originalItems;
+                } else {
+                    unassigned.addAll(originalItems);
+                }
             }
-        }
 
-        int y = 0;
+            int y = 0;
 
-        if (!unassigned.isEmpty()) {
-            int count = countLeftoverItems(true, unassigned, layoutItems, contentItems, searchItems);
-            y = (count + 8) / 9;
-            padToFullRow(count, layoutItems);
-        }
+            if (unassigned != null && !unassigned.isEmpty()) {
+                int count = countLeftoverItems(true, unassigned, layoutItems, contentItems, searchItems);
+                y = (count + 8) / 9;
+                padToFullRow(count, layoutItems);
+            }
 
-        if (!sectionMap.isEmpty()) {
-            List<Section> sectionKeys = sectionMap.keySet().stream().sorted().toList();
-            TAB_SECTIONS.put(tab, sectionKeys);
+            List<Section> sections = Sections.getSectionsFromTab(tab);
 
-            int totalRows = layoutSections(sectionKeys, y, yValues, layoutItems, section -> countLeftoverItems(!Sections.sectionCollapsed(section), sectionMap.get(section), layoutItems, contentItems, searchItems));
-            TOTAL_ROWS.put(tab, totalRows);
-        } else {
-            TAB_SECTIONS.put(tab, List.of());
+            if (!sections.isEmpty()) {
+                TAB_SECTIONS.put(tab, sections);
+
+                int totalRows = layoutSections(sections, y, yValues, layoutItems, section -> countLeftoverItems(!Sections.sectionCollapsed(section), section.getContent(), layoutItems, contentItems, searchItems));
+                TOTAL_ROWS.put(tab, totalRows);
+            } else {
+                TAB_SECTIONS.put(tab, List.of());
+            }
         }
     }
 
+    //ToDo: fix search for items in section as they don't get filtered - improve logic more && remove old SectionUtil logic & take over item tag logic to the new system
     @Nullable
     public static List<ItemStack> layoutSearchResults(CreativeModeTab tab, List<ItemStack> results) {
-        List<Section> tabSections = TAB_SECTIONS.get(tab);
-        if (tabSections != null && !tabSections.isEmpty()) {
-            Set<ResourceLocation> tabSectionIds = new HashSet<>();
-            for (Section section : tabSections) {
-                tabSectionIds.add(Sections.getId(section));
+        CreativeModeTabExtension tabExtension = (CreativeModeTabExtension) tab;
+        if(tabExtension.moderntabs$hasCustomTabContent()) {
+            TabContent tabContent = tabExtension.moderntabs$getCustomTabContent();
+            List<Section> sections = Sections.getSectionsFromTab(tab);
+            HashMap<Section, List<ItemStack>> matches = new HashMap<>();
+
+            if(!sections.isEmpty()) {
+                for(Section section : sections) {
+                    List<ItemStack> contentMatches = new ArrayList<>();
+                    for(ItemStack stack : results) {
+                        if(section.getContent().contains(stack)) {
+                            contentMatches.add(stack);
+                        }
+                    }
+                    matches.put(section, contentMatches);
+                }
             }
 
-            Map<ResourceLocation, List<ItemStack>> matches = new HashMap<>();
-            List<ItemStack> unassigned = new ArrayList<>();
-
-            for (ItemStack stack : results) {
-                ResourceLocation sectionId = SectionUtil.sectionOf(stack.getItem());
-                if (sectionId != null && tabSectionIds.contains(sectionId)) {
-                    matches.computeIfAbsent(sectionId, id -> new ArrayList<>()).add(stack);
-                } else {
-                    unassigned.add(stack);
+            List<ItemStack> unassigned = getUnassignedItems(sections, results);
+            if(tabContent.getTabContent() != null) {
+                for (ItemStack stack : results) {
+                    if (tabContent.getTabContent().contains(stack)) {
+                        unassigned.add(stack);
+                    }
                 }
             }
 
@@ -334,9 +354,9 @@ public class SectionRenderer {
                 padToFullRow(unassigned.size(), layout::add);
             }
 
-            int totalRows = layoutSections(tabSections, y, yValues, layout::add, section -> {
+            int totalRows = layoutSections(sections, y, yValues, layout::add, section -> {
                 ResourceLocation id = Sections.getId(section);
-                List<ItemStack> sectionMatches = matches.getOrDefault(id, List.of());
+                List<ItemStack> sectionMatches = matches.getOrDefault(section, List.of());
 
                 if (sectionMatches.isEmpty() && Sections.isCollapsible(section)) {
                     collapsed.add(id);
@@ -352,8 +372,18 @@ public class SectionRenderer {
             SEARCH_COLLAPSED.put(tab, collapsed);
             return layout;
         } else {
-            return null;
+            return results;
         }
+    }
+
+    private static List<ItemStack> getUnassignedItems(List<Section> sections, List<ItemStack> results) {
+        List<ItemStack> unassigned = new ArrayList<>(results);
+        if(!sections.isEmpty()) {
+            for (Section section : sections) {
+                unassigned.removeIf(stack -> section.getContent().contains(stack));
+            }
+        }
+        return unassigned;
     }
 
     private static int layoutSections(List<Section> sections, int startRow, Object2IntOpenHashMap<ResourceLocation> yValues, Consumer<ItemStack> layoutItems, ToIntFunction<Section> emitItems) {

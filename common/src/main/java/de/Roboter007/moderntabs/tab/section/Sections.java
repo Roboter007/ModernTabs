@@ -1,14 +1,13 @@
 package de.Roboter007.moderntabs.tab.section;
 
+import de.Roboter007.moderntabs.tab.content.TabContent;
+import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.tab.section.states.ToggleState;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public final class Sections {
 
@@ -16,18 +15,17 @@ public final class Sections {
 
     private static Map<ResourceLocation, Section> SECTION_BY_ID = Map.of();
     private static Map<Section, ResourceLocation> IDS_BY_SECTION = Map.of();
-    private static List<Section> SORTED = new ArrayList<>();
 
     private static Set<ResourceLocation> COLLAPSED_IDS = new HashSet<>();
 
     private Sections() {}
 
     public static boolean isCollapsible(Section section) {
-        return section.sectionToggle().isPresent();
+        return section.getSectionToggle() != null;
     }
 
     public static boolean isCollapsedByDefault(Section section) {
-        return isCollapsible(section) && section.sectionToggle().get().defaultState() == ToggleState.COLLAPSED;
+        return isCollapsible(section) && section.getSectionToggle().getDefaultState() == ToggleState.COLLAPSED;
     }
 
     public static boolean sectionCollapsed(Section section) {
@@ -68,8 +66,23 @@ public final class Sections {
         return IDS_BY_SECTION.get(section);
     }
 
-    public static List<Section> sortedEntries() {
-        return SORTED;
+    public static List<Section> getSectionsFromTab(CreativeModeTab tab) {
+        CreativeModeTabExtension tabExtension = (CreativeModeTabExtension) tab;
+        if(tabExtension.moderntabs$hasCustomTabContent()) {
+            TabContent tabContent = tabExtension.moderntabs$getCustomTabContent();
+            return tabContent.getSections().stream().map(SECTION_BY_ID::get).filter(Objects::nonNull).toList();
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public static List<ItemStack> getContentForSection(ResourceLocation resourceLocation) {
+        Section section = SECTION_BY_ID.get(resourceLocation);
+        if(section != null) {
+            return section.getContent();
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     public static void reload(Map<ResourceLocation, Section> newEntries) {
@@ -79,7 +92,6 @@ public final class Sections {
 
         SECTION_BY_ID = Map.copyOf(byIdCopy);
         IDS_BY_SECTION = Map.copyOf(idsCopy);
-        SORTED = newEntries.values().stream().sorted().toList();
 
         Set<ResourceLocation> collapsed = new HashSet<>();
 

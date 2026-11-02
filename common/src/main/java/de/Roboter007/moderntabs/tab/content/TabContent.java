@@ -8,18 +8,26 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static de.Roboter007.moderntabs.util.CodecUtil.nullable;
 
 public class TabContent {
 
     public static final Codec<TabContent> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.BOOL.optionalFieldOf("overwriteDefaultContent", false).forGetter(TabContent::isOverwritingDefaultContent),
-            ItemStack.CODEC.listOf().optionalFieldOf("items", new ArrayList<>()).forGetter(TabContent::getTabContent),
+            ItemStack.CODEC.listOf().optionalFieldOf("items").forGetter(nullable(TabContent::getTabContent)),
             ResourceLocation.CODEC.listOf().optionalFieldOf("sections", new ArrayList<>()).forGetter(TabContent::getSections)
-    ).apply(instance, TabContent::new));
+    ).apply(instance, TabContent::codec));
 
     private boolean overwriteDefaultContent = false;
-    private List<ItemStack> tabContent = new ArrayList<>();
+    private List<ItemStack> tabContent = null;
     private List<ResourceLocation> sections = new ArrayList<>();
+
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    private static TabContent codec(boolean overwriteDefaultContent, Optional<List<ItemStack>> tabContent, List<ResourceLocation> resourceLocations) {
+        return new TabContent(overwriteDefaultContent, tabContent.orElse(null), resourceLocations);
+    }
 
     public TabContent(boolean overwriteDefaultContent, @Nullable List<ItemStack> tabContent, List<ResourceLocation> sections) {
         this.overwriteDefaultContent = overwriteDefaultContent;
@@ -65,6 +73,7 @@ public class TabContent {
         return this;
     }
 
+    @Nullable
     public List<ItemStack> getTabContent() {
         return tabContent;
     }

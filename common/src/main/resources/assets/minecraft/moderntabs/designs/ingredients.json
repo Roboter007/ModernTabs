@@ -1,0 +1,19 @@
+{
+  "sectionsEnabled": true,
+  "allowLessVisibleRows": true,
+  "background": {
+    "color": "F54927"
+  },
+  "button": {
+  },
+  "searchbar": {
+    "color": "27F5EE"
+  },
+  "title": {
+    "textStyle": "custom",
+    "color": "#9C2007"
+  },
+  "content": {
+    "overwriteDefaultContent": false
+  }
+}

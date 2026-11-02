@@ -11,7 +11,7 @@ import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
 import de.Roboter007.moderntabs.tab.icon.TabIcon;
 import de.Roboter007.moderntabs.tab.searchbar.Searchbar;
-import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
+import de.Roboter007.moderntabs.tab.title.CustomTabTitle;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -19,7 +19,6 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.text.html.Option;
 import java.util.*;
 
 import static de.Roboter007.moderntabs.util.CodecUtil.nullable;
@@ -101,7 +100,7 @@ public class ModernTabs {
                 TabBackground.CODEC.optionalFieldOf("background").forGetter(nullable(TabDesign::getBackground)),
                 TabButton.CODEC.optionalFieldOf("button").forGetter(nullable(TabDesign::getTabButton)),
                 Searchbar.CODEC.optionalFieldOf("searchbar").forGetter(nullable(TabDesign::getSearchbar)),
-                CustomTabTitel.CODEC.optionalFieldOf("title").forGetter(nullable(TabDesign::getCustomTabTitel)),
+                CustomTabTitle.CODEC.optionalFieldOf("title").forGetter(nullable(TabDesign::getCustomTabTitel)),
                 ResourceLocation.CODEC.optionalFieldOf("fillerLocation").forGetter(nullable(TabDesign::getFillerLocation)),
                 ResourceLocation.CODEC.optionalFieldOf("scrollerLocation").forGetter(nullable(TabDesign::getScrollerLocation)),
                 TabContent.CODEC.optionalFieldOf("content").forGetter(nullable(TabDesign::getTabContent))
@@ -112,12 +111,12 @@ public class ModernTabs {
         private TabBackground background = null;
         private TabButton tabButton = null;
         private Searchbar searchbar = null;
-        private CustomTabTitel<?> customTabTitel = null;
+        private CustomTabTitle<?> customTabTitel = null;
         private ResourceLocation fillerLocation = DEFAULT_SPACE_FILLER;
         private ResourceLocation scrollerLocation = null;
         private TabContent tabContent = null;
 
-        public TabDesign(boolean sectionsEnabled, boolean allowLessVisibleRows, @Nullable TabBackground background, @Nullable TabButton tabButton, @Nullable Searchbar searchbar, @Nullable CustomTabTitel<?> customTabTitel , @Nullable ResourceLocation fillerLocation, @Nullable ResourceLocation tabScrollerLocation, @Nullable TabContent tabContent) {
+        public TabDesign(boolean sectionsEnabled, boolean allowLessVisibleRows, @Nullable TabBackground background, @Nullable TabButton tabButton, @Nullable Searchbar searchbar, @Nullable CustomTabTitle<?> customTabTitel , @Nullable ResourceLocation fillerLocation, @Nullable ResourceLocation tabScrollerLocation, @Nullable TabContent tabContent) {
             this.sectionsEnabled = sectionsEnabled;
             this.allowLessVisibleRows = allowLessVisibleRows;
             this.background = background;
@@ -130,7 +129,7 @@ public class ModernTabs {
         }
 
         @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-        public TabDesign(boolean sectionsEnabled, boolean allowLessVisibleRows, Optional<TabBackground> background, Optional<TabButton> tabButton, Optional<Searchbar> searchbar, Optional<CustomTabTitel<?>> customTabTitel , Optional<ResourceLocation> fillerLocation, Optional<ResourceLocation> tabScrollerLocation, Optional<TabContent> tabContent) {
+        public TabDesign(boolean sectionsEnabled, boolean allowLessVisibleRows, Optional<TabBackground> background, Optional<TabButton> tabButton, Optional<Searchbar> searchbar, Optional<CustomTabTitle<?>> customTabTitel , Optional<ResourceLocation> fillerLocation, Optional<ResourceLocation> tabScrollerLocation, Optional<TabContent> tabContent) {
             this(sectionsEnabled, allowLessVisibleRows, background.orElse(null), tabButton.orElse(null), searchbar.orElse(null), customTabTitel.orElse(null), fillerLocation.orElse(null), tabScrollerLocation.orElse(null), tabContent.orElse(null));
         }
 
@@ -187,7 +186,7 @@ public class ModernTabs {
             return this;
         }
 
-        public TabDesign customTabTitel(CustomTabTitel<?> customTabTitel) {
+        public TabDesign customTabTitel(CustomTabTitle<?> customTabTitel) {
             this.customTabTitel = customTabTitel;
             return this;
         }
@@ -255,7 +254,7 @@ public class ModernTabs {
             return searchbar;
         }
 
-        public CustomTabTitel<?> getCustomTabTitel() {
+        public CustomTabTitle<?> getCustomTabTitel() {
             return customTabTitel;
         }
 

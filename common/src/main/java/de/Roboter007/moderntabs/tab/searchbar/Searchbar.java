@@ -30,7 +30,7 @@ public class Searchbar extends TabElement<Searchbar> {
             Codec.INT.optionalFieldOf("height", 12).forGetter(Searchbar::getHeight),
             Codec.INT.optionalFieldOf("editBoxWidth", 89).forGetter(Searchbar::getEditBoxWidth),
             Codec.INT.optionalFieldOf("editBoxHeight", 9).forGetter(Searchbar::getEditBoxWidth)
-    ).apply(instance, Searchbar::new));
+    ).apply(instance, Searchbar::codec));
 
     @Nullable
     private ResourceLocation searchbarLocation = null;
@@ -44,6 +44,11 @@ public class Searchbar extends TabElement<Searchbar> {
     private int editBoxWidth = 89;
     private int editBoxHeight = 9;
 
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    private static Searchbar codec(Vector2i offset, Optional<ResourceLocation> searchbarLocation, Optional<SimpleColor> color, Optional<ResourceLocation> fontLocation, ElementOrientation orientation, Integer width, Integer height, Integer editBoxWidth, Integer editBoxHeight) {
+        return new Searchbar(offset, searchbarLocation.orElse(DEFAULT_SEARCHBAR_LOCATION), color.orElse(null), fontLocation.orElse(null), orientation, width, height, editBoxWidth, editBoxHeight);
+    }
+
     public Searchbar(Vector2i offset, @Nullable ResourceLocation searchbarLocation, @Nullable SimpleColor color, @Nullable ResourceLocation fontLocation, ElementOrientation orientation, int width, int height, int editBoxWidth, int editBoxHeight) {
         super(offset);
         this.searchbarLocation = searchbarLocation;
@@ -54,11 +59,6 @@ public class Searchbar extends TabElement<Searchbar> {
         this.height = height;
         this.editBoxWidth = editBoxWidth;
         this.editBoxHeight = editBoxHeight;
-    }
-
-    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public Searchbar(Vector2i offset, Optional<ResourceLocation> searchbarLocation, Optional<SimpleColor> color, Optional<ResourceLocation> fontLocation, ElementOrientation orientation, Integer width, Integer height, Integer editBoxWidth, Integer editBoxHeight) {
-        this(offset, searchbarLocation.orElse(DEFAULT_SEARCHBAR_LOCATION), color.orElse(null), fontLocation.orElse(null), orientation, width, height, editBoxWidth, editBoxHeight);
     }
 
     public Searchbar() {

@@ -6,7 +6,7 @@ import de.Roboter007.moderntabs.tab.content.TabContent;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.platform.SearchbarPlatform;
 import de.Roboter007.moderntabs.tab.searchbar.Searchbar;
-import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
+import de.Roboter007.moderntabs.tab.title.CustomTabTitle;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -36,7 +36,7 @@ public class CreativeModeTabMixin implements CreativeModeTabExtension {
     @Unique
     public TabButton moderntabs$tabButton = null;
     @Unique
-    public CustomTabTitel<?> moderntabs$customTabTitel = null;
+    public CustomTabTitle<?> moderntabs$customTabTitel = null;
     @Unique
     public Searchbar moderntabs$searchbar = null;
     @Unique
@@ -99,12 +99,12 @@ public class CreativeModeTabMixin implements CreativeModeTabExtension {
     }
 
     @Override
-    public void moderntabs$setCustomTabTitel(CustomTabTitel<?> customTabTitel) {
+    public void moderntabs$setCustomTabTitel(CustomTabTitle<?> customTabTitel) {
         this.moderntabs$customTabTitel = customTabTitel;
     }
 
     @Override
-    public CustomTabTitel<?> moderntabs$getCustomTabTitel() {
+    public CustomTabTitle<?> moderntabs$getCustomTabTitel() {
         return moderntabs$customTabTitel;
     }
 

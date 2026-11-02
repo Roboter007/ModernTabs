@@ -18,7 +18,7 @@
     "tab.icon.CreativeModeInventoryMixin",
     "tab.scrollbar.CreativeModeInventoryMixin",
     "tab.searchbar.CreativeModeInventoryScreenMixin",
-    "tab.titel.CreativeModeInventoryMixin"
+    "tab.title.CreativeModeInventoryMixin"
   ],
   "mixins": [
     "tab.CreativeModeTabMixin",

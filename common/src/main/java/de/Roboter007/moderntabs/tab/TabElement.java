@@ -22,10 +22,6 @@ public abstract class TabElement<T extends TabElement<?>> {
         return offset;
     }
 
-    public Optional<Vector2i> optionalOffset() {
-        return Optional.ofNullable(offset);
-    }
-
     @SuppressWarnings("unchecked")
     protected T self() {
         return (T) this;

@@ -14,6 +14,7 @@ import org.joml.Vector3f;
 
 public class TextRenderer {
 
+    //ToDo: add a render method to each individual text tab titel
     public static void drawAuraText(GuiGraphics graphics, Component text, ResourceLocation font1Location, ResourceLocation font2Location, int color1, int color2, boolean dropShadow1, boolean dropShadow2, int x, int y) {
         Font defaultFont = Minecraft.getInstance().font;
         Window window = Minecraft.getInstance().getWindow();

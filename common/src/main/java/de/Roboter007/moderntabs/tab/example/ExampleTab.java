@@ -4,10 +4,10 @@ import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.color.ColorPresets;
 import de.Roboter007.moderntabs.color.SimpleColor;
 import de.Roboter007.moderntabs.platform.ModernTabsPlatform;
+import de.Roboter007.moderntabs.tab.content.TabContent;
 import de.Roboter007.moderntabs.tab.searchbar.Searchbar;
 import de.Roboter007.moderntabs.tab.section.states.ElementOrientation;
-import de.Roboter007.moderntabs.tab.titel.SpriteTabTitel;
-import de.Roboter007.moderntabs.util.SectionUtil;
+import de.Roboter007.moderntabs.tab.title.SpriteTabTitle;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -18,7 +18,7 @@ import java.util.List;
 
 public final class ExampleTab {
 
-    public static final ResourceLocation TAB_ID = ModernTabs.path("example_tab");
+    public static final ResourceLocation TAB_ID = ModernTabs.path("example");
 
     private static final ResourceLocation SECTION_BUILDING_BLOCKS = ModernTabs.path("example_building_blocks");
     private static final ResourceLocation SECTION_TOOLS_AND_WEAPONS = ModernTabs.path("example_tools_and_weapons");
@@ -57,8 +57,8 @@ public final class ExampleTab {
 
     public static void init() {
         SimpleColor example_color = ColorPresets.CHARCOAL;
-        SpriteTabTitel spriteTabTitel = new SpriteTabTitel()
-                .backgroundColor(example_color.toComplex().lighten(0.6f))
+        SpriteTabTitle spriteTabTitel = new SpriteTabTitle()
+                .backgroundColor(new SimpleColor("#00C8B8").toComplex().darken(0.4f))
                 .textOrientation(ElementOrientation.LEFT)
                 .spriteTitelLocation(ModernTabs.path("container/creative_inventory/titel"))
                 .width(64)
@@ -66,20 +66,27 @@ public final class ExampleTab {
 
         Searchbar searchbar = new Searchbar().orientation(ElementOrientation.RIGHT);
 
-        /*AuraTabTitel auraTabTitel = (AuraTabTitel) new AuraTabTitel()
+        /*AuraTabTitle auraTabTitel = (AuraTabTitle) new AuraTabTitle()
                 .color2(new ComplexColor("#36454F").darken(0.4f))
                 .color(new ComplexColor("#36454F"))
                 .textOrientation(ElementOrientation.RIGHT)
                 .backgroundColor(new ComplexColor("#36454F").darken(0.75f)); */
 
-        SectionUtil.addItemList(SECTION_BUILDING_BLOCKS, BUILDING_BLOCKS);
+        TabContent content = new TabContent()
+                .addSection(SECTION_BUILDING_BLOCKS)
+                .addSection(SECTION_TOOLS_AND_WEAPONS)
+                .addSection(SECTION_FOOD);
+
+        /*SectionUtil.addItemList(SECTION_BUILDING_BLOCKS, BUILDING_BLOCKS);
         SectionUtil.addItemList(SECTION_TOOLS_AND_WEAPONS, TOOLS_AND_WEAPONS);
-        SectionUtil.addItemList(SECTION_FOOD, FOOD);
+        SectionUtil.addItemList(SECTION_FOOD, FOOD); */
 
         ModernTabs.TabDesign tabDesign = new ModernTabs.TabDesign()
                 .withSections()
                 .searchbar(searchbar)
                 .iconLocation(ModernTabs.path("container/creative_inventory/icon"))
+                .tabContent(content)
+                //.tabButton(tabButton)
                 .color(example_color)
                 .customTabTitel(spriteTabTitel);
 

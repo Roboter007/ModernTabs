@@ -4,7 +4,7 @@ import de.Roboter007.moderntabs.tab.background.TabBackground;
 import de.Roboter007.moderntabs.tab.button.TabButton;
 import de.Roboter007.moderntabs.tab.content.TabContent;
 import de.Roboter007.moderntabs.tab.searchbar.Searchbar;
-import de.Roboter007.moderntabs.tab.titel.CustomTabTitel;
+import de.Roboter007.moderntabs.tab.title.CustomTabTitle;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -35,8 +35,8 @@ public interface CreativeModeTabExtension {
     }
 
     // tab titles
-    void moderntabs$setCustomTabTitel(CustomTabTitel<?> customTabTitel);
-    CustomTabTitel<?> moderntabs$getCustomTabTitel();
+    void moderntabs$setCustomTabTitel(CustomTabTitle<?> customTabTitel);
+    CustomTabTitle<?> moderntabs$getCustomTabTitel();
     default boolean moderntabs$hasCustomTabTitelRendering() {
         return moderntabs$getCustomTabTitel() != null;
     }

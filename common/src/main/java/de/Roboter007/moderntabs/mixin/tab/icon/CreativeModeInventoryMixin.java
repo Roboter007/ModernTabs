@@ -1,6 +1,7 @@
 package de.Roboter007.moderntabs.mixin.tab.icon;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import de.Roboter007.moderntabs.ModernTabs;
 import de.Roboter007.moderntabs.tab.extensions.CreativeModeTabExtension;
 import de.Roboter007.moderntabs.tab.icon.TabIcon;
 import net.minecraft.client.gui.GuiGraphics;

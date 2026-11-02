@@ -1,13 +1,18 @@
 {
-  "priority": 1,
+  "content": [
+    {
+      "id": "minecraft:diamond"
+    }
+  ],
   "sectionToggle": {
     "defaultState": "expanded",
     "orientation": "left"
   },
   "title": {
+    "textStyle": "aura",
     "text": { "translate": "moderntabs.creativeTab.section.tools_and_weapons" },
-    "color": "#CFF3FF",
-    "secondaryColor": "CFFFF3",
+    "color": "CFF3FF",
+    "color2": "CFFFF3",
     "orientation": "centered"
   },
   "banner": {
